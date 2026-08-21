@@ -1,5 +1,5 @@
 {
-  "$comment": "Edited by the local admin panel — see src/data/overrides.ts. Safe to hand-edit. Commit and push to publish.",
+  "$comment": "Edited from /admin, which commits through the GitHub API. Safe to hand-edit. See src/data/overrides.ts.",
   "updatedAt": "2026-08-21T10:11:13.675Z",
   "products": {},
   "services": {},

@@ -28,12 +28,6 @@ const stash = join(root, ".static-build-stash");
 const SERVER_ONLY = [
   { from: join(root, "src", "app", "api"), name: "api" },
   { from: join(root, "src", "proxy.ts"), name: "proxy.ts" },
-  /*
-   * The admin panel. It already refuses to render outside development and its
-   * API route already refuses to run, but the strongest guarantee is simply
-   * not compiling it into the thing that gets published.
-   */
-  { from: join(root, "src", "app", "[locale]", "admin"), name: "admin" },
 ];
 
 const BASE_PATH = process.env.BASE_PATH ?? "";

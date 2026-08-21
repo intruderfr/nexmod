@@ -1,26 +1,41 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { IconCheck, IconClose, IconStar } from "@/components/Icons";
+import { IconArrowRight, IconCheck, IconClose, IconStar } from "@/components/Icons";
+import { GitHubGate } from "@/components/admin/GitHubGate";
 import { articles } from "@/data/articles";
 import { careTiers } from "@/data/care";
 import { products } from "@/data/products";
 import { services } from "@/data/services";
 import { lkr } from "@/data/site";
 import { isPublished } from "@/lib/content";
+import {
+  ACTIONS_URL,
+  OVERRIDES_PATH,
+  REPO,
+  clearToken,
+  getFile,
+  putFile,
+  readToken,
+  verifyToken,
+  type CommitResult,
+  type GitHubUser,
+} from "@/lib/github";
 
 /**
- * The local admin panel.
+ * The admin panel.
  *
- * Edits src/data/overrides.json through a route handler that only runs under
- * `next dev`. Nothing here reaches the deployed site: the route is stripped
- * from the static export, and GitHub Pages could not execute it anyway.
+ * Reads and writes src/data/overrides.json straight through the GitHub API,
+ * from the browser, with no server anywhere. Saving makes a real commit on the
+ * default branch, which triggers the deploy workflow, which rebuilds the site.
  *
- * The workflow it is built around is the one the owner already has — change
- * the numbers, look at them, commit, push, and the deploy Action rebuilds. So
- * the panel is honest about that: it saves to a file and then tells you the
- * two git commands, rather than pretending a Save button published anything.
+ * That means it works from the published site on any device the owner is
+ * signed in on — a phone at the counter included — rather than only on a
+ * machine with the repository checked out.
+ *
+ * The panel edits numbers and dates, not the catalogue. Body copy, specs and
+ * photographs stay in the repository, where a change goes through review.
  */
 
 type Section = "products" | "services" | "articles" | "care";
@@ -37,33 +52,71 @@ const SECTIONS: { id: Section; label: string; count: number }[] = [
 ];
 
 export function AdminPanel() {
+  const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<GitHubUser | null>(null);
+  const [checking, setChecking] = useState(true);
+
   const [draft, setDraft] = useState<Draft>(EMPTY);
+  /** The blob sha of the file we loaded, needed to write it back safely. */
+  const [sha, setSha] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [section, setSection] = useState<Section>("products");
   const [status, setStatus] = useState<
-    { kind: "idle" } | { kind: "saving" } | { kind: "saved"; at: string } | { kind: "error"; message: string }
+    | { kind: "idle" }
+    | { kind: "saving" }
+    | { kind: "saved"; commit: CommitResult }
+    | { kind: "error"; message: string }
   >({ kind: "idle" });
   const [filter, setFilter] = useState("");
 
+  /*
+   * A stored token is only trusted once GitHub confirms it still works. They
+   * expire, and discovering that at save time — after a screen of edits —
+   * would be the worst possible moment.
+   */
   useEffect(() => {
-    fetch("/api/admin")
-      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
-      .then((data) => {
-        setDraft({
-          products: data.products ?? {},
-          services: data.services ?? {},
-          articles: data.articles ?? {},
-          care: data.care ?? {},
-        });
-        setLoaded(true);
+    const stored = readToken();
+    if (!stored) {
+      setChecking(false);
+      return;
+    }
+    verifyToken(stored)
+      .then((who) => {
+        setUser(who);
+        setToken(stored);
       })
-      .catch((error) =>
-        setStatus({
-          kind: "error",
-          message: `Could not read overrides.json — is the dev server running? (${error.message})`,
-        }),
-      );
+      .catch(() => clearToken())
+      .finally(() => setChecking(false));
   }, []);
+
+  const load = useCallback(async (activeToken: string) => {
+    try {
+      const file = await getFile(activeToken, OVERRIDES_PATH);
+      const data = JSON.parse(file.text || "{}");
+      setDraft({
+        products: data.products ?? {},
+        services: data.services ?? {},
+        articles: data.articles ?? {},
+        care: data.care ?? {},
+      });
+      setSha(file.sha);
+      setLoaded(true);
+    } catch (error) {
+      setStatus({ kind: "error", message: (error as Error).message });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (token) void load(token);
+  }, [token, load]);
+
+  function signOut() {
+    clearToken();
+    setToken(null);
+    setUser(null);
+    setLoaded(false);
+    setDraft(EMPTY);
+  }
 
   const dirtyCount = useMemo(
     () =>
@@ -98,19 +151,57 @@ export function AdminPanel() {
   }
 
   async function save() {
+    if (!token || !sha) return;
     setStatus({ kind: "saving" });
+
+    const payload = {
+      $comment:
+        "Edited from /admin, which commits through the GitHub API. Safe to hand-edit. See src/data/overrides.ts.",
+      updatedAt: new Date().toISOString(),
+      products: draft.products,
+      services: draft.services,
+      articles: draft.articles,
+      care: draft.care,
+    };
+
+    const changed = SECTIONS.reduce((n, s) => n + Object.keys(draft[s.id]).length, 0);
+    const message =
+      changed === 0
+        ? "Clear all price and publishing overrides"
+        : `Update ${changed} price and publishing ${changed === 1 ? "override" : "overrides"}`;
+
     try {
-      const response = await fetch("/api/admin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(draft),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error ?? `HTTP ${response.status}`);
-      setStatus({ kind: "saved", at: data.updatedAt });
+      const commit = await putFile(
+        token,
+        OVERRIDES_PATH,
+        `${JSON.stringify(payload, null, 2)}\n`,
+        sha,
+        message,
+      );
+      /*
+       * Writing returns a new blob sha. Without picking it up, a second save in
+       * the same session would be rejected as a conflict against the old one.
+       */
+      await load(token);
+      setStatus({ kind: "saved", commit });
     } catch (error) {
       setStatus({ kind: "error", message: (error as Error).message });
     }
+  }
+
+  if (checking) {
+    return <div className="h-64 rounded-xl bg-[var(--bg-inset)] animate-pulse" />;
+  }
+
+  if (!token || !user) {
+    return (
+      <GitHubGate
+        onSignedIn={(who, freshToken) => {
+          setUser(who);
+          setToken(freshToken);
+        }}
+      />
+    );
   }
 
   if (!loaded && status.kind !== "error") {
@@ -132,25 +223,59 @@ export function AdminPanel() {
           )}
           {status.kind === "saved" && (
             <p className="text-[13px] text-[var(--ok)] mt-1">
-              Written to src/data/overrides.json. Commit and push to publish.
+              Committed. The site rebuilds in a minute or two.
             </p>
           )}
         </div>
 
-        <button
-          type="button"
-          onClick={save}
-          disabled={status.kind === "saving"}
-          className="btn btn-primary shrink-0"
-        >
-          {status.kind === "saving" ? "Saving…" : "Save to overrides.json"}
-        </button>
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-[12.5px] text-[var(--fg-subtle)] hidden sm:inline">
+            {user.login}
+          </span>
+          <button type="button" onClick={signOut} className="btn btn-sm btn-ghost">
+            Sign out
+          </button>
+          <button
+            type="button"
+            onClick={save}
+            disabled={status.kind === "saving"}
+            className="btn btn-primary"
+          >
+            {status.kind === "saving" ? "Committing…" : "Commit to GitHub"}
+          </button>
+        </div>
       </div>
 
       {status.kind === "saved" && (
-        <pre className="surface p-4 text-[12.5px] overflow-x-auto">
-          <code>{`git add src/data/overrides.json\ngit commit -m "Update prices"\ngit push`}</code>
-        </pre>
+        <div className="surface p-5 flex flex-wrap items-center justify-between gap-4">
+          <div className="min-w-0">
+            <p className="font-semibold text-[14px] mb-1">
+              Committed to {REPO.owner}/{REPO.name}
+            </p>
+            <p className="text-[13px] text-[var(--fg-muted)] leading-relaxed">
+              The deploy workflow is running now. Changes appear on the live site once it finishes.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2 shrink-0">
+            <a
+              href={status.commit.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-sm btn-outline"
+            >
+              View commit
+            </a>
+            <a
+              href={ACTIONS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-sm btn-outline"
+            >
+              Watch the deploy
+              <IconArrowRight width={14} height={14} />
+            </a>
+          </div>
+        </div>
       )}
 
       {/* -------------------------------------------------------- sections */}

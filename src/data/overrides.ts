@@ -11,9 +11,10 @@ import raw from "./overrides.json";
  * at all to the person who needs to change a price on a Tuesday.
  *
  * So the fields that actually change — prices, stock, publish dates, plan fees
- * — are read through this file. The local admin panel writes overrides.json,
- * the owner commits it, and the deploy Action rebuilds. That is the whole
- * mechanism, and it survives having no backend.
+ * — are read through this file. The editor at /admin writes overrides.json by
+ * committing to the repository through the GitHub API, straight from the
+ * browser, and the deploy Action rebuilds from the commit. That is the whole
+ * mechanism, and it survives having no backend of our own.
  *
  * WHY A SEPARATE JSON FILE rather than rewriting the .ts sources. Editing
  * TypeScript from a form means parsing and re-emitting code, which fails badly
