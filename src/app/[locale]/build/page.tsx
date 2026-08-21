@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { BuildStudio } from "@/components/build/BuildStudio";
 import { IconCheck, IconShield, IconTool } from "@/components/Icons";
@@ -81,7 +82,16 @@ export default function BuildPage() {
       </section>
 
       <section className="container-nex py-16 md:py-20">
-        <BuildStudio />
+        <Suspense
+          fallback={
+            <div className="grid lg:grid-cols-[1fr_380px] gap-8">
+              <div className="h-[32rem] rounded-xl bg-[var(--bg-inset)] animate-pulse" />
+              <div className="h-64 rounded-xl bg-[var(--bg-inset)] animate-pulse" />
+            </div>
+          }
+        >
+          <BuildStudio />
+        </Suspense>
       </section>
     </>
   );

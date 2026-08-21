@@ -7,6 +7,7 @@ import { Faq } from "@/components/Faq";
 import { IconArrowRight, IconCheck, IconClock, IconShield, IconTool } from "@/components/Icons";
 import { JsonLd } from "@/components/JsonLd";
 import { Photo } from "@/components/Photo";
+import { RecentlyViewed, TrackProductView } from "@/components/RecentlyViewed";
 import { Visual } from "@/components/Visual";
 import { productImage } from "@/data/imagery";
 import { getCategory } from "@/data/categories";
@@ -56,6 +57,7 @@ export default async function ProductPage({
   return (
     <>
       <JsonLd data={productSchema(product)} />
+      <TrackProductView slug={product.slug} />
       {product.faqs && product.faqs.length > 0 && <JsonLd data={faqSchema(product.faqs)} />}
 
       <div className="container-nex pt-6 pb-4">
@@ -271,6 +273,7 @@ export default async function ProductPage({
           </div>
         </section>
       )}
+      <RecentlyViewed exclude={product.slug} />
     </>
   );
 }

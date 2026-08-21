@@ -13,7 +13,15 @@ import { lkr } from "@/data/site";
 import type { Article, Product, Service } from "@/data/types";
 import { formatDateShort } from "@/lib/content";
 import { priceRange } from "@/data/products";
-import { CategoryIcon, IconArrowRight, IconClock, IconTool } from "./Icons";
+import { usePrefs } from "@/lib/prefs";
+import {
+  CategoryIcon,
+  IconArrowRight,
+  IconCheck,
+  IconClock,
+  IconPlus,
+  IconTool,
+} from "./Icons";
 import { Photo } from "./Photo";
 import { Visual } from "./Visual";
 import {
@@ -32,9 +40,21 @@ export function ProductCard({ product }: { product: Product }) {
   const range = priceRange(product);
   const hasRange = range.min !== range.max;
   const photo = productImage(product.slug, product.category);
+  const { isComparing, toggleCompare, compareFull, activeVehicle } = usePrefs();
+  const comparing = isComparing(product.slug);
+
+  // Does this fit the car currently selected in the garage?
+  const fitsActive =
+    activeVehicle &&
+    (product.fitment ?? []).some(
+      (f) =>
+        f === "Universal" ||
+        f.toLowerCase().includes(activeVehicle.model.toLowerCase()) ||
+        activeVehicle.model.toLowerCase().includes(f.toLowerCase()),
+    );
 
   return (
-    <article className="surface surface-hover overflow-hidden flex flex-col group">
+    <article className="relative surface surface-hover overflow-hidden flex flex-col group">
       <Link href={`/products/${product.slug}`} className="block relative overflow-hidden">
         {photo ? (
           <Photo
@@ -65,18 +85,47 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
         )}
         {product.compareAt && product.compareAt > product.price && (
-          <span className="absolute top-2.5 right-2.5 px-2 py-1 rounded text-[10px] font-bold bg-white text-black">
+          <span className="absolute bottom-2.5 left-2.5 px-2 py-1 rounded text-[10px] font-bold bg-white text-black">
             −{Math.round((1 - product.price / product.compareAt) * 100)}%
           </span>
         )}
       </Link>
 
+      {/* Compare toggle — outside the Link so it never navigates. */}
+      <button
+        type="button"
+        onClick={() => toggleCompare(product.slug)}
+        disabled={!comparing && compareFull}
+        aria-pressed={comparing}
+        aria-label={comparing ? `Remove ${product.name} from compare` : `Compare ${product.name}`}
+        title={
+          !comparing && compareFull ? "Compare list is full (4 max)" : "Compare"
+        }
+        className={`absolute top-2.5 right-2.5 z-10 grid place-items-center w-8 h-8 rounded-md backdrop-blur transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
+          comparing
+            ? "bg-[var(--accent)] text-white"
+            : "bg-black/50 text-white hover:bg-black/75"
+        }`}
+      >
+        {comparing ? <IconCheck width={14} height={14} /> : <IconPlus width={14} height={14} />}
+      </button>
+
+
+
       <div className="flex-1 flex flex-col p-4">
-        {product.brand && (
-          <span className="text-[10.5px] font-bold uppercase tracking-[0.12em] text-[var(--accent)] mb-1.5">
-            {product.brand}
-          </span>
-        )}
+        <span className="flex flex-wrap items-center gap-1.5 mb-1.5 min-h-[1.1rem]">
+          {product.brand && (
+            <span className="text-[10.5px] font-bold uppercase tracking-[0.12em] text-[var(--accent)]">
+              {product.brand}
+            </span>
+          )}
+          {fitsActive && (
+            <span className="badge badge-stock">
+              <IconCheck width={10} height={10} />
+              Fits your {activeVehicle?.model}
+            </span>
+          )}
+        </span>
 
         <h3 className="font-semibold text-[15px] leading-snug mb-1.5">
           <Link href={`/products/${product.slug}`} className="hover:text-[var(--accent)] transition-colors">

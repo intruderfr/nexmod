@@ -5,6 +5,7 @@ import { lkr, site, waLink } from "@/data/site";
 import type { Product } from "@/data/types";
 import { useCart } from "@/lib/cart";
 import { IconCart, IconCheck, IconMinus, IconPlus, IconTool, IconWhatsApp } from "./Icons";
+import { PayLater } from "./PayLater";
 
 /**
  * Product buy box. Handles variant selection, quantity, the installation
@@ -59,9 +60,13 @@ export function AddToCart({ product }: { product: Product }) {
           </span>
         )}
       </div>
-      <p className="text-xs text-[var(--fg-subtle)] mb-5">
+      <p className="text-xs text-[var(--fg-subtle)] mb-4">
         Price includes VAT. {canInstall && installFee === 0 && "Installation included."}
       </p>
+
+      <div className="mb-5">
+        <PayLater amount={lineTotal} />
+      </div>
 
       {/* Variants */}
       {product.variants && product.variants.length > 0 && (

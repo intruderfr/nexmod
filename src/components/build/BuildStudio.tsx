@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { categories } from "@/data/categories";
 import { allFitments, products } from "@/data/products";
 import { lkr, site, waLink } from "@/data/site";
@@ -14,6 +15,45 @@ import {
   IconWhatsApp,
 } from "@/components/Icons";
 import { PhotoStudio } from "./PhotoStudio";
+
+/**
+ * Builds are shareable via the URL.
+ *
+ * The selection is encoded as `?b=slug~variant~i,slug~variant~i` — readable,
+ * diffable and short enough to paste into WhatsApp without a shortener. The
+ * photo is deliberately NOT encoded: it never leaves the device, so it cannot
+ * travel with the link either.
+ */
+function encodeBuild(selected: Selection[], vehicle: string, colour: string): string {
+  const params = new URLSearchParams();
+  if (selected.length) {
+    params.set(
+      "b",
+      selected
+        .map((s) => [s.slug, s.variantId ?? "", s.withInstallation ? "1" : "0"].join("~"))
+        .join(","),
+    );
+  }
+  if (vehicle) params.set("v", vehicle);
+  if (colour) params.set("c", colour);
+  return params.toString();
+}
+
+function decodeBuild(raw: string | null): Selection[] {
+  if (!raw) return [];
+
+  const out: Selection[] = [];
+  for (const chunk of raw.split(",")) {
+    const [slug, variantId, install] = chunk.split("~");
+    // Ignore unknown slugs rather than throwing — a shared link should still
+    // work after a product is renamed or retired.
+    if (!slug || !products.some((p) => p.slug === slug)) continue;
+    const entry: Selection = { slug, withInstallation: install === "1" };
+    if (variantId) entry.variantId = variantId;
+    out.push(entry);
+  }
+  return out;
+}
 
 /**
  * Build Studio.
@@ -33,13 +73,27 @@ interface Selection {
 
 export function BuildStudio() {
   const { add, setOpen } = useCart();
+  const searchParams = useSearchParams();
 
   const [vehicle, setVehicle] = useState("");
   const [customVehicle, setCustomVehicle] = useState("");
   const [colour, setColour] = useState("");
   const [selected, setSelected] = useState<Selection[]>([]);
+  const [copied, setCopied] = useState(false);
   const [openCategory, setOpenCategory] = useState<string | null>("body-kits");
   const [hasPhoto, setHasPhoto] = useState(false);
+
+  // Restore a shared build once, on mount.
+  useEffect(() => {
+    const shared = decodeBuild(searchParams.get("b"));
+    if (shared.length) setSelected(shared);
+    const v = searchParams.get("v");
+    if (v) setVehicle(v);
+    const c = searchParams.get("c");
+    if (c) setColour(c);
+    // Intentionally mount-only: later edits must not be clobbered by the URL.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fitments = useMemo(() => allFitments(), []);
   const vehicleLabel = vehicle === "other" ? customVehicle : vehicle;
@@ -439,6 +493,36 @@ export function BuildStudio() {
                 <button type="button" onClick={addAllToCart} className="btn btn-outline w-full">
                   <IconCart width={16} height={16} />
                   Add all to cart
+                </button>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const query = encodeBuild(selected, vehicleLabel, colour);
+                    const url = `${window.location.origin}${window.location.pathname}?${query}`;
+                    try {
+                      if (navigator.share) {
+                        await navigator.share({ title: "My Nexmod build", url });
+                      } else {
+                        await navigator.clipboard.writeText(url);
+                        setCopied(true);
+                        window.setTimeout(() => setCopied(false), 2000);
+                      }
+                    } catch {
+                      // Share sheet dismissed, or clipboard blocked — the URL
+                      // is still in the address bar for manual copying.
+                      window.history.replaceState(null, "", `?${query}`);
+                    }
+                  }}
+                  className="btn btn-outline w-full"
+                >
+                  {copied ? (
+                    <>
+                      <IconCheck width={15} height={15} />
+                      Link copied
+                    </>
+                  ) : (
+                    "Share this build"
+                  )}
                 </button>
                 <button
                   type="button"

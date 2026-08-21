@@ -12,6 +12,7 @@ import {
   IconWhatsApp,
 } from "@/components/Icons";
 import { JsonLd } from "@/components/JsonLd";
+import { BeforeAfter } from "@/components/BeforeAfter";
 import { Photo } from "@/components/Photo";
 import { Visual } from "@/components/Visual";
 import { serviceImage } from "@/data/imagery";
@@ -240,6 +241,28 @@ export default async function ServicePage({
           </div>
         </div>
       </section>
+
+      {/* ============================================= TINT COMPARISON */}
+      {service.slug === "window-tinting" && photo && (
+        <section className="container-nex py-16 md:py-20">
+          <div className="max-w-3xl">
+            <p className="eyebrow mb-5">See the difference</p>
+            <h2 className="text-3xl md:text-4xl mb-4">Untinted, and at 35% VLT</h2>
+            <p className="text-[var(--fg-muted)] leading-relaxed mb-8">
+              The same photograph either side of the handle — drag it to compare. This shows the
+              tonal change a mid-level film makes; it is an illustration of darkness, not a
+              simulation of heat rejection, which is the part you actually feel.
+            </p>
+            <BeforeAfter
+              before={photo}
+              beforeLabel="Untinted"
+              afterLabel="35% VLT"
+              afterOverlay="rgba(6,8,12,0.44)"
+              caption="Illustrative. We fit within Sri Lankan legal VLT limits and will tell you what those are before we start."
+            />
+          </div>
+        </section>
+      )}
 
       {/* ==================================================== PROCESS */}
       <section className="container-nex py-16 md:py-20">

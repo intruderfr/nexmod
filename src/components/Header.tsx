@@ -15,9 +15,10 @@ import {
   IconClose,
   IconMenu,
   IconPhone,
-  IconSearch,
   IconWhatsApp,
 } from "./Icons";
+import { CommandPalette } from "./CommandPalette";
+import { GarageMenu } from "./GarageMenu";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -152,13 +153,8 @@ export function Header() {
 
             {/* Actions */}
             <div className="flex items-center gap-1.5">
-              <Link
-                href="/search"
-                aria-label={dict.nav.search}
-                className="grid place-items-center w-10 h-10 rounded-md text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors"
-              >
-                <IconSearch width={18} height={18} />
-              </Link>
+              <CommandPalette />
+              <GarageMenu />
 
               <LanguageSwitcher />
 

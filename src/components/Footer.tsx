@@ -166,6 +166,8 @@ export function Footer() {
             </h3>
             <ul className="space-y-2.5">
               {[
+                { href: "/build", label: dict.nav.build },
+                { href: "/gallery", label: "Gallery" },
                 { href: "/about", label: dict.nav.about },
                 { href: "/ez-lip", label: "EZ Lip Sri Lanka" },
                 { href: "/articles", label: dict.nav.articles },

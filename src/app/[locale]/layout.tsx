@@ -8,6 +8,8 @@ import {
 } from "next/font/google";
 import { notFound } from "next/navigation";
 import { CartDrawer } from "@/components/CartDrawer";
+import { CommandPalette } from "@/components/CommandPalette";
+import { CompareTray } from "@/components/CompareTray";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { JsonLd } from "@/components/JsonLd";
@@ -18,6 +20,7 @@ import { site } from "@/data/site";
 import { getDictionary } from "@/i18n";
 import { isLocale, localeMeta, locales } from "@/i18n/config";
 import { CartProvider } from "@/lib/cart";
+import { PrefsProvider } from "@/lib/prefs";
 import { siteGraph } from "@/lib/schema";
 import "../globals.css";
 
@@ -197,13 +200,16 @@ export default async function LocaleLayout({
           {dict.common.skipToContent}
         </a>
 
-        <CartProvider>
-          <Header />
-          <main id="main">{children}</main>
-          <Footer />
-          <CartDrawer />
-          <WhatsAppFab />
-        </CartProvider>
+        <PrefsProvider>
+          <CartProvider>
+            <Header />
+            <main id="main">{children}</main>
+            <Footer />
+            <CartDrawer />
+            <CompareTray />
+            <WhatsAppFab />
+          </CartProvider>
+        </PrefsProvider>
       </body>
     </html>
   );
