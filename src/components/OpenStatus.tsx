@@ -102,7 +102,10 @@ export function OpenStatus({ compact = false }: { compact?: boolean }) {
     >
       <span className="relative flex w-1.5 h-1.5 shrink-0">
         {status.open && (
-          <span className="absolute inset-0 rounded-full bg-[var(--ok)] animate-ping opacity-60" />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 rounded-full bg-[var(--ok)] animate-ping opacity-60"
+          />
         )}
         <span
           className={`relative w-1.5 h-1.5 rounded-full ${

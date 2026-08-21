@@ -11,6 +11,23 @@ import { IconClose, IconWhatsApp } from "./Icons";
  *
  * The prompt bubble appears once per session after a short delay, and is
  * suppressed on checkout so it cannot distract from a completing order.
+ *
+ * NOTHING INVISIBLE HERE MAY EAT A CLICK.
+ * This is a fixed element sitting over the bottom-right of every page, which
+ * is where the footer links and the last row of product cards live. Two parts
+ * of it used to swallow clicks while drawing nothing:
+ *
+ *   - The wrapper is a flex column with a gap. Between the bubble and the
+ *     button, and to the left of the button, is wrapper box with no pixels in
+ *     it. It is now pointer-events-none, with the two real controls opting
+ *     back in.
+ *   - The pulse ring animates to twice its size, so a 56px button was
+ *     intercepting clicks across 112px. It is decorative, so it is now
+ *     pointer-events-none and hidden from assistive tech.
+ *
+ * The bubble itself still blocks what is behind it, which is correct — it is
+ * opaque and visible, it has a dismiss button, and it now takes itself away
+ * after a few seconds rather than camping on the footer for the session.
  */
 export function WhatsAppFab() {
   const pathname = usePathname();
@@ -21,8 +38,25 @@ export function WhatsAppFab() {
     const seen = sessionStorage.getItem("nexmod.wa.prompt");
     if (seen) return;
     setDismissed(false);
-    const t = window.setTimeout(() => setShowPrompt(true), 9000);
-    return () => window.clearTimeout(t);
+
+    const show = window.setTimeout(() => setShowPrompt(true), 9000);
+
+    /*
+     * And then retire itself. The bubble is opaque and sits over the bottom
+     * right of the page, which on the home page is the footer contact links
+     * and the last row of product cards. Left up, it quietly costs the visitor
+     * those taps for the rest of the session. Eight seconds is long enough to
+     * read fifteen words.
+     */
+    const hide = window.setTimeout(() => {
+      setShowPrompt(false);
+      sessionStorage.setItem("nexmod.wa.prompt", "1");
+    }, 17000);
+
+    return () => {
+      window.clearTimeout(show);
+      window.clearTimeout(hide);
+    };
   }, []);
 
   function dismiss() {
@@ -34,9 +68,9 @@ export function WhatsAppFab() {
   if (pathname.startsWith("/checkout")) return null;
 
   return (
-    <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3 print:hidden">
+    <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3 print:hidden pointer-events-none">
       {showPrompt && !dismissed && (
-        <div className="relative max-w-[16rem] surface p-4 pr-9 shadow-xl animate-fade-up">
+        <div className="relative max-w-[16rem] surface p-4 pr-9 shadow-xl animate-fade-up pointer-events-auto">
           <button
             type="button"
             onClick={dismiss}
@@ -60,10 +94,13 @@ export function WhatsAppFab() {
         target="_blank"
         rel="noopener noreferrer"
         onClick={dismiss}
-        className="group relative grid place-items-center w-14 h-14 rounded-full bg-[#25d366] text-[#05291a] shadow-lg shadow-black/25 hover:scale-105 active:scale-95 transition-transform"
+        className="group relative grid place-items-center w-14 h-14 rounded-full pointer-events-auto bg-[#25d366] text-[#05291a] shadow-lg shadow-black/25 hover:scale-105 active:scale-95 transition-transform"
         aria-label={`Message Nexmod on WhatsApp at ${site.contact.phoneDisplay}`}
       >
-        <span className="absolute inset-0 rounded-full bg-[#25d366] animate-ping opacity-20" />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 rounded-full bg-[#25d366] animate-ping opacity-20"
+        />
         <IconWhatsApp width={26} height={26} className="relative" />
       </a>
     </div>

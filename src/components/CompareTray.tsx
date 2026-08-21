@@ -23,9 +23,14 @@ export function CompareTray() {
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-30 print:hidden animate-fade-up">
+    /*
+     * The wrapper spans the full width but only the inner card is painted, so
+     * the transparent gutters either side of it would otherwise intercept
+     * every click along the bottom of the page. Only the card opts back in.
+     */
+    <div className="fixed inset-x-0 bottom-0 z-30 print:hidden animate-fade-up pointer-events-none">
       <div className="container-nex pb-4 md:pb-5">
-        <div className="surface shadow-2xl p-3 md:p-4">
+        <div className="surface shadow-2xl p-3 md:p-4 pointer-events-auto">
           <div className="flex items-center gap-3 md:gap-4">
             <div className="hidden sm:block shrink-0">
               <p className="font-[family-name:var(--font-display)] font-bold text-[14px] leading-tight">

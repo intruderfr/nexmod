@@ -15,6 +15,13 @@ const isStatic = process.env.STATIC_EXPORT === "1";
 // On GitHub Pages the site is served from a repository subpath.
 const basePath = process.env.BASE_PATH ?? "";
 
+/**
+ * Namespaces the service worker's caches. scripts/build-static.mjs sets this
+ * from the git SHA and stamps the same value into out/sw.js, so a deploy can
+ * never leave a visitor running a previous build's JavaScript chunks.
+ */
+const buildId = process.env.BUILD_ID || "dev";
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
@@ -40,6 +47,7 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_STATIC_EXPORT: isStatic ? "1" : "",
     NEXT_PUBLIC_BASE_PATH: basePath,
+    NEXT_PUBLIC_BUILD_ID: buildId,
   },
 
   // Headers are a server feature; a static export ignores them, and GitHub

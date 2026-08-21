@@ -6,19 +6,23 @@ import { useEffect } from "react";
 /**
  * Scroll-reveal driver.
  *
- * Mounted once in the root layout. It observes every `[data-reveal]` element on
- * the page and stamps `data-revealed` when it enters the viewport; the CSS in
- * globals.css does the actual animating.
+ * Mounted once in the root layout. It observes every `[data-reveal]` element
+ * and stamps `data-revealed` when it enters the viewport; the CSS in
+ * globals.css does the animating.
  *
- * Design decisions worth keeping:
- *  - Elements already in view on first paint are revealed immediately with no
- *    delay, so the top of the page never animates in after the user is looking
- *    at it.
- *  - Children of a `[data-reveal-group]` get an incremental delay, which gives
- *    grids a stagger without hard-coding delays into markup.
- *  - A MutationObserver picks up nodes added later by client filtering, so
- *    catalogue results reveal too.
- *  - Reveal is one-way. Re-hiding on scroll-up feels like a gimmick.
+ * SAFETY FIRST, THEN THE EFFECT.
+ * `[data-reveal]` starts at opacity 0, which means any failure to run this
+ * leaves content permanently invisible — a dead-looking, unclickable page.
+ * That has to be impossible, so there are four independent ways out:
+ *
+ *   1. `prefers-reduced-motion` or no IntersectionObserver — reveal everything
+ *      immediately.
+ *   2. A zero-size viewport (embedded frames, some headless contexts) would
+ *      mean the observer never fires — detected and everything revealed.
+ *   3. A hard 1200ms failsafe reveals anything still hidden, whatever the
+ *      reason.
+ *   4. CSS handles the no-JS case entirely, so this file never running at all
+ *      still shows the page.
  */
 export function Reveal() {
   const pathname = usePathname();
@@ -26,13 +30,19 @@ export function Reveal() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    // No IntersectionObserver, or the user prefers no motion: show everything.
-    if (reduced || !("IntersectionObserver" in window)) {
+    const revealAll = () => {
       document
         .querySelectorAll<HTMLElement>("[data-reveal]:not([data-revealed])")
         .forEach((el) => el.setAttribute("data-revealed", ""));
+    };
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const noObserver = !("IntersectionObserver" in window);
+    // A viewport with no height means nothing can ever intersect it.
+    const noViewport = window.innerHeight === 0 || window.innerWidth === 0;
+
+    if (reduced || noObserver || noViewport) {
+      revealAll();
       return;
     }
 
@@ -45,8 +55,6 @@ export function Reveal() {
           observer.unobserve(el);
         }
       },
-      // Fire slightly before the element reaches the fold so it is settled by
-      // the time it is properly in view.
       { rootMargin: "0px 0px -12% 0px", threshold: 0.05 },
     );
 
@@ -88,7 +96,15 @@ export function Reveal() {
     });
     mutations.observe(document.body, { childList: true, subtree: true });
 
+    /*
+     * Failsafe. If anything above went wrong — an observer that never fires,
+     * a layout that reports zero heights, a browser quirk — show the content
+     * anyway. A missed animation is invisible; missing content is not.
+     */
+    const failsafe = window.setTimeout(revealAll, 1200);
+
     return () => {
+      window.clearTimeout(failsafe);
       observer.disconnect();
       mutations.disconnect();
     };
