@@ -15,6 +15,7 @@ export const en = {
     products: "Products",
     services: "Services",
     ezLip: "EZ Lip",
+    build: "Build Studio",
     articles: "Articles",
     about: "About",
     contact: "Contact",
@@ -252,6 +253,10 @@ export const en = {
     articlesTitle: "Know before you spend",
     articlesLede:
       "Honest guides to what things cost, how long they last, and which upgrades are worth your money in Sri Lankan conditions.",
+    gallery: "Recent work",
+    galleryTitle: "Straight from the workshop floor",
+    galleryLede: "A sample of the kind of work that comes through Dehiwala — carbon, kits, lighting and lettering.",
+    buildCta: "Build your car",
     visitTitle: "71 Sri Saranankara Road, Dehiwala.",
     visitLede:
       "Walk in for quick jobs — mirror caps, wipers, tyre lettering. Book ahead for anything that takes the car for a day.",

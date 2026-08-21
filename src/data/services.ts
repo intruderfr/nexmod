@@ -314,6 +314,114 @@ export const services: Service[] = [
   },
 
   {
+    slug: "body-kit-fitting",
+    name: "Body Kit Fitting",
+    tagline: "Dry-fitted complete, gapped, then painted as a set.",
+    category: "styling",
+    fromPrice: 68500,
+    priceNote: "Three-piece lip kit from Rs. 68,500. Full aero kit from Rs. 185,000. Quoted per vehicle.",
+    duration: "1 day to 1 week depending on kit",
+    icon: "bodykit",
+    featured: true,
+    body: [
+      "We supply and fit three-piece lip kits, full aero kits, wide-body arch sets and OEM-plus conversions. A body kit is the biggest visual change you can make to a car, and it is also the job where fitting quality is most visible for the rest of the car's life.",
+      "The single thing that separates a good kit fit from a bad one is that everything is dry-fitted complete before anything is permanent. A kit is not four parts in a box — it is four parts that have to agree with each other and with panels that were never designed to accept them. Gaps get set while they can still be set.",
+      "Then it is painted as a set, in one booth session, off the car. Painting parts individually as they arrive is how you end up with a front bumper that is very slightly a different colour from the skirts in daylight — and once you have seen it, you cannot stop seeing it.",
+      "On most cars some flange trimming is needed. That is normal for any aftermarket kit, and doing it carefully rather than forcing the part is most of what you are paying for.",
+      "Your original bumpers come back to you boxed and labelled. A body kit narrows your buyer pool when you sell, and being able to return the car to standard resolves most of that.",
+    ],
+    includes: [
+      "Complete dry fit before any bonding, drilling or paint",
+      "Panel gaps set against wings, bonnet and boot",
+      "Flange trimming where the kit requires it",
+      "Painted as a complete set in one booth session",
+      "New clips and fixings throughout on refit",
+      "Every drilled hole deburred, primed and butyl-sealed",
+      "Original parts boxed, labelled and returned",
+    ],
+    process: [
+      {
+        title: "Fitment check and honest quote",
+        detail:
+          "We confirm the kit actually suits your shell and tell you what adaptation it will need. If a kit is known to fit badly on your model, we will say so rather than take the booking and discover it with your car in pieces.",
+      },
+      {
+        title: "Strip and dry fit",
+        detail:
+          "Original bumpers and trim come off. The complete kit is offered up and held in position so every gap can be assessed together rather than one part at a time.",
+      },
+      {
+        title: "Gapping and trimming",
+        detail:
+          "Flanges are trimmed and mounting points adjusted until gaps are even against the wings, bonnet and boot. This is the slow part and the part that decides how the car looks forever.",
+      },
+      {
+        title: "Paint as a set",
+        detail:
+          "Parts go to the booth together and are sprayed in one session to your colour code, then cured properly. Painting as a set is the only reliable way to get colour match across every piece.",
+      },
+      {
+        title: "Refit and seal",
+        detail:
+          "Bonded with 3M automotive VHB where the design allows. Where fixings are required, every hole is deburred, primed and butyl-sealed before a stainless fixing goes in. New clips throughout.",
+      },
+      {
+        title: "Inspection and handover",
+        detail:
+          "We walk the car with you in daylight, check every gap and edge, hand over your original parts boxed, and go through the aftercare.",
+      },
+    ],
+    specs: [
+      { label: "Kit types", value: "Three-piece lip, full aero, wide-body arch, OEM-plus" },
+      { label: "Materials", value: "Flexible PU, ABS, fibre-reinforced polymer" },
+      { label: "Mounting", value: "3M VHB bonded; sealed stainless fixings where required" },
+      { label: "Paint", value: "Colour code or blend-matched, sprayed as a set" },
+      { label: "Timeline", value: "Lip kit 1 day; full aero approx. 1 week" },
+      { label: "Original parts", value: "Boxed, labelled and returned to you" },
+    ],
+    faqs: [
+      {
+        q: "Will a body kit hurt my resale value?",
+        a: "A full aftermarket kit narrows your buyer pool — that is simply true, and anyone who tells you otherwise is selling. It matters less than people fear if the work is reversible and the original parts exist, which is why we box and label them. An OEM-plus conversion is the exception: it generally helps, because the car reads as a higher factory grade.",
+      },
+      {
+        q: "Do I need to tell my insurer?",
+        a: "Yes, and this is not optional. A body kit is a material modification. Most Sri Lankan insurers accept it with an adjusted premium; not declaring it can void a claim entirely. Do this before you book, not after.",
+      },
+      {
+        q: "Why does trimming take so long?",
+        a: "Because aftermarket kits are moulded to a tolerance and factory panels vary between cars. Achieving even gaps means removing material a little at a time and re-offering the part repeatedly. Forcing a part into place instead is faster, and you can see the result from across a car park.",
+      },
+      {
+        q: "Can you fit a kit I bought myself?",
+        a: "Usually yes, and we will quote fitting only. We will inspect it first and tell you honestly if the moulding quality means it will never gap well — better you hear that before we start than after.",
+      },
+      {
+        q: "What about ground clearance?",
+        a: "A lip kit drops the front around 40mm. That is manageable with care on Colombo ramps because we use flexible PU on the contact runs. If you use very steep basement ramps daily, tell us and we will steer you to a shallower profile.",
+      },
+    ],
+    suitableFor: [
+      "Cars where you want a complete visual change, not an accent",
+      "Three-piece lip kits as a first, reversible step",
+      "OEM-plus conversions where resale matters",
+      "Wide-body builds with a matched wheel package",
+      "Correcting a previously badly fitted kit",
+    ],
+    aftercare: [
+      "Do not wash for 24 hours after a bonded fit, or 7 days after fresh paint",
+      "Avoid pressure-washing directly into a bond line or panel gap",
+      "Approach ramps slowly and at an angle",
+      "Wax fresh paint only after 30 days, once it has fully cured",
+      "Bring it in if a gap opens or an edge lifts — early re-bonding is quick",
+    ],
+    warranty: "12 months on fitting, bond integrity, sealing and paint adhesion",
+    relatedProducts: ["three-piece-lip-kit", "full-aero-body-kit", "wide-body-arch-kit", "oem-plus-conversion"],
+    relatedServices: ["spoiler-body-kit-fitting", "carbon-fibre-wrapping", "detailing-protection"],
+    keywords: ["body kit fitting Sri Lanka", "body kit installation Colombo", "wide body Sri Lanka", "aero kit fitting Dehiwala", "bumper conversion Sri Lanka"],
+  },
+
+  {
     slug: "tyre-lettering",
     name: "Tyre Lettering & Sidewall Graphics",
     tagline: "TyreDeckz rubber lettering — flexes with the tyre instead of cracking off it.",

@@ -56,6 +56,25 @@ export const categories: Category[] = [
     ],
   },
   {
+    slug: "body-kits",
+    name: "Body Kits",
+    heading: "Full Body Kits & Wide-Body",
+    tagline: "Complete kits, fitted and finished as one piece of work.",
+    description: [
+      "A body kit is the biggest visual change you can make to a car, and the one where fitting quality shows most. A kit is not four parts in a box — it is four parts that have to line up with each other and with panels that were never designed to accept them.",
+      "We supply and fit three-piece lip kits, full aero kits, wide-body arch sets and OEM-plus conversions. Every kit is dry-fitted complete before anything is bonded or painted, so panel gaps are corrected while they can still be corrected. Then it is painted as a set, not part by part, which is the only way the colour matches across all of it.",
+    ],
+    icon: "bodykit",
+    featured: true,
+    keywords: [
+      "body kit Sri Lanka",
+      "full body kit price Sri Lanka",
+      "wide body kit Colombo",
+      "aero kit Sri Lanka",
+      "body kit fitting Dehiwala",
+    ],
+  },
+  {
     slug: "tyre-stickers",
     name: "Tyre Stickers",
     heading: "TyreDeckz Tyre Stickers & Decals",

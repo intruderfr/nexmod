@@ -18,6 +18,7 @@ export const ta: Dictionary = {
     products: "பொருட்கள்",
     services: "சேவைகள்",
     ezLip: "EZ Lip",
+    build: "Build Studio",
     articles: "கட்டுரைகள்",
     about: "எங்களைப் பற்றி",
     contact: "தொடர்பு",
@@ -266,6 +267,10 @@ export const ta: Dictionary = {
     articlesTitle: "செலவழிப்பதற்கு முன் அறிந்துகொள்ளுங்கள்",
     articlesLede:
       "பொருட்களின் விலை, அவை எவ்வளவு காலம் நீடிக்கும், இலங்கைச் சூழலில் எந்த மேம்பாடுகள் உங்கள் பணத்திற்கு மதிப்புள்ளவை என்பது பற்றிய நேர்மையான வழிகாட்டிகள்.",
+    gallery: "சமீபத்திய வேலைகள்",
+    galleryTitle: "பணிமனையிலிருந்து நேரடியாக",
+    galleryLede: "தெஹிவளைக்கு வரும் வேலைகளின் மாதிரி — carbon, kits, lighting மற்றும் lettering.",
+    buildCta: "உங்கள் வாகனத்தை உருவாக்குங்கள்",
     visitTitle: "71 ஸ்ரீ சரணங்கர வீதி, தெஹிவளை.",
     visitLede:
       "சிறிய வேலைகளுக்கு நேரடியாக வாருங்கள் — mirror caps, wipers, tyre lettering. ஒரு நாள் ஆகும் வேலைகளுக்கு முன்கூட்டியே முன்பதிவு செய்யுங்கள்.",

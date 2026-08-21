@@ -29,6 +29,7 @@ export function Header() {
     { label: dict.nav.products, href: "/products", mega: "products" as const },
     { label: dict.nav.services, href: "/services", mega: "services" as const },
     { label: dict.nav.ezLip, href: "/ez-lip" },
+    { label: dict.nav.build, href: "/build" },
     { label: dict.nav.articles, href: "/articles" },
     { label: dict.nav.about, href: "/about" },
     { label: dict.nav.contact, href: "/contact" },

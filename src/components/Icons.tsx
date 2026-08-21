@@ -213,6 +213,15 @@ export const IconEssentials = (p: IconProps) => (
   <Base {...p}><path d="M4 19 15 8" /><path d="M13 4h7v7" /><path d="M20 4 9 15" /><circle cx="5" cy="19" r="1.6" /></Base>
 );
 
+export const IconBodyKit = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M3 14.5h18M5 14.5V12l2.2-4.2A2 2 0 0 1 9 6.7h6a2 2 0 0 1 1.8 1.1L19 12v2.5" />
+    <path d="M2 18h4M18 18h4" strokeWidth={1.3} />
+    <circle cx="7.5" cy="16.5" r="1.6" />
+    <circle cx="16.5" cy="16.5" r="1.6" />
+  </Base>
+);
+
 export const IconTint = (p: IconProps) => (
   <Base {...p}><path d="M12 3s6 6.4 6 10.4A6 6 0 0 1 6 13.4C6 9.4 12 3 12 3Z" /><path d="M12 8v9" strokeWidth={1.1} /></Base>
 );
@@ -244,6 +253,7 @@ export const iconMap: Record<string, (p: IconProps) => React.ReactElement> = {
   interior: IconInterior,
   essentials: IconEssentials,
   tint: IconTint,
+  bodykit: IconBodyKit,
   decal: IconDecal,
   deaden: IconDeaden,
   detail: IconDetail,

@@ -19,6 +19,7 @@ export const si: Dictionary = {
     products: "භාණ්ඩ",
     services: "සේවා",
     ezLip: "EZ Lip",
+    build: "Build Studio",
     articles: "ලිපි",
     about: "අප ගැන",
     contact: "සම්බන්ධ වන්න",
@@ -265,6 +266,10 @@ export const si: Dictionary = {
     articlesTitle: "වියදම් කිරීමට පෙර දැනගන්න",
     articlesLede:
       "දේවල් වල මිල, ඒවා කොපමණ කල් පවතී ද, සහ ශ්‍රී ලාංකික තත්ත්වයන් තුළ කුමන දියුණු කිරීම් ඔබේ මුදලට වටී ද යන්න පිළිබඳ අවංක මාර්ගෝපදේශ.",
+    gallery: "මෑත වැඩ",
+    galleryTitle: "වැඩපොළෙන් කෙලින්ම",
+    galleryLede: "දෙහිවලට එන වැඩ වර්ගයේ නියැදියක් — carbon, kits, lighting සහ lettering.",
+    buildCta: "ඔබේ වාහනය සකසන්න",
     visitTitle: "71 ශ්‍රී සරණංකර පාර, දෙහිවල.",
     visitLede:
       "කුඩා වැඩ සඳහා කෙලින්ම එන්න — mirror caps, wipers, tyre lettering. දිනක් ගතවන වැඩ සඳහා කලින් වෙන් කරන්න.",

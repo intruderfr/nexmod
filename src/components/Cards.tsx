@@ -14,7 +14,14 @@ import type { Article, Product, Service } from "@/data/types";
 import { formatDateShort } from "@/lib/content";
 import { priceRange } from "@/data/products";
 import { CategoryIcon, IconArrowRight, IconClock, IconTool } from "./Icons";
+import { Photo } from "./Photo";
 import { Visual } from "./Visual";
+import {
+  articleImage,
+  categoryImage,
+  productImage,
+  serviceImage,
+} from "@/data/imagery";
 
 /* ------------------------------------------------------------------ Product */
 
@@ -24,16 +31,27 @@ export function ProductCard({ product }: { product: Product }) {
   const category = getCategory(product.category);
   const range = priceRange(product);
   const hasRange = range.min !== range.max;
+  const photo = productImage(product.slug, product.category);
 
   return (
     <article className="surface surface-hover overflow-hidden flex flex-col group">
-      <Link href={`/products/${product.slug}`} className="block relative">
-        <Visual
-          variant={product.category}
-          icon={category?.icon ?? "tool"}
-          label={category ? categoryName(category.slug, locale, category.name) : undefined}
-          ratio="wide"
-        />
+      <Link href={`/products/${product.slug}`} className="block relative overflow-hidden">
+        {photo ? (
+          <Photo
+            image={photo}
+            ratio="wide"
+            zoom
+            scrim="soft"
+            sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
+          />
+        ) : (
+          <Visual
+            variant={product.category}
+            icon={category?.icon ?? "tool"}
+            label={category ? categoryName(category.slug, locale, category.name) : undefined}
+            ratio="wide"
+          />
+        )}
         {product.badges && product.badges.length > 0 && (
           <div className="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5 max-w-[calc(100%-1.25rem)]">
             {product.badges.slice(0, 2).map((b) => (
@@ -102,11 +120,22 @@ export function ProductCard({ product }: { product: Product }) {
 export function ServiceCard({ service }: { service: Service }) {
   const locale = useLocale();
   const dict = useDictionary();
+  const photo = serviceImage(service.slug);
 
   return (
     <article className="surface surface-hover overflow-hidden flex flex-col group">
-      <Link href={`/services/${service.slug}`} className="block">
-        <Visual variant={service.category} icon={service.icon} ratio="wide" />
+      <Link href={`/services/${service.slug}`} className="block overflow-hidden">
+        {photo ? (
+          <Photo
+            image={photo}
+            ratio="wide"
+            zoom
+            scrim="soft"
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          />
+        ) : (
+          <Visual variant={service.category} icon={service.icon} ratio="wide" />
+        )}
       </Link>
 
       <div className="flex-1 flex flex-col p-5">
@@ -158,6 +187,7 @@ export function ArticleCard({
   featured?: boolean;
 }) {
   const dict = useDictionary();
+  const photo = articleImage(article.slug);
 
   const categoryIcon =
     article.category === "news"
@@ -176,15 +206,26 @@ export function ArticleCard({
     >
       <Link
         href={`/articles/${article.slug}`}
-        className={featured ? "block md:w-[46%] shrink-0" : "block"}
+        className={featured ? "block md:w-[46%] shrink-0 overflow-hidden" : "block overflow-hidden"}
       >
-        <Visual
-          variant={article.category === "news" ? "ez-lip" : "carbon-fibre"}
-          icon={categoryIcon}
-          label={article.category}
-          ratio={featured ? "wide" : "wide"}
-          className={featured ? "md:h-full" : ""}
-        />
+        {photo ? (
+          <Photo
+            image={photo}
+            ratio="wide"
+            zoom
+            scrim="soft"
+            className={featured ? "md:h-full md:aspect-auto" : ""}
+            sizes={featured ? "(max-width: 768px) 100vw, 46vw" : "(max-width: 640px) 100vw, 33vw"}
+          />
+        ) : (
+          <Visual
+            variant={article.category === "news" ? "ez-lip" : "carbon-fibre"}
+            icon={categoryIcon}
+            label={article.category}
+            ratio="wide"
+            className={featured ? "md:h-full" : ""}
+          />
+        )}
       </Link>
 
       <div className={`flex-1 flex flex-col p-5 ${featured ? "md:p-7 md:justify-center" : ""}`}>
@@ -242,13 +283,24 @@ export function CategoryCard({
   count: number;
 }) {
   const locale = useLocale();
+  const photo = categoryImage(slug);
 
   return (
     <Link
       href={`/categories/${slug}`}
       className="surface surface-hover overflow-hidden flex flex-col group"
     >
-      <Visual variant={slug} icon={icon} ratio="square" />
+      {photo ? (
+        <Photo
+          image={photo}
+          ratio="square"
+          zoom
+          scrim="bottom"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+        />
+      ) : (
+        <Visual variant={slug} icon={icon} ratio="square" />
+      )}
       <div className="p-4">
         <div className="flex items-center justify-between gap-2 mb-1">
           <h3 className="font-semibold text-[15px] group-hover:text-[var(--accent)] transition-colors">

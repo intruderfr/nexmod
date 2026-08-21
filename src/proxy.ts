@@ -44,6 +44,12 @@ function preferredLocale(request: NextRequest): string {
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Static assets are not localised. Without this, /images/hero-main-md.webp
+  // gets rewritten to /en/images/... and every photograph 404s.
+  if (PUBLIC_FILE.test(pathname) || pathname.startsWith("/images/")) {
+    return NextResponse.next();
+  }
+
   // Anything already carrying a valid locale passes straight through.
   const first = pathname.split("/").filter(Boolean)[0];
   if (first && isLocale(first)) return NextResponse.next();
@@ -66,7 +72,7 @@ export const config = {
      *    manifest, icons, OG images)
      *  - any request with a file extension
      */
-    "/((?!api|_next/static|_next/image|sitemap.xml|robots.txt|feed.xml|manifest.webmanifest|icon|apple-icon|opengraph-image|favicon.ico).*)",
+    "/((?!api|_next/static|_next/image|images|sitemap.xml|robots.txt|feed.xml|manifest.webmanifest|icon|apple-icon|opengraph-image|favicon.ico).*)",
   ],
 };
 

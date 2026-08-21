@@ -1,6 +1,8 @@
 import { LocaleLink as Link } from "@/i18n/client";
 import { ArticleCard, CategoryCard, ProductCard, ServiceCard } from "@/components/Cards";
 import { HeroAtmosphere } from "@/components/HeroAtmosphere";
+import { Photo } from "@/components/Photo";
+import { galleryImages } from "@/data/imagery";
 import {
   IconArrowRight,
   IconCheck,
@@ -64,16 +66,24 @@ export default async function HomePage({
     <>
       {/* ============================================================== HERO */}
       <section className="relative isolate overflow-hidden border-b border-[var(--border)]">
-        <HeroAtmosphere />
-        <div className="absolute inset-0 grid-bg opacity-60" aria-hidden="true" />
-        <div className="absolute inset-0 carbon-texture opacity-30" aria-hidden="true" />
-        {/* Grounds the type against the light field */}
+        {/* Photograph first, then the light field over it, then a gradient that
+            keeps the left-hand column readable at every viewport width. */}
+        <Photo
+          image="hero-main"
+          ratio="free"
+          priority
+          alt=""
+          sizes="100vw"
+          className="absolute inset-0 h-full w-full"
+        />
+        <HeroAtmosphere className="mix-blend-screen opacity-70" />
+        <div className="absolute inset-0 grid-bg opacity-30" aria-hidden="true" />
         <div
           className="absolute inset-0"
           aria-hidden="true"
           style={{
             background:
-              "linear-gradient(to right, var(--bg) 0%, color-mix(in srgb, var(--bg) 72%, transparent) 44%, transparent 78%)",
+              "linear-gradient(100deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 92%, transparent) 34%, color-mix(in srgb, var(--bg) 55%, transparent) 60%, color-mix(in srgb, var(--bg) 20%, transparent) 100%)",
           }}
         />
 
@@ -183,13 +193,20 @@ export default async function HomePage({
 
       {/* =========================================================== EZ LIP */}
       <section className="relative isolate overflow-hidden border-y border-[var(--border)] bg-[var(--bg-subtle)]">
-        <div className="absolute inset-0 carbon-texture opacity-60" aria-hidden="true" />
+        <Photo
+          image="cat-ez-lip"
+          ratio="free"
+          alt=""
+          sizes="100vw"
+          className="absolute inset-0 h-full w-full opacity-[0.16]"
+        />
+        <div className="absolute inset-0 carbon-texture opacity-50" aria-hidden="true" />
         <div
           className="absolute inset-0"
           aria-hidden="true"
           style={{
             background:
-              "radial-gradient(60% 80% at 15% 50%, var(--accent-subtle), transparent 70%)",
+              "radial-gradient(70% 90% at 12% 50%, color-mix(in srgb, var(--bg-subtle) 92%, transparent), transparent 72%)",
           }}
         />
 
@@ -279,6 +296,40 @@ export default async function HomePage({
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+
+      {/* ========================================================== GALLERY */}
+      <section className="border-b border-[var(--border)]">
+        <div className="container-nex pt-16 md:pt-20">
+          <SectionHead
+            eyebrow={dict.home.gallery}
+            title={dict.home.galleryTitle}
+            lede={dict.home.galleryLede}
+            action={{ href: "/build", label: dict.home.buildCta }}
+          />
+        </div>
+
+        {/* Full-bleed mosaic — the widest thing on the page, so it reads as a
+            change of pace rather than another card grid. */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-px bg-[var(--border)] border-y border-[var(--border)]">
+          {galleryImages.map((key, i) => (
+            <div
+              key={key}
+              className={`group relative overflow-hidden bg-[var(--bg)] ${
+                i === 0 || i === 7 ? "col-span-2 row-span-2" : ""
+              }`}
+            >
+              <Photo
+                image={key}
+                ratio={i === 0 || i === 7 ? "square" : "square"}
+                zoom
+                scrim="soft"
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 17vw"
+              />
+            </div>
+          ))}
         </div>
       </section>
 
