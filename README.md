@@ -4,6 +4,8 @@ Production website for **Nexmod**, a premium car accessories studio at 71 Sri Sa
 
 Built with Next.js 16 (App Router), React 19, TypeScript and Tailwind CSS v4.
 
+**Trilingual** — English, Sinhala and Tamil. 346 statically prerendered pages.
+
 ---
 
 ## Quick start
@@ -48,7 +50,14 @@ Search the codebase for `PLACEHOLDER` to find every one of these.
 
 ```
 src/
-  app/                    Routes (App Router)
+  app/
+    [locale]/             ALL pages live here — /en, /si, /ta
+  i18n/                   Locale config, dictionaries, content translations
+  proxy.ts                Locale detection and redirect
+```
+
+```
+src/app/[locale]/         Routes (App Router)
     api/bookings/         Booking endpoint — validates + logs (integration seam)
     api/orders/           Order endpoint — validates + logs (integration seam)
     articles/             Blog: index, [slug], category/, tag/
@@ -78,6 +87,50 @@ src/
 ```
 
 **Content is data, not markup.** Everything the site says lives in `src/data/`. To change a price, add a product, or write an article, you edit a typed TypeScript file — no CMS, no database, no markup to break.
+
+---
+
+## Languages
+
+Three locales, all prefixed: `/en`, `/si`, `/ta`. An unprefixed request is
+redirected by `src/proxy.ts`, which prefers a stored cookie, then
+`Accept-Language`, then English. An explicit URL always wins, so shared links
+behave.
+
+`app/[locale]/layout.tsx` is the root layout — there is deliberately no
+`app/layout.tsx`. That is what lets `<html lang>` be set per locale while every
+page stays statically prerendered.
+
+Internal links go through `LocaleLink` (`src/i18n/client.tsx`), which reads the
+locale from `usePathname()`. That works during server rendering, so the HTML a
+crawler receives already carries the right prefix.
+
+### What is translated
+
+| Layer | Status |
+|---|---|
+| UI chrome, nav, commerce, filters, forms | **Translated** — `src/i18n/dictionaries/` |
+| Category and service names + taglines | **Translated** — `src/i18n/content.ts` |
+| Product taglines | **Translated** — `src/i18n/content.ts` |
+| Product **names** | English by design — they are identifiers |
+| Technical terms (carbon fibre, EZ Lip, LED, KOKO) | English by design — how customers actually speak |
+| Long-form article bodies | English — see below |
+
+Article bodies stay English deliberately. They are technical documents, and a
+machine-grade translation would read worse than the English does. When the owner
+has them professionally translated, the strings go in `src/i18n/content.ts` —
+one file, no application code to touch.
+
+Adding a key to `dictionaries/en.ts` makes it **required** in `si.ts` and
+`ta.ts`, so a missing translation is a TypeScript error rather than a blank
+space on the site.
+
+### Typography
+
+Sinhala and Tamil have taller ascenders and deeper descenders than Latin, and
+the Latin display face is tracked at `-0.028em` which damages Indic letterforms.
+Each locale gets Noto Sans Sinhala/Tamil, neutral tracking, looser line-height,
+and drops the uppercase transform on labels where it carries no meaning.
 
 ---
 
@@ -141,14 +194,15 @@ The highest-impact items on the checklist, in order:
 - **JSON-LD** — a connected `@graph` of Organization → LocalBusiness → WebSite in the root layout, plus per-page `Product` (with `AggregateOffer`), `Service` (with `OfferCatalog`), `Article`, `BreadcrumbList`, `FAQPage`, `CollectionPage`, `ItemList`, `ContactPage`
 - **LocalBusiness** typed as `AutoPartsStore` + `AutoBodyShop` with geo, opening hours (including the Friday closure), `AggregateRating` 4.5/94, and `areaServed`
 - **Open Graph images** — generated per page at the edge via `next/og`; products show price, services show duration, articles show read time
-- **Sitemap** — auto-generated from data, daily revalidation, priority-weighted
+- **Sitemap** — 228 URLs with 912 `xhtml:link` alternates, daily revalidation, priority-weighted
+- **hreflang** — reciprocal set plus `x-default` on every page and in the sitemap
 - **RSS** — RSS 2.0 at `/feed.xml`
 - **Breadcrumbs** — visible nav and JSON-LD emitted from one source so they cannot drift
 - **Internal linking** — products ↔ categories ↔ services ↔ articles are cross-linked in every direction; tag and category archives create additional crawl surface
 - **Geo meta tags** — `geo.region`, `geo.position`, `ICBM` for local search
 - **Security headers** — HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy in `next.config.ts`
 
-197 pages statically prerendered.
+346 pages statically prerendered across three locales.
 
 ---
 
@@ -235,4 +289,5 @@ Deploys to Vercel with zero configuration. Set `metadataBase` correctly by keepi
 - [ ] Connect a payment gateway, or confirm COD-only at launch
 - [ ] Wire booking notifications to email
 - [ ] Add real photography
+- [ ] Have a native speaker review the Sinhala and Tamil strings in `src/i18n/`
 - [ ] Test a live order and a live booking end to end
