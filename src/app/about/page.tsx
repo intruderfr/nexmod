@@ -28,7 +28,7 @@ export default function AboutPage() {
       </div>
 
       {/* Hero */}
-      <section className="container-nex pb-12 border-b border-[var(--border)]">
+      <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <div className="max-w-3xl">
           <p className="eyebrow mb-2.5">About</p>
           <h1 className="text-4xl md:text-5xl mb-6 leading-[1.08]">
@@ -44,7 +44,7 @@ export default function AboutPage() {
 
       {/* Numbers */}
       <section className="border-b border-[var(--border)]">
-        <div className="container-nex py-10">
+        <div className="container-nex py-12 md:py-16">
           <dl className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { value: site.rating.value.toString(), label: `From ${site.rating.count} Google reviews`, star: true },
@@ -70,7 +70,7 @@ export default function AboutPage() {
       </section>
 
       {/* Story */}
-      <section className="container-nex py-16">
+      <section className="container-nex py-16 md:py-20">
         <div className="grid lg:grid-cols-[1fr_360px] gap-12">
           <div className="max-w-2xl">
             <div className="prose-nex">

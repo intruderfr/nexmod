@@ -70,7 +70,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       </div>
 
       {/* ======================================================== HERO */}
-      <section className="container-nex pb-12">
+      <section className="container-nex pb-12 md:pb-16">
         <div className="grid lg:grid-cols-[1fr_400px] gap-10">
           <div>
             <div className="flex items-center gap-3 mb-5">
@@ -159,7 +159,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
       {/* =================================================== INCLUDES */}
       <section className="border-y border-[var(--border)] bg-[var(--bg-subtle)]">
-        <div className="container-nex py-14">
+        <div className="container-nex py-16 md:py-20">
           <div className="grid lg:grid-cols-[1fr_1fr] gap-12">
             <div>
               <p className="eyebrow mb-3">Included as standard</p>
@@ -202,7 +202,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       </section>
 
       {/* ==================================================== PROCESS */}
-      <section className="container-nex py-16">
+      <section className="container-nex py-16 md:py-20">
         <div className="max-w-2xl mb-10">
           <p className="eyebrow mb-3">The process</p>
           <h2 className="text-3xl md:text-4xl mb-3">Step by step, start to finish</h2>
@@ -230,7 +230,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       {/* ====================================================== SPECS */}
       {service.specs && service.specs.length > 0 && (
         <section className="border-y border-[var(--border)] bg-[var(--bg-subtle)]">
-          <div className="container-nex py-14">
+          <div className="container-nex py-16 md:py-20">
             <h2 className="text-2xl md:text-3xl mb-7">Technical detail</h2>
             <dl className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-5 max-w-5xl">
               {service.specs.map((spec) => (
@@ -248,7 +248,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
       {/* =================================================== AFTERCARE */}
       {service.aftercare && service.aftercare.length > 0 && (
-        <section className="container-nex py-14">
+        <section className="container-nex py-16 md:py-20">
           <div className="grid lg:grid-cols-[1fr_1.4fr] gap-10">
             <div>
               <p className="eyebrow mb-3">Looking after it</p>
@@ -274,7 +274,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
       {/* ======================================================== FAQ */}
       <section className="border-t border-[var(--border)]">
-        <div className="container-nex py-14">
+        <div className="container-nex py-16 md:py-20">
           <div className="max-w-3xl">
             <p className="eyebrow mb-3">Questions</p>
             <h2 className="text-2xl md:text-3xl mb-7">
@@ -288,7 +288,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       {/* =================================================== PRODUCTS */}
       {related.length > 0 && (
         <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
-          <div className="container-nex py-14">
+          <div className="container-nex py-16 md:py-20">
             <h2 className="text-2xl md:text-3xl mb-2">Products we use for this</h2>
             <p className="text-[var(--fg-muted)] mb-7">
               Buy the part with fitting included, or just the part for islandwide delivery.
@@ -305,7 +305,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       {/* ============================================ OTHER SERVICES */}
       {alsoServices.length > 0 && (
         <section className="border-t border-[var(--border)]">
-          <div className="container-nex py-14">
+          <div className="container-nex py-16 md:py-20">
             <h2 className="text-2xl md:text-3xl mb-7">Often done at the same time</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {alsoServices.map((s) => (

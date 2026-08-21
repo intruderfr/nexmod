@@ -56,7 +56,7 @@ export default function StudioPage() {
       </section>
 
       {/* How scheduling works */}
-      <section className="container-nex py-10 border-b border-[var(--border)]">
+      <section className="container-nex py-12 md:py-16 border-b border-[var(--border)]">
         <div className="surface p-6 max-w-3xl">
           <h2 className="flex items-center gap-2.5 text-xl mb-3">
             <IconCalendar width={20} height={20} className="text-[var(--accent)]" />
@@ -87,7 +87,7 @@ export default function StudioPage() {
 
       {/* Scheduled queue */}
       {queued.length > 0 && (
-        <section className="container-nex py-10 border-b border-[var(--border)]">
+        <section className="container-nex py-12 md:py-16 border-b border-[var(--border)]">
           <h2 className="text-2xl md:text-3xl mb-6">Publishing queue</h2>
           <div className="surface overflow-hidden">
             <div className="scroll-x">
@@ -128,7 +128,7 @@ export default function StudioPage() {
       )}
 
       {/* Weekly rhythm */}
-      <section className="container-nex py-10 border-b border-[var(--border)]">
+      <section className="container-nex py-12 md:py-16 border-b border-[var(--border)]">
         <div className="max-w-2xl mb-7">
           <h2 className="text-2xl md:text-3xl mb-3">Weekly posting rhythm</h2>
           <p className="text-[var(--fg-muted)] leading-relaxed">
@@ -191,7 +191,7 @@ export default function StudioPage() {
       </section>
 
       {/* Checklist */}
-      <section className="container-nex py-10 border-b border-[var(--border)]">
+      <section className="container-nex py-12 md:py-16 border-b border-[var(--border)]">
         <div className="max-w-2xl mb-7">
           <h2 className="text-2xl md:text-3xl mb-3">Local SEO checklist</h2>
           <p className="text-[var(--fg-muted)] leading-relaxed">
@@ -236,7 +236,7 @@ export default function StudioPage() {
       </section>
 
       {/* Keyword map */}
-      <section className="container-nex py-10 border-b border-[var(--border)]">
+      <section className="container-nex py-12 md:py-16 border-b border-[var(--border)]">
         <div className="max-w-2xl mb-7">
           <h2 className="flex items-center gap-2.5 text-2xl md:text-3xl mb-3">
             <IconSearch width={22} height={22} className="text-[var(--accent)]" />
@@ -302,7 +302,7 @@ export default function StudioPage() {
       </section>
 
       {/* Pipeline */}
-      <section className="container-nex py-10">
+      <section className="container-nex py-12 md:py-16">
         <div className="max-w-2xl mb-7">
           <h2 className="text-2xl md:text-3xl mb-3">Article pipeline</h2>
           <p className="text-[var(--fg-muted)] leading-relaxed">

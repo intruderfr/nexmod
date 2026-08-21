@@ -152,7 +152,7 @@ export default function FaqPage() {
         <Breadcrumbs trail={[{ name: "FAQ", path: "/faq" }]} />
       </div>
 
-      <section className="container-nex pb-10 border-b border-[var(--border)]">
+      <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <p className="eyebrow mb-2.5">FAQ</p>
         <h1 className="text-4xl md:text-5xl mb-4 max-w-2xl">Questions, answered properly.</h1>
         <p className="text-lg text-[var(--fg-muted)] leading-relaxed max-w-2xl">
@@ -161,7 +161,7 @@ export default function FaqPage() {
         </p>
       </section>
 
-      <section className="container-nex py-12">
+      <section className="container-nex py-12 md:py-16">
         <div className="grid lg:grid-cols-[220px_1fr] gap-10">
           {/* Jump nav */}
           <nav aria-label="FAQ sections" className="hidden lg:block">

@@ -55,7 +55,7 @@ export default function ArticlesPage() {
         <Breadcrumbs trail={[{ name: "Articles", path: "/articles" }]} />
       </div>
 
-      <section className="container-nex pb-10 border-b border-[var(--border)]">
+      <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <p className="eyebrow mb-2.5">Articles &amp; news</p>
         <h1 className="text-4xl md:text-5xl mb-4 max-w-2xl">Know before you spend.</h1>
         <p className="text-lg text-[var(--fg-muted)] leading-relaxed max-w-2xl mb-6">
@@ -90,7 +90,7 @@ export default function ArticlesPage() {
         </div>
       </section>
 
-      <section className="container-nex py-10">
+      <section className="container-nex py-12 md:py-16">
         {lead && (
           <div className="mb-8">
             <ArticleCard article={lead} featured />
@@ -107,7 +107,7 @@ export default function ArticlesPage() {
       {/* Tag cloud — internal linking surface for SEO */}
       {tags.length > 0 && (
         <section className="border-t border-[var(--border)]">
-          <div className="container-nex py-12">
+          <div className="container-nex py-12 md:py-16">
             <h2 className="text-[11px] font-bold uppercase tracking-[0.13em] text-[var(--fg-subtle)] mb-4">
               Browse by topic
             </h2>

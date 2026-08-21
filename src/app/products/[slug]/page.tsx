@@ -63,7 +63,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </div>
 
       {/* =============================================== BUY SECTION */}
-      <section className="container-nex pb-14">
+      <section className="container-nex pb-16 md:pb-20">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Visual column */}
           <div>
@@ -123,7 +123,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       {/* ================================================= DESCRIPTION */}
       <section className="border-t border-[var(--border)]">
-        <div className="container-nex py-14">
+        <div className="container-nex py-16 md:py-20">
           <div className="grid lg:grid-cols-[1fr_360px] gap-12">
             <div className="max-w-2xl">
               <p className="eyebrow mb-3">About this product</p>
@@ -204,7 +204,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {/* ==================================================== SERVICE */}
       {service && (
         <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
-          <div className="container-nex py-14">
+          <div className="container-nex py-16 md:py-20">
             <div className="surface p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6">
               <span className="shrink-0 grid place-items-center w-14 h-14 rounded-lg bg-[var(--accent-subtle)] text-[var(--accent)]">
                 <IconTool width={26} height={26} />
@@ -229,7 +229,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {/* ======================================================== FAQ */}
       {product.faqs && product.faqs.length > 0 && (
         <section className="border-t border-[var(--border)]">
-          <div className="container-nex py-14">
+          <div className="container-nex py-16 md:py-20">
             <div className="max-w-3xl">
               <p className="eyebrow mb-3">Questions</p>
               <h2 className="text-2xl md:text-3xl mb-7">
@@ -244,7 +244,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {/* ==================================================== RELATED */}
       {related.length > 0 && (
         <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
-          <div className="container-nex py-14">
+          <div className="container-nex py-16 md:py-20">
             <h2 className="text-2xl md:text-3xl mb-7">Goes well with this</h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
               {related.map((p) => (

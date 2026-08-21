@@ -104,9 +104,12 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Proof strip, seated on the hairline at the base of the hero */}
+          {/* Proof strip, seated on the hairline at the base of the hero.
+              A 1px gap over a border-coloured ground draws the dividers, so
+              every cell keeps identical padding on all four sides — no text
+              ever sits flush against a rule. */}
           <div
-            className="grid grid-cols-2 lg:grid-cols-4 border-t border-[var(--border)] animate-fade-in"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--border)] border-t border-[var(--border)] animate-fade-in"
             style={{ animationDelay: "320ms" }}
           >
             {[
@@ -117,16 +120,15 @@ export default function HomePage() {
               },
               { Icon: IconShield, value: "Official", label: "EZ Lip Sri Lanka agent" },
               { Icon: IconTool, value: "In-house", label: "Nothing subcontracted" },
-              { Icon: IconTruck, value: "Islandwide", label: `Free over ${lkr(site.delivery.freeThreshold)}` },
-            ].map(({ Icon, value, label }, i) => (
-              <div
-                key={label}
-                className={`py-6 pr-5 ${
-                  i < 3 ? "lg:border-r border-[var(--border)]" : ""
-                } ${i % 2 === 0 ? "border-r lg:border-r" : ""} ${i < 2 ? "border-b lg:border-b-0" : ""}`}
-              >
-                <Icon width={16} height={16} className="text-[var(--accent)] mb-3" />
-                <p className="font-[family-name:var(--font-display)] font-bold text-lg leading-none mb-1.5">
+              {
+                Icon: IconTruck,
+                value: "Islandwide",
+                label: `Free over ${lkr(site.delivery.freeThreshold)}`,
+              },
+            ].map(({ Icon, value, label }) => (
+              <div key={label} className="bg-[var(--bg)] px-5 py-7 first:pl-0">
+                <Icon width={16} height={16} className="text-[var(--accent)] mb-3.5" />
+                <p className="font-[family-name:var(--font-display)] font-bold text-lg leading-none mb-2">
                   {value}
                 </p>
                 <p className="text-[12.5px] text-[var(--fg-subtle)] leading-snug">{label}</p>
@@ -137,7 +139,7 @@ export default function HomePage() {
       </section>
 
       {/* ======================================================== CATEGORIES */}
-      <section className="container-nex py-20 md:py-28">
+      <section className="container-nex py-16 md:py-20">
         <SectionHead
           eyebrow="Shop"
           title="Browse by category"
@@ -174,7 +176,7 @@ export default function HomePage() {
           }}
         />
 
-        <div className="container-nex relative py-20 md:py-24">
+        <div className="container-nex relative py-16 md:py-20">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <div data-reveal>
               <p className="eyebrow mb-5">Exclusive to Nexmod</p>
@@ -229,7 +231,7 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================= SERVICES */}
-      <section className="container-nex py-20 md:py-28">
+      <section className="container-nex py-16 md:py-20">
         <SectionHead
           eyebrow="Workshop"
           title="Services, done properly"
@@ -248,7 +250,7 @@ export default function HomePage() {
 
       {/* ========================================================= PRODUCTS */}
       <section className="border-y border-[var(--border)] bg-[var(--bg-subtle)]">
-        <div className="container-nex py-20 md:py-28">
+        <div className="container-nex py-16 md:py-20">
           <SectionHead
             eyebrow="Best sellers"
             title="What people are fitting"
@@ -266,7 +268,7 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================== PROCESS */}
-      <section className="container-nex py-20 md:py-28">
+      <section className="container-nex py-16 md:py-20">
         <SectionHead
           eyebrow="How it works"
           title="From photo to fitted"
@@ -308,7 +310,7 @@ export default function HomePage() {
 
       {/* ========================================================= ARTICLES */}
       <section className="border-t border-[var(--border)]">
-        <div className="container-nex py-20 md:py-28">
+        <div className="container-nex py-16 md:py-20">
           <SectionHead
             eyebrow="Articles & news"
             title="Know before you spend"
@@ -335,7 +337,7 @@ export default function HomePage() {
 
       {/* ============================================================ VISIT */}
       <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
-        <div className="container-nex py-20 md:py-28">
+        <div className="container-nex py-16 md:py-20">
           <div className="grid lg:grid-cols-2 gap-14">
             <div data-reveal>
               <p className="eyebrow mb-5">Find us</p>

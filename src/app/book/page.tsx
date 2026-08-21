@@ -29,7 +29,7 @@ export default function BookPage() {
         <Breadcrumbs trail={[{ name: "Book a fitting", path: "/book" }]} />
       </div>
 
-      <section className="container-nex pb-12">
+      <section className="container-nex pb-12 md:pb-16">
         <div className="grid lg:grid-cols-[1fr_380px] gap-10">
           <div>
             <p className="eyebrow mb-2.5">Booking</p>

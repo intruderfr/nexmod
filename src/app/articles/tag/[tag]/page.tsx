@@ -45,7 +45,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
         />
       </div>
 
-      <section className="container-nex pb-10 border-b border-[var(--border)]">
+      <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <p className="eyebrow mb-2.5">Topic</p>
         <h1 className="text-4xl md:text-5xl mb-3 capitalize">{tag}</h1>
         <p className="text-lg text-[var(--fg-muted)]">
@@ -53,7 +53,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
         </p>
       </section>
 
-      <section className="container-nex py-10">
+      <section className="container-nex py-12 md:py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger">
           {items.map((a) => (
             <ArticleCard key={a.slug} article={a} />
@@ -63,7 +63,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
 
       {others.length > 0 && (
         <section className="border-t border-[var(--border)]">
-          <div className="container-nex py-12">
+          <div className="container-nex py-12 md:py-16">
             <h2 className="text-[11px] font-bold uppercase tracking-[0.13em] text-[var(--fg-subtle)] mb-4">
               Other topics
             </h2>

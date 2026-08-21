@@ -42,7 +42,7 @@ export default function ProductsPage() {
         <Breadcrumbs trail={[{ name: "Products", path: "/products" }]} />
       </div>
 
-      <section className="container-nex pb-10 border-b border-[var(--border)]">
+      <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <p className="eyebrow mb-2.5">Shop</p>
         <h1 className="text-4xl md:text-5xl mb-4 max-w-2xl">
           Every accessory, supplied and fitted.
@@ -62,7 +62,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      <section className="container-nex py-10">
+      <section className="container-nex py-12 md:py-16">
         <ProductBrowser products={products} categories={categories} fitments={allFitments()} />
       </section>
     </>

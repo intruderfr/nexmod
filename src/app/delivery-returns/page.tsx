@@ -23,7 +23,7 @@ export default function DeliveryReturnsPage() {
         <Breadcrumbs trail={[{ name: "Delivery & returns", path: "/delivery-returns" }]} />
       </div>
 
-      <section className="container-nex pb-10 border-b border-[var(--border)]">
+      <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <p className="eyebrow mb-2.5">Policy</p>
         <h1 className="text-4xl md:text-5xl mb-4">Delivery &amp; returns</h1>
         <p className="text-lg text-[var(--fg-muted)] leading-relaxed max-w-2xl">
@@ -31,7 +31,7 @@ export default function DeliveryReturnsPage() {
         </p>
       </section>
 
-      <section className="container-nex py-12">
+      <section className="container-nex py-12 md:py-16">
         <div className="max-w-3xl">
           {/* Delivery table */}
           <div className="surface p-6 mb-10">

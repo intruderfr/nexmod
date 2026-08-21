@@ -55,7 +55,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         />
       </div>
 
-      <section className="container-nex pb-10 border-b border-[var(--border)]">
+      <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <div className="flex items-start gap-4 mb-5">
           <span className="shrink-0 grid place-items-center w-12 h-12 rounded-lg bg-[var(--accent-subtle)] text-[var(--accent)]">
             <CategoryIcon name={category.icon} width={24} height={24} />
@@ -73,7 +73,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         </div>
       </section>
 
-      <section className="container-nex py-10">
+      <section className="container-nex py-12 md:py-16">
         <ProductBrowser
           products={items}
           categories={categories}
@@ -85,7 +85,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       {/* Related services */}
       {relatedServices.length > 0 && (
         <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
-          <div className="container-nex py-14">
+          <div className="container-nex py-16 md:py-20">
             <h2 className="text-2xl md:text-3xl mb-2">We fit all of this</h2>
             <p className="text-[var(--fg-muted)] mb-7 max-w-2xl leading-relaxed">
               Buying the part is half of it. Here is exactly how we install it, and the steps that
@@ -123,7 +123,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
 
       {/* Other categories */}
       <section className="border-t border-[var(--border)]">
-        <div className="container-nex py-12">
+        <div className="container-nex py-12 md:py-16">
           <h2 className="text-[11px] font-bold uppercase tracking-[0.13em] text-[var(--fg-subtle)] mb-4">
             Other categories
           </h2>

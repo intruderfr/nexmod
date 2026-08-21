@@ -18,7 +18,7 @@ export default function PrivacyPage() {
         <Breadcrumbs trail={[{ name: "Privacy", path: "/privacy" }]} />
       </div>
 
-      <section className="container-nex py-10">
+      <section className="container-nex py-12 md:py-16">
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-5xl mb-3">Privacy policy</h1>
           <p className="text-[var(--fg-subtle)] mb-10">Last updated: {updated}</p>

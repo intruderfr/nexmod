@@ -104,7 +104,7 @@ export default function EzLipPage() {
           }}
         />
 
-        <div className="container-nex relative py-14 md:py-20">
+        <div className="container-nex relative py-16 md:py-20">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--accent)] bg-[var(--accent-subtle)] mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
@@ -146,7 +146,7 @@ export default function EzLipPage() {
       </section>
 
       {/* Why flexible */}
-      <section className="container-nex py-16">
+      <section className="container-nex py-16 md:py-20">
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
             <p className="eyebrow mb-3">Why flexible wins here</p>
@@ -220,7 +220,7 @@ export default function EzLipPage() {
 
       {/* Agency benefits */}
       <section className="border-y border-[var(--border)] bg-[var(--bg-subtle)]">
-        <div className="container-nex py-14">
+        <div className="container-nex py-16 md:py-20">
           <div className="max-w-2xl mb-9">
             <p className="eyebrow mb-3">What the agency means</p>
             <h2 className="text-3xl md:text-4xl mb-3">Why buying genuine matters</h2>
@@ -266,7 +266,7 @@ export default function EzLipPage() {
       </section>
 
       {/* Products */}
-      <section className="container-nex py-16">
+      <section className="container-nex py-16 md:py-20">
         <div className="max-w-2xl mb-8">
           <p className="eyebrow mb-3">In stock</p>
           <h2 className="text-3xl md:text-4xl mb-3">Choose your profile</h2>
@@ -286,7 +286,7 @@ export default function EzLipPage() {
       {/* Process */}
       {service && (
         <section className="border-y border-[var(--border)] bg-[var(--bg-subtle)]">
-          <div className="container-nex py-14">
+          <div className="container-nex py-16 md:py-20">
             <div className="max-w-2xl mb-9">
               <p className="eyebrow mb-3">Fitting</p>
               <h2 className="text-3xl md:text-4xl mb-3">How we fit it</h2>
@@ -319,7 +319,7 @@ export default function EzLipPage() {
       )}
 
       {/* FAQ */}
-      <section className="container-nex py-16">
+      <section className="container-nex py-16 md:py-20">
         <div className="max-w-3xl">
           <p className="eyebrow mb-3">Questions</p>
           <h2 className="text-3xl md:text-4xl mb-8">EZ Lip, answered</h2>
@@ -329,7 +329,7 @@ export default function EzLipPage() {
 
       {/* CTA */}
       <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
-        <div className="container-nex py-14 text-center">
+        <div className="container-nex py-16 md:py-20 text-center">
           <h2 className="text-3xl md:text-4xl mb-3">Send us your bumper.</h2>
           <p className="text-[var(--fg-muted)] leading-relaxed max-w-xl mx-auto mb-7">
             One straight-on photo is all we need to confirm fitment and tell you which profile

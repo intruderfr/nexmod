@@ -44,7 +44,7 @@ export default function ServicesPage() {
       </div>
 
       {/* Hero */}
-      <section className="container-nex pb-12 border-b border-[var(--border)]">
+      <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <div className="grid lg:grid-cols-2 gap-10 items-start">
           <div>
             <p className="eyebrow mb-2.5">Workshop</p>
@@ -104,7 +104,7 @@ export default function ServicesPage() {
         if (groupServices.length === 0) return null;
 
         return (
-          <section key={group.id} className="container-nex py-12 border-b border-[var(--border)] last:border-0">
+          <section key={group.id} className="container-nex py-12 md:py-16 border-b border-[var(--border)] last:border-0">
             <div className="mb-7">
               <h2 className="text-2xl md:text-3xl mb-2">{group.label}</h2>
               <p className="text-[var(--fg-muted)]">{group.blurb}</p>
@@ -120,7 +120,7 @@ export default function ServicesPage() {
 
       {/* CTA */}
       <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
-        <div className="container-nex py-14 text-center">
+        <div className="container-nex py-16 md:py-20 text-center">
           <h2 className="text-3xl md:text-4xl mb-3">Not sure what your car needs?</h2>
           <p className="text-[var(--fg-muted)] leading-relaxed max-w-xl mx-auto mb-7">
             Send us a photo and tell us what bothers you about the car. We will tell you what we

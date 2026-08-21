@@ -79,7 +79,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       </div>
 
       {/* Header */}
-      <header className="container-nex pb-10 border-b border-[var(--border)]">
+      <header className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <div className="max-w-3xl">
           <div className="flex flex-wrap items-center gap-2.5 text-[13px] text-[var(--fg-subtle)] mb-5">
             <Link href={`/articles/category/${article.category}`} className="badge badge-accent capitalize">
@@ -100,7 +100,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       </header>
 
       {/* Body + sidebar */}
-      <div className="container-nex py-12">
+      <div className="container-nex py-12 md:py-16">
         <div className="grid lg:grid-cols-[1fr_280px] gap-12">
           <article className="max-w-2xl min-w-0">
             <ArticleBody blocks={article.body} />
@@ -229,7 +229,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       {/* Products */}
       {products.length > 0 && (
         <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
-          <div className="container-nex py-14">
+          <div className="container-nex py-16 md:py-20">
             <h2 className="text-2xl md:text-3xl mb-7">Products mentioned</h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
               {products.slice(0, 4).map((p) => (
@@ -243,7 +243,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       {/* Read next */}
       {related.length > 0 && (
         <section className="border-t border-[var(--border)]">
-          <div className="container-nex py-14">
+          <div className="container-nex py-16 md:py-20">
             <div className="flex items-end justify-between gap-4 mb-7">
               <h2 className="text-2xl md:text-3xl">Read next</h2>
               <Link

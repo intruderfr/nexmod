@@ -1,5 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Instrument_Sans, JetBrains_Mono } from "next/font/google";
+import {
+  Archivo,
+  Instrument_Sans,
+  JetBrains_Mono,
+  Noto_Sans_Sinhala,
+  Noto_Sans_Tamil,
+} from "next/font/google";
 import { CartDrawer } from "@/components/CartDrawer";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -38,6 +44,26 @@ const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   display: "swap",
   weight: ["400", "500", "600"],
+});
+
+/**
+ * Sinhala and Tamil scripts. Archivo and Instrument Sans carry no Indic
+ * glyphs, so without these the browser falls back to whatever the OS has —
+ * which on Windows is often a face that clips ascenders badly. Loaded on every
+ * page so a locale switch never flashes a fallback.
+ */
+const notoSinhala = Noto_Sans_Sinhala({
+  subsets: ["sinhala"],
+  variable: "--font-sinhala",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+const notoTamil = Noto_Sans_Tamil({
+  subsets: ["tamil"],
+  variable: "--font-tamil",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -103,12 +129,16 @@ const themeScript = `(function(){try{var t=localStorage.getItem("nexmod.theme");
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-LK" suppressHydrationWarning>
+    <html
+      lang="en-LK"
+      suppressHydrationWarning
+      className={`${archivo.variable} ${instrument.variable} ${jetbrains.variable} ${notoSinhala.variable} ${notoTamil.variable}`}
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       </head>
-      <body className={`${archivo.variable} ${instrument.variable} ${jetbrains.variable}`}>
+      <body>
         <JsonLd data={siteGraph()} />
         <Reveal />
         <ScrollProgress />

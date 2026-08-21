@@ -56,7 +56,7 @@ export default function ContactPage() {
         <Breadcrumbs trail={[{ name: "Contact", path: "/contact" }]} />
       </div>
 
-      <section className="container-nex pb-12">
+      <section className="container-nex pb-12 md:pb-16">
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
             <p className="eyebrow mb-2.5">Contact</p>

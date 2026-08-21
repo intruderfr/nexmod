@@ -18,9 +18,9 @@
 
 @theme {
   /* Type ------------------------------------------------------------- */
-  --font-display: var(--font-archivo), "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --font-sans: var(--font-instrument), "Instrument Sans", system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  --font-display: var(--font-archivo, "Archivo"), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-instrument, "Instrument Sans"), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains, "JetBrains Mono"), ui-monospace, "SF Mono", monospace;
 
   /* Motion ----------------------------------------------------------- */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -251,6 +251,70 @@ p {
 .tabular,
 .tabular-nums {
   font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   Script-specific typography.
+
+   Sinhala and Tamil have taller ascenders and deeper descenders than Latin,
+   and their glyphs carry loops and curls that collide when lines are set
+   tight. The Latin display face is also tracked at -0.028em, which actively
+   damages Indic letterforms — they need neutral or slightly positive tracking.
+
+   So each locale gets its own face stack and its own metrics rather than
+   inheriting the Latin ones. Numbers stay in the mono face throughout, since
+   prices are read as data in every language.
+   -------------------------------------------------------------------------- */
+
+:root:lang(si),
+[lang="si"],
+[lang="si-LK"] {
+  --font-sans: var(--font-sinhala, "Noto Sans Sinhala"), system-ui, sans-serif;
+  --font-display: var(--font-sinhala, "Noto Sans Sinhala"), system-ui, sans-serif;
+}
+
+:root:lang(ta),
+[lang="ta"],
+[lang="ta-LK"] {
+  --font-sans: var(--font-tamil, "Noto Sans Tamil"), system-ui, sans-serif;
+  --font-display: var(--font-tamil, "Noto Sans Tamil"), system-ui, sans-serif;
+}
+
+[lang="si"] body,
+[lang="ta"] body,
+[lang="si-LK"] body,
+[lang="ta-LK"] body {
+  line-height: 1.78;
+}
+
+[lang="si"] h1, [lang="si"] h2, [lang="si"] h3, [lang="si"] h4, [lang="si"] h5,
+[lang="ta"] h1, [lang="ta"] h2, [lang="ta"] h3, [lang="ta"] h4, [lang="ta"] h5,
+[lang="si-LK"] h1, [lang="si-LK"] h2, [lang="si-LK"] h3, [lang="si-LK"] h4, [lang="si-LK"] h5,
+[lang="ta-LK"] h1, [lang="ta-LK"] h2, [lang="ta-LK"] h3, [lang="ta-LK"] h4, [lang="ta-LK"] h5 {
+  letter-spacing: 0;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+/* Uppercase transforms are meaningless in these scripts and the wide tracking
+   pulls conjuncts apart, so both are dropped. */
+[lang="si"] .eyebrow, [lang="ta"] .eyebrow,
+[lang="si-LK"] .eyebrow, [lang="ta-LK"] .eyebrow,
+[lang="si"] .badge, [lang="ta"] .badge,
+[lang="si-LK"] .badge, [lang="ta-LK"] .badge {
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+[lang="si"] .prose-nex, [lang="ta"] .prose-nex,
+[lang="si-LK"] .prose-nex, [lang="ta-LK"] .prose-nex {
+  line-height: 1.95;
+}
+
+/* Prices and figures stay in the mono face in every locale. */
+[lang="si"] .figure, [lang="ta"] .figure,
+[lang="si-LK"] .figure, [lang="ta-LK"] .figure {
+  font-family: var(--font-jetbrains, "JetBrains Mono"), ui-monospace, monospace;
 }
 
 @media (prefers-reduced-motion: reduce) {

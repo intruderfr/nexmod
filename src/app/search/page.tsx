@@ -20,7 +20,7 @@ export default function SearchPage() {
         <Breadcrumbs trail={[{ name: "Search", path: "/search" }]} />
       </div>
 
-      <section className="container-nex pb-16">
+      <section className="container-nex pb-16 md:pb-20">
         <p className="eyebrow mb-2.5">Search</p>
         <h1 className="text-4xl md:text-5xl mb-6">Find it fast.</h1>
 

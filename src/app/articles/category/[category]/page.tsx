@@ -53,7 +53,7 @@ export default async function ArticleCategoryPage({
         />
       </div>
 
-      <section className="container-nex pb-10 border-b border-[var(--border)]">
+      <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <p className="eyebrow mb-2.5">
           {items.length} {items.length === 1 ? "article" : "articles"}
         </p>
@@ -78,7 +78,7 @@ export default async function ArticleCategoryPage({
         </div>
       </section>
 
-      <section className="container-nex py-10">
+      <section className="container-nex py-12 md:py-16">
         {items.length === 0 ? (
           <p className="text-[var(--fg-muted)]">Nothing published in this category yet.</p>
         ) : (
