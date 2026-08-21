@@ -59,7 +59,7 @@ export function ThemeToggle() {
 
   // Fixed-size placeholder so layout does not shift on hydration.
   if (!mounted) {
-    return <span className="w-9 h-9 shrink-0" aria-hidden="true" />;
+    return <span className="w-[var(--hdr-control)] h-[var(--hdr-control)] shrink-0" aria-hidden="true" />;
   }
 
   const label =
@@ -71,7 +71,7 @@ export function ThemeToggle() {
       onClick={cycle}
       title={label}
       aria-label={`${label}. Click to change.`}
-      className="relative grid place-items-center w-9 h-9 rounded-lg text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors"
+      className="relative hdr-btn"
     >
       {resolved === "dark" ? (
         <IconMoon width={18} height={18} />

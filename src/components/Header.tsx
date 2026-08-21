@@ -116,6 +116,7 @@ export function Header() {
   const mobileNav = [
     ...nav,
     { label: dict.nav.ezLip, href: "/ez-lip" },
+    { label: "My Nexmod", href: "/account" },
     { label: dict.nav.about, href: "/about" },
     { label: dict.nav.contact, href: "/contact" },
   ];
@@ -125,7 +126,7 @@ export function Header() {
       {/* ========================================================= UTILITY */}
       <div className="hidden lg:block border-b border-[var(--border)] bg-[var(--bg-subtle)]">
         <div className="container-nex">
-          <div className="flex items-center justify-between h-9 text-xs text-[var(--fg-muted)]">
+          <div className="flex items-center justify-between h-8 text-xs text-[var(--fg-muted)]">
             <p className="flex items-center gap-2 min-w-0">
               <span className="w-1 h-1 rounded-sm bg-[var(--accent)] shrink-0" aria-hidden="true" />
               <span className="truncate">
@@ -166,37 +167,41 @@ export function Header() {
         onMouseLeave={scheduleClose}
       >
         <div className="container-nex">
-          <div className="flex items-center gap-5 h-[68px]">
+          <div
+            className={`flex items-center gap-4 transition-[height] duration-300 ${
+              scrolled ? "h-[52px]" : "h-[60px]"
+            }`}
+          >
             {/* Wordmark */}
             <Link
               href="/"
               className="flex items-center gap-2.5 shrink-0"
               aria-label={`${site.name} home`}
             >
-              <span className="relative grid place-items-center w-9 h-9 rounded-[7px] bg-[var(--fg)] text-[var(--bg)] overflow-hidden">
-                <span className="font-[family-name:var(--font-display)] font-extrabold text-[15px] leading-none">
+              <span className="relative grid place-items-center w-8 h-8 rounded-[6px] bg-[var(--fg)] text-[var(--bg)] overflow-hidden">
+                <span className="font-[family-name:var(--font-display)] font-extrabold text-[14px] leading-none">
                   N
                 </span>
                 <span className="absolute inset-x-0 bottom-0 h-[3px] bg-[var(--accent)]" />
               </span>
-              <span className="hidden sm:block leading-none">
-                <span className="block font-[family-name:var(--font-display)] font-extrabold tracking-[-0.03em] text-[19px]">
+              <span className="block leading-none">
+                <span className="block font-[family-name:var(--font-display)] font-extrabold tracking-[-0.03em] text-[17px]">
                   NEXMOD
                 </span>
-                <span className="block font-[family-name:var(--font-mono)] text-[8.5px] tracking-[0.2em] uppercase text-[var(--fg-subtle)] mt-[3px]">
+                <span className="hidden sm:block font-[family-name:var(--font-mono)] text-[8px] tracking-[0.18em] uppercase text-[var(--fg-subtle)] mt-[2px]">
                   Premium Car Accessories
                 </span>
               </span>
             </Link>
 
             {/* Primary nav */}
-            <nav className="hidden lg:flex items-center gap-0.5 ml-3" aria-label="Main">
+            <nav className="hidden lg:flex items-center gap-0.5 ml-2" aria-label="Main">
               {nav.map((item) => (
                 <div key={item.href} onMouseEnter={() => openMega(item.mega ?? null)}>
                   <Link
                     href={item.href}
                     aria-expanded={item.mega ? mega === item.mega : undefined}
-                    className={`inline-flex items-center gap-1 h-9 px-3 rounded-lg text-[14px] font-medium transition-colors ${
+                    className={`inline-flex items-center gap-1 h-8 px-2.5 rounded-lg text-[13.5px] font-medium transition-colors ${
                       isActive(item.href)
                         ? "text-[var(--fg)] bg-[var(--bg-inset)]"
                         : "text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)]"
@@ -217,24 +222,29 @@ export function Header() {
               ))}
             </nav>
 
-            {/* Actions — grouped, divided, all on one 36px line */}
+            {/* Actions — grouped, divided, all on one line */}
             <div className="flex items-center gap-0.5 ml-auto shrink-0">
               <CommandPalette />
 
-              <Divider className="hidden md:block mx-2 h-5" />
+              {/*
+                Desktop-only. A phone header has room for about three targets
+                at a thumb-friendly size, and search, cart and menu earn those
+                places. Garage, account, language and theme are all reachable
+                from the menu sheet, labelled, which is easier to hit than a
+                32px icon and easier to understand than one too.
+              */}
+              <div className="hidden lg:flex items-center gap-0.5">
+                <Divider className="mx-2 h-5" />
 
-              <GarageMenu />
+                <GarageMenu />
 
-              <Link
-                href="/account"
-                aria-label="My Nexmod"
-                className="grid place-items-center w-9 h-9 rounded-lg text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors"
-              >
-                <IconUser width={18} height={18} />
-              </Link>
+                <Link href="/account" aria-label="My Nexmod" className="hdr-btn">
+                  <IconUser width={18} height={18} />
+                </Link>
 
-              <LanguageSwitcher />
-              <ThemeToggle />
+                <LanguageSwitcher />
+                <ThemeToggle />
+              </div>
 
               <Divider className="mx-2 h-5" />
 
@@ -242,7 +252,7 @@ export function Header() {
                 type="button"
                 onClick={() => setOpen(true)}
                 aria-label={`${dict.commerce.cart}, ${totals.itemCount}`}
-                className="relative grid place-items-center w-9 h-9 rounded-lg text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors"
+                className="relative hdr-btn"
               >
                 <IconCart width={18} height={18} />
                 {totals.itemCount > 0 && (
@@ -266,7 +276,7 @@ export function Header() {
                 type="button"
                 onClick={() => setMobileOpen(true)}
                 aria-label={dict.nav.openMenu}
-                className="lg:hidden grid place-items-center w-9 h-9 rounded-lg text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors ml-1"
+                className="lg:hidden hdr-btn ml-1"
               >
                 <IconMenu width={19} height={19} />
               </button>
@@ -280,7 +290,7 @@ export function Header() {
             onMouseEnter={() => openMega(mega)}
             className="hidden lg:block absolute inset-x-0 top-full glass border-b border-[var(--border)] shadow-2xl animate-fade-in"
           >
-            <div className="container-nex py-8">
+            <div className="container-nex py-7">
               <div className="grid grid-cols-12 gap-8">
                 {/* Featured rail */}
                 <div className="col-span-3">
@@ -404,16 +414,22 @@ export function Header() {
           />
 
           <div className="absolute inset-y-0 right-0 w-full max-w-sm bg-[var(--bg)] border-l border-[var(--border)] flex flex-col animate-slide-in-right">
-            <div className="flex items-center justify-between h-16 px-5 border-b border-[var(--border)] shrink-0">
+            <div className="flex items-center justify-between gap-2 h-16 px-4 border-b border-[var(--border)] shrink-0">
               <OpenStatus compact />
-              <button
-                type="button"
-                onClick={() => setMobileOpen(false)}
-                aria-label={dict.nav.closeMenu}
-                className="grid place-items-center w-10 h-10 rounded-lg hover:bg-[var(--bg-inset)]"
-              >
-                <IconClose />
-              </button>
+
+              <div className="flex items-center gap-0.5 shrink-0">
+                <GarageMenu />
+                <LanguageSwitcher compact />
+                <ThemeToggle />
+                <button
+                  type="button"
+                  onClick={() => setMobileOpen(false)}
+                  aria-label={dict.nav.closeMenu}
+                  className="hdr-btn"
+                >
+                  <IconClose />
+                </button>
+              </div>
             </div>
 
             <div className="flex-1 overflow-y-auto px-5 py-6">

@@ -103,7 +103,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Nexmod on ${label}`}
-                  className="grid place-items-center w-9 h-9 rounded-md border border-[var(--border)] text-[var(--fg-muted)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-colors"
+                  className="grid place-items-center w-11 h-11 md:w-9 md:h-9 rounded-md border border-[var(--border)] text-[var(--fg-muted)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-colors"
                 >
                   <Icon width={16} height={16} />
                 </a>

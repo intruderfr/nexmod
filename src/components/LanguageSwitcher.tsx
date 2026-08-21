@@ -60,7 +60,7 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-label={dict.language.change}
-        className={`inline-flex items-center gap-1 h-9 rounded-lg text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors ${
+        className={`inline-flex items-center gap-1 h-[var(--hdr-control)] rounded-lg text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors ${
           compact ? "px-2" : "px-2.5"
         }`}
       >

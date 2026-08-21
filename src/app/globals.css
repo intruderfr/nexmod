@@ -315,6 +315,22 @@ p {
   /* Margin deliberately not reset here — see the note on the heading rule. */
 }
 
+/*
+ * Sinhala and Tamil build very long compound words with no break opportunity
+ * inside them. On a 375px screen a single Tamil noun phrase was 144px wider
+ * than the viewport and dragged the whole page sideways with it.
+ *
+ * `anywhere` rather than `break-word` on purpose: it also shrinks the
+ * min-content width, so flex and grid children actually agree to narrow
+ * instead of holding the line box open at the width of their longest word.
+ * Scoped by lang so English keeps ordinary word breaking. The attribute is
+ * "si-LK"/"ta-LK", hence |= (subtag match) rather than an exact compare.
+ */
+html[lang|="si"],
+html[lang|="ta"] {
+  overflow-wrap: anywhere;
+}
+
 /* Anything numeric lines up in columns. */
 .tabular,
 .tabular-nums {
@@ -529,7 +545,49 @@ p {
    Components
    -------------------------------------------------------------------------- */
 
+/*
+ * Header geometry.
+ *
+ * The action cluster is drawn by six components living in six files — search,
+ * garage, account, language, theme, cart. When each carried its own size they
+ * drifted apart, and a row of buttons whose centres line up but whose hover
+ * backgrounds are different sizes looks broken in a way that is hard to name.
+ * One token, one size, nowhere to drift to.
+ */
+:root {
+  /*
+   * 44px on a phone, because that is roughly the contact patch of a fingertip
+   * and anything smaller is a coin toss. 32px from lg up, where there is a
+   * pointer to aim with and a much longer bar to fill.
+   */
+  --hdr-control: 2.75rem;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --hdr-control: 2rem;
+  }
+}
+
 @layer components {
+  /* Every square control in the header's action cluster. See --hdr-control. */
+  .hdr-btn {
+    display: inline-grid;
+    place-items: center;
+    width: var(--hdr-control);
+    height: var(--hdr-control);
+    border-radius: 0.5rem;
+    color: var(--fg-muted);
+    transition:
+      color 0.2s var(--ease-out-expo),
+      background-color 0.2s var(--ease-out-expo);
+  }
+
+  .hdr-btn:hover {
+    color: var(--fg);
+    background: var(--bg-inset);
+  }
+
   /* ------------------------------------------------------------- buttons */
 
   .btn {

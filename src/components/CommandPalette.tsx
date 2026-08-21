@@ -296,7 +296,7 @@ export function CommandPalette() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label={dict.nav.search}
-        className="lg:hidden grid place-items-center w-9 h-9 rounded-lg text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors"
+        className="lg:hidden hdr-btn"
       >
         <IconSearch width={18} height={18} />
       </button>

@@ -105,7 +105,7 @@ export function ProductCard({ product }: { product: Product }) {
         title={
           !comparing && compareFull ? "Compare list is full (4 max)" : "Compare"
         }
-        className={`absolute top-2.5 right-2.5 z-10 grid place-items-center w-8 h-8 rounded-md backdrop-blur transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
+        className={`absolute top-2.5 right-2.5 z-10 grid place-items-center w-10 h-10 md:w-8 md:h-8 rounded-md backdrop-blur transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
           comparing
             ? "bg-[var(--accent)] text-white"
             : "bg-black/50 text-white hover:bg-black/75"
@@ -120,7 +120,7 @@ export function ProductCard({ product }: { product: Product }) {
         aria-pressed={saved}
         aria-label={saved ? `Remove ${product.name} from wishlist` : `Save ${product.name}`}
         title={saved ? "Saved" : "Save for later"}
-        className={`absolute top-[3.25rem] right-2.5 z-10 grid place-items-center w-8 h-8 rounded-md backdrop-blur transition-colors ${
+        className={`absolute top-[3.625rem] md:top-[3.25rem] right-2.5 z-10 grid place-items-center w-10 h-10 md:w-8 md:h-8 rounded-md backdrop-blur transition-colors ${
           saved ? "bg-[var(--accent)] text-white" : "bg-black/50 text-white hover:bg-black/75"
         }`}
       >
@@ -158,8 +158,15 @@ export function ProductCard({ product }: { product: Product }) {
           {productTagline(product.slug, locale, product.tagline)}
         </p>
 
-        <div className="mt-auto pt-3 border-t border-[var(--border)] flex items-end justify-between gap-3">
-          <div>
+        {/*
+          Two columns of cards on a phone leaves each one about 154px wide,
+          which the price and the fitting badge cannot share on a single line —
+          the badge ran past the card's overflow-hidden edge and had its label
+          sliced off. Wrapping lets the badge drop under the price on the
+          narrowest cards and sit beside it everywhere else.
+        */}
+        <div className="mt-auto pt-3 border-t border-[var(--border)] flex flex-wrap items-end justify-between gap-x-3 gap-y-2">
+          <div className="min-w-0">
             <span className="block text-[10.5px] uppercase tracking-wider text-[var(--fg-subtle)]">
               {hasRange ? dict.commerce.from : dict.commerce.price}
             </span>
@@ -174,8 +181,8 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
 
           {product.installation?.available && (
-            <span className="badge shrink-0">
-              <IconTool width={11} height={11} />
+            <span className="badge max-w-full">
+              <IconTool width={11} height={11} className="shrink-0" />
               {dict.commerce.fitting}
             </span>
           )}
