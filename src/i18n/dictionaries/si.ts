@@ -1,0 +1,303 @@
+import type { Dictionary } from "./en";
+
+/**
+ * Sinhala dictionary.
+ *
+ * Translation policy: navigation, actions, commerce and form language are in
+ * natural Sinhala. Established technical and brand terms — EZ Lip, carbon
+ * fibre, spoiler, LED, WhatsApp, KOKO, Mintpay — stay in English, because that
+ * is how Sri Lankan customers actually refer to them. Translating them would
+ * read as stilted rather than helpful.
+ */
+export const si: Dictionary = {
+  meta: {
+    siteSuffix: "Nexmod ශ්‍රී ලංකා",
+    tagline: "ප්‍රිමියම් වාහන උපාංග",
+  },
+
+  nav: {
+    products: "භාණ්ඩ",
+    services: "සේවා",
+    ezLip: "EZ Lip",
+    articles: "ලිපි",
+    about: "අප ගැන",
+    contact: "සම්බන්ධ වන්න",
+    search: "සොයන්න",
+    menu: "මෙනුව",
+    openMenu: "මෙනුව විවෘත කරන්න",
+    closeMenu: "මෙනුව වසන්න",
+    allProducts: "සියලුම භාණ්ඩ",
+    allServices: "සියලුම සේවා",
+    shopBy: "වර්ගය අනුව සොයන්න",
+    browseCategories: "වර්ග බලන්න",
+    everyCategory: "සියලුම වර්ග",
+    whatWeDo: "අප කරන දේ",
+    megaProducts: "දෙහිවල අපගේ වැඩපොළේදී සපයා වෘත්තීයමය ලෙස සවි කරනු ලැබේ.",
+    megaServices: "සේවා දොළහක්, සියල්ලම දෙහිවලදී අප විසින්ම සිදු කරයි.",
+    announcement:
+      "ශ්‍රී ලංකාවේ නිල EZ Lip USA නියෝජිතයා — සැබෑ නිෂ්පාදනය, සවි කරන්නේ මෙහිදී පමණයි.",
+  },
+
+  actions: {
+    shopProducts: "භාණ්ඩ මිලදී ගන්න",
+    viewServices: "සේවා බලන්න",
+    getQuote: "මිල ගණන් ලබාගන්න",
+    bookFitting: "සවි කිරීමක් වෙන් කරන්න",
+    bookService: "මෙම සේවාව වෙන් කරන්න",
+    askQuestion: "ප්‍රශ්නයක් අසන්න",
+    askWhatsApp: "WhatsApp හරහා අසන්න",
+    whatsappUs: "WhatsApp කරන්න",
+    sendPhoto: "ඡායාරූපයක් එවන්න",
+    addToCart: "කරත්තයට එකතු කරන්න",
+    addedToCart: "කරත්තයට එකතු කළා",
+    outOfStock: "තොගයේ නැත",
+    checkout: "ගෙවීම් කරන්න",
+    orderWhatsApp: "WhatsApp හරහා ඇණවුම් කරන්න",
+    orderWhatsAppInstead: "ඒ වෙනුවට WhatsApp හරහා ඇණවුම් කරන්න",
+    keepShopping: "තවත් බලන්න",
+    readGuide: "මාර්ගෝපදේශය කියවන්න",
+    learnMore: "වැඩිදුර දැනගන්න",
+    seeProcess: "ක්‍රියාවලිය බලන්න",
+    allArticles: "සියලුම ලිපි",
+    clearFilters: "පෙරහන් ඉවත් කරන්න",
+    getDirections: "දිශාව ලබාගන්න",
+    openInMaps: "Google Maps හි විවෘත කරන්න",
+    askFitment: "ගැලපීම ගැන අසන්න",
+    requestSlot: "මෙම වේලාව ඉල්ලන්න",
+    placeOrder: "ඇණවුම තහවුරු කරන්න",
+    sending: "යවමින්…",
+    placing: "ඇණවුම යවමින්…",
+  },
+
+  commerce: {
+    price: "මිල",
+    from: "සිට",
+    total: "එකතුව",
+    subtotal: "උප එකතුව",
+    delivery: "බෙදාහැරීම",
+    installation: "සවි කිරීම",
+    free: "නොමිලේ",
+    inStock: "දෙහිවල තොගයේ ඇත",
+    fitting: "සවි කිරීම",
+    fitAtWorkshop: "දෙහිවල වැඩපොළේදී සවි කරන්න",
+    fitAtWorkshopShort: "වැඩපොළේදී සවි කරන්න",
+    deliverOnly: "බෙදාහැරීම පමණයි",
+    includedFree: "නොමිලේ ඇතුළත්",
+    workshopFitting: "වැඩපොළේදී සවි කිරීම",
+    chooseOption: "විකල්පයක් තෝරන්න",
+    quantity: "ප්‍රමාණය වැඩි කරන්න",
+    quantityDown: "ප්‍රමාණය අඩු කරන්න",
+    cart: "ඔබේ කරත්තය",
+    cartEmpty: "ඔබේ කරත්තය හිස්ය",
+    cartEmptyBody:
+      "අපගේ භාණ්ඩ බලන්න, නැතහොත් WhatsApp හරහා පණිවිඩයක් එවන්න — අපි ඔබට තෝරා ගැනීමට උදව් කරන්නෙමු.",
+    closeCart: "කරත්තය වසන්න",
+    remove: "ඉවත් කරන්න",
+    item: "අයිතමය",
+    items: "අයිතම",
+    freeDeliveryProgress: "දිවයින පුරා නොමිලේ බෙදාහැරීමට තව",
+    paymentNote:
+      "බෙදාහැරීමේදී මුදල්, කාඩ්පත්, බැංකු මාරු කිරීම්, KOKO සහ Mintpay පිළිගනු ලැබේ.",
+    priceIncludesVat: "මිලට VAT ඇතුළත්ය.",
+    installationIncluded: "සවි කිරීම ඇතුළත්ය.",
+    keyPoints: "ප්‍රධාන කරුණු",
+    specifications: "පිරිවිතර",
+    fittedTo: "සාමාන්‍යයෙන් සවි කරන වාහන",
+    fitmentNote:
+      "ඔබේ වාහනය ලැයිස්තුවේ නැද්ද? WhatsApp හරහා ඡායාරූපයක් එවන්න — ඇණවුම් කිරීමට පෙර අපි ගැලපීම තහවුරු කරන්නෙමු.",
+    goesWellWith: "මේ සමඟ හොඳින් ගැලපේ",
+    aboutProduct: "මෙම භාණ්ඩය ගැන",
+    detailThatMatters: "වැදගත් වන්නේ මේ විස්තරයයි",
+    fittingTakes: "සවි කිරීමට ගතවන කාලය",
+  },
+
+  filters: {
+    filters: "පෙරහන්",
+    category: "වර්ගය",
+    options: "විකල්ප",
+    fitsMyCar: "මගේ වාහනයට ගැලපේ",
+    anyVehicle: "ඕනෑම වාහනයක්",
+    fitmentHelp:
+      "සියලුම වාහනවලට ගැලපෙන භාණ්ඩද ඇතුළත්ය. ලැයිස්තුවේ නැද්ද? WhatsApp කරන්න — අපි තහවුරු කරන්නෙමු.",
+    installAvailable: "සවි කිරීම තිබේ",
+    inStockOnly: "තොගයේ ඇති ඒවා පමණයි",
+    searchProducts: "භාණ්ඩ සොයන්න…",
+    sort: "භාණ්ඩ පෙළගස්වන්න",
+    sortFeatured: "විශේෂිත",
+    sortPriceAsc: "මිල: අඩුයි සිට වැඩියි",
+    sortPriceDesc: "මිල: වැඩියි සිට අඩුයි",
+    sortName: "නම A–Z",
+    product: "භාණ්ඩය",
+    products: "භාණ්ඩ",
+    noMatch: "එම පෙරහන්වලට ගැලපෙන කිසිවක් නැත",
+    noMatchBody:
+      "පෙරහනක් ඉවත් කර බලන්න, නැතහොත් අපට පණිවිඩයක් එවන්න — අපි ඇණවුම මත භාණ්ඩ ගෙන්වා දෙන්නෙමු.",
+    show: "පෙන්වන්න",
+  },
+
+  form: {
+    name: "ඔබේ නම",
+    fullName: "සම්පූර්ණ නම",
+    phone: "දුරකථනය / WhatsApp",
+    email: "ඊමේල්",
+    optional: "(අත්‍යවශ්‍ය නොවේ)",
+    vehicle: "වාහනය",
+    service: "සේවාව",
+    chooseService: "සේවාවක් තෝරන්න…",
+    somethingElse: "වෙනත් දෙයක් / විශ්වාස නැත",
+    preferredDate: "කැමති දිනය",
+    preferredTime: "කැමති වේලාව",
+    anyTime: "ඕනෑම වේලාවක්",
+    address: "ලිපිනය",
+    city: "නගරය",
+    notes: "වෙනත් යමක්?",
+    orderNotes: "ඇණවුම පිළිබඳ සටහන්",
+    payment: "ගෙවීම",
+    yourDetails: "ඔබේ විස්තර",
+    deliveryAddress: "බෙදාහැරීමේ ලිපිනය",
+    orderSummary: "ඇණවුමේ සාරාංශය",
+    closedFriday: "සිකුරාදා අප වසා ඇත. කරුණාකර වෙනත් දිනයක් තෝරන්න.",
+    required: "අවශ්‍යයි",
+    notesPlaceholder:
+      "ඔබ සිතන දේ හෝ වාහනය ගැන විශේෂයෙන් යමක් තිබේ නම් අපට කියන්න.",
+    orderNotesPlaceholder:
+      "වාහන මාදිලිය, වර්ණ කේතය, කැමති සවි කිරීමේ දිනය, වෙනත් යමක්.",
+    bookingDisclaimer:
+      "මෙය ඉල්ලීමක් මිස තහවුරු කළ වෙන් කිරීමක් නොවේ — වේලාව තහවුරු කිරීමට අපි ඔබ හා සම්බන්ධ වන්නෙමු.",
+    orderReceived: "ඇණවුම ලැබුණි",
+    bookingReceived: "වෙන් කිරීමේ ඉල්ලීම ලැබුණි",
+    sendOnWhatsApp: "නැතහොත් WhatsApp හරහා එවන්න",
+    confirmOnWhatsApp: "WhatsApp හරහා තහවුරු කරන්න",
+    fasterOnWhatsApp:
+      "ඉක්මනින් තහවුරු කර ගැනීමට අවශ්‍යද? එම විස්තර WhatsApp හරහා එවන්න.",
+    errorGeneric:
+      "එය යැවීමට නොහැකි විය. කරුණාකර පහත WhatsApp බොත්තම භාවිතා කරන්න — එය වහාම අප වෙත ලැබෙනු ඇත.",
+  },
+
+  common: {
+    questions: "ප්‍රශ්න",
+    faq: "නිතර අසන ප්‍රශ්න",
+    minRead: "මිනිත්තු කියවීම",
+    readNext: "ඊළඟට කියවන්න",
+    onThisPage: "මෙම පිටුවේ",
+    relatedServices: "අදාළ සේවා",
+    productsMentioned: "සඳහන් කළ භාණ්ඩ",
+    otherCategories: "වෙනත් වර්ග",
+    tagged: "ටැග්",
+    browseByTopic: "මාතෘකාව අනුව බලන්න",
+    openingHours: "විවෘත වේලාවන්",
+    contactLabel: "සම්බන්ධතා",
+    address: "ලිපිනය",
+    findUs: "අප සොයාගන්න",
+    visitWorkshop: "වැඩපොළට එන්න",
+    closed: "වසා ඇත",
+    fridayClosed: "සිකුරාදා වසා ඇත",
+    openSixDays: "දින 6ක් විවෘතයි",
+    googleReviews: "Google සමාලෝචන",
+    warranty: "වගකීම",
+    timeNeeded: "අවශ්‍ය කාලය",
+    included: "සම්මතයෙන් ඇතුළත්",
+    whatYouGet: "ඔබට සැබවින්ම ලැබෙන දේ",
+    suitableFor: "සුදුසු වන්නේ",
+    rightJob: "මෙය නිවැරදි තේරීම වන අවස්ථා",
+    theProcess: "ක්‍රියාවලිය",
+    stepByStep: "පියවරෙන් පියවර, ආරම්භයේ සිට අවසානය දක්වා",
+    technicalDetail: "තාක්ෂණික විස්තර",
+    aftercare: "පසු රැකවරණය",
+    lookingAfterIt: "එය රැකබලා ගැනීම",
+    productsWeUse: "මේ සඳහා අප භාවිතා කරන භාණ්ඩ",
+    oftenTogether: "බොහෝවිට එකවර කරන දේ",
+    weAccept: "අප පිළිගන්නා ගෙවීම්",
+    company: "සමාගම",
+    seeOurWork: "අපගේ වැඩ බලන්න",
+    skipToContent: "අන්තර්ගතයට යන්න",
+  },
+
+  home: {
+    heroTitle1: "ප්‍රිමියම් වාහන උපාංග,",
+    heroTitle2: "නිවැරදිව සවි කර.",
+    heroLede:
+      "Carbon fibre, EZ Lip, spoilers, tyre lettering, lighting, audio සහ 360 camera — දෙහිවල අපගේ වැඩපොළේදීම සපයා සවි කරනු ලැබේ. කුමක් කිරීම වටී ද, කුමක් නොවටී ද යන්න අපි අවංකව කියන්නෙමු.",
+    since: "දෙහිවල · කොළඹ · ආරම්භය",
+    proofAgent: "EZ Lip ශ්‍රී ලංකා නියෝජිත",
+    proofOfficial: "නිල",
+    proofInHouse: "අප විසින්ම",
+    proofSubcontract: "උපකොන්ත්‍රාත් නැත",
+    proofIslandwide: "දිවයින පුරා",
+    proofFreeOver: "නොමිලේ, ඉන් වැඩි නම්",
+    shopEyebrow: "සාප්පුව",
+    shopTitle: "වර්ගය අනුව බලන්න",
+    ezLipEyebrow: "Nexmod සඳහා පමණයි",
+    ezLipTitle: "ශ්‍රී ලංකාවේ එකම බලයලත් EZ Lip නියෝජිතයා.",
+    ezLipLede:
+      "එක්සත් ජනපදයේ නිෂ්පාදිත, නම්‍යශීලී universal front lip එකකි. එය ඔබේ වාහනයේ පෙනුම 40mm දක්වා පහත් කරයි — දෘඪ fibreglass lip එකක් මෙන් නොව, වේග බාධක සහ හෝටල් ramp වලින් එය කැඩෙන්නේ නැත.",
+    ezLipPoint1: "සැබෑ නිෂ්පාදනය, කර්මාන්තශාලා ඇසුරුමින්, දේශීය වගකීම සමඟ",
+    ezLipPoint2: "කැපීමක් නැත, සිදුරු කිරීමක් නැත, bumper එක ගැලවීමක් නැත",
+    ezLipPoint3: "මිනිත්තු 90කින් සවි කරයි — ඔබට රැඳී සිටිය හැක",
+    ezLipPoint4: "සම්පූර්ණයෙන් ඉවත් කළ හැක, තීන්තයට හානියක් නැත",
+    ezLipCta: "EZ Lip ශ්‍රී ලංකා ගැන",
+    ezLipShop: "EZ Lip Pro මිලදී ගන්න",
+    servicesEyebrow: "වැඩපොළ",
+    servicesTitle: "සේවා, නිවැරදිව කරන ලද",
+    servicesLede:
+      "විෂයයන් දොළහක්, සියල්ලම දෙහිවලදී අප විසින්ම සිදු කරයි. සෑම සේවා පිටුවකම අප කරන දේ, කුමන අනුපිළිවෙලින් ද, සහ අනෙක් අය මඟහරින පියවර වැදගත් වන්නේ ඇයි ද යන්න පැහැදිලි කරයි.",
+    servicesAction: "සියලුම සේවා 12",
+    bestSellers: "වැඩියෙන්ම අලෙවි වන",
+    bestSellersTitle: "අනෙක් අය සවි කරන දේ",
+    shopAll: "සියල්ල බලන්න",
+    processEyebrow: "ක්‍රියාත්මක වන ආකාරය",
+    processTitle: "ඡායාරූපයේ සිට සවි කිරීම දක්වා",
+    processLede:
+      "බොහෝ වැඩ ආරම්භ වන්නේ WhatsApp ඡායාරූපයකින්, අවසන් වන්නේ ඔබ වෙන් කරන දිනයේම.",
+    step1Title: "ඡායාරූපයක් එවන්න",
+    step1Body:
+      "ඔබේ වාහනයේ ඡායාරූපයක් WhatsApp කර, ඔබ සිතන දේ කියන්න. කුමක් ගැලපේ ද, එහි මිල කීයද යන්න අපි පිළිතුරු දෙන්නෙමු.",
+    step2Title: "අවංක පිළිතුරක් ලබාගන්න",
+    step2Body:
+      "ඔබේ වාහනයට යමක් කිරීම වටින්නේ නැත්නම්, අපි එය කියන්නෙමු. වැරදි දෙයක් විකිණීමට වඩා එක් වැඩක් අහිමි වීම අපි තෝරා ගනිමු.",
+    step3Title: "වේලාවක් වෙන් කරන්න",
+    step3Body:
+      "ඔබට සුදුසු දිනයක් තෝරන්න. කුඩා වැඩ සඳහා රැඳී සිටිය හැක; විශාල වැඩ සඳහා දිනක් ගතවේ. අපි සතියේ දින හයක් විවෘතයි.",
+    step4Title: "සවි කර, පරීක්ෂා කර",
+    step4Body:
+      "ඔබ පිටත් වීමට පෙර අපි ඔබ සමඟ වාහනය පරීක්ෂා කර, පසු රැකවරණය පැහැදිලි කර, වගකීමක් ලබා දෙන්නෙමු.",
+    articlesEyebrow: "ලිපි සහ පුවත්",
+    articlesTitle: "වියදම් කිරීමට පෙර දැනගන්න",
+    articlesLede:
+      "දේවල් වල මිල, ඒවා කොපමණ කල් පවතී ද, සහ ශ්‍රී ලාංකික තත්ත්වයන් තුළ කුමන දියුණු කිරීම් ඔබේ මුදලට වටී ද යන්න පිළිබඳ අවංක මාර්ගෝපදේශ.",
+    visitTitle: "71 ශ්‍රී සරණංකර පාර, දෙහිවල.",
+    visitLede:
+      "කුඩා වැඩ සඳහා කෙලින්ම එන්න — mirror caps, wipers, tyre lettering. දිනක් ගතවන වැඩ සඳහා කලින් වෙන් කරන්න.",
+  },
+
+  footer: {
+    ctaEyebrow: "ඔබ සූදානම් වූ විට",
+    ctaTitle1: "ඔබේ වාහනයේ ඡායාරූපයක් එවන්න.",
+    ctaTitle2: "කුමක් ගැලපේ ද අපි කියන්නෙමු.",
+    ctaLede:
+      "බොහෝ මිල ගණන් WhatsApp හරහා මිනිත්තු කිහිපයකින් ලැබේ. කිසිදු බැඳීමක් නැත, යමක් කිරීම නොවටී නම් අපි එය අවංකව කියන්නෙමු.",
+    blurb:
+      "දෙහිවල, කොළඹ — ප්‍රිමියම් වාහන උපාංග, carbon fibre මෝස්තර සහ වෘත්තීය සවි කිරීම්.",
+    officialAgent: "ශ්‍රී ලංකාවේ නිල EZ Lip USA නියෝජිතයා.",
+    faqLink: "නිතර අසන ප්‍රශ්න",
+    deliveryLink: "බෙදාහැරීම සහ ආපසු භාරදීම",
+    privacy: "රහස්‍යතාව",
+    terms: "නියම",
+    rights: "සියලුම හිමිකම් ඇවිරිණි.",
+  },
+
+  language: {
+    label: "භාෂාව",
+    change: "භාෂාව වෙනස් කරන්න",
+    englishOnly: "මෙම මාර්ගෝපදේශය ඇත්තේ ඉංග්‍රීසි භාෂාවෙන් පමණි.",
+    englishOnlyBody:
+      "අපගේ තාක්ෂණික මාර්ගෝපදේශ ලියා ඇත්තේ ඉංග්‍රීසියෙන්. භාණ්ඩ පිටු, සේවා සහ ඇණවුම් කිරීම සිංහල සහ දෙමළ භාෂාවලින් ලබාගත හැක — තවද ඔබට ඔබේ භාෂාවෙන් WhatsApp හරහා ඕනෑම දෙයක් අපෙන් විමසිය හැක.",
+  },
+
+  notFound: {
+    title: "මෙම පිටුව සොයාගත නොහැක.",
+    body:
+      "ඔබ සෙවූ පිටුව නොපවතී, නැතහොත් එය වෙනත් තැනකට ගොස් ඇත. අපගේ භාණ්ඩ බලන්න, නැතහොත් කෙලින්ම අපෙන් අසන්න — එය සාමාන්‍යයෙන් වේගවත්ය.",
+    askUs: "අපෙන් අසන්න",
+  },
+};
