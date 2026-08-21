@@ -4,6 +4,7 @@ import { LocaleLink as Link } from "@/i18n/client";
 import { useState } from "react";
 import { lkr, site } from "@/data/site";
 import { useCart } from "@/lib/cart";
+import { usePrefs } from "@/lib/prefs";
 import { IconCart, IconCheck, IconTruck, IconWhatsApp } from "./Icons";
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -27,15 +28,17 @@ const IS_STATIC = process.env.NEXT_PUBLIC_STATIC_EXPORT === "1";
  */
 export function CheckoutForm() {
   const { lines, totals, clear, whatsappOrderLink } = useCart();
+  const { logHistory, profile } = usePrefs();
   const [status, setStatus] = useState<Status>("idle");
   const [reference, setReference] = useState("");
   const [error, setError] = useState("");
+  // Pre-filled from the saved profile so returning customers do not retype.
   const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    email: "",
+    name: profile.name ?? "",
+    phone: profile.phone ?? "",
+    email: profile.email ?? "",
     address: "",
-    city: "",
+    city: profile.city ?? "",
     payment: "cod",
     notes: "",
   });
@@ -65,6 +68,12 @@ export function CheckoutForm() {
       if (!res.ok) throw new Error(data.error ?? "Request failed");
 
       setReference(data.reference);
+      logHistory({
+        kind: "order",
+        summary: `Order — ${lines.length} ${lines.length === 1 ? "item" : "items"}`,
+        total: totals.total,
+        reference: data.reference,
+      });
       setStatus("sent");
       clear();
     } catch (err) {

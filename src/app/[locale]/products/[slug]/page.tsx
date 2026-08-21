@@ -2,6 +2,7 @@ import { LocaleLink as Link } from "@/i18n/client";
 import { notFound } from "next/navigation";
 import { AddToCart } from "@/components/AddToCart";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { DeliveryEstimator } from "@/components/DeliveryEstimator";
 import { ProductCard } from "@/components/Cards";
 import { Faq } from "@/components/Faq";
 import { IconArrowRight, IconCheck, IconClock, IconShield, IconTool } from "@/components/Icons";
@@ -216,6 +217,10 @@ export default async function ProductPage({
                     )}
                   </div>
                 )}
+              </div>
+
+              <div className="mt-5">
+                <DeliveryEstimator />
               </div>
             </aside>
           </div>

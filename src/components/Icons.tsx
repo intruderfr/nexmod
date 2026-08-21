@@ -142,6 +142,25 @@ export const IconCalendar = (p: IconProps) => (
   </Base>
 );
 
+export const IconUser = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </Base>
+);
+
+export const IconHeart = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M20.4 5.6a5 5 0 0 0-7.1 0L12 6.9l-1.3-1.3a5 5 0 1 0-7.1 7.1l8.4 8.4 8.4-8.4a5 5 0 0 0 0-7.1Z" />
+  </Base>
+);
+
+export const IconHeartFilled = (p: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width={20} height={20} {...p}>
+    <path d="M20.4 5.6a5 5 0 0 0-7.1 0L12 6.9l-1.3-1.3a5 5 0 1 0-7.1 7.1l8.4 8.4 8.4-8.4a5 5 0 0 0 0-7.1Z" />
+  </svg>
+);
+
 export const IconMail = (p: IconProps) => (
   <Base {...p}><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m2 7 10 6 10-6" /></Base>
 );

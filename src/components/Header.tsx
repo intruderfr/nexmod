@@ -21,6 +21,7 @@ import {
   IconMapPin,
   IconMenu,
   IconPhone,
+  IconUser,
   IconWhatsApp,
 } from "./Icons";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -59,6 +60,7 @@ export function Header() {
   const nav = [
     { label: dict.nav.products, href: "/products", mega: "products" as const },
     { label: dict.nav.services, href: "/services", mega: "services" as const },
+    { label: "Advisor", href: "/advisor" },
     { label: "Packages", href: "/packages" },
     { label: dict.nav.build, href: "/build" },
     { label: "Gallery", href: "/gallery" },
@@ -222,6 +224,15 @@ export function Header() {
               <Divider className="hidden md:block mx-2 h-5" />
 
               <GarageMenu />
+
+              <Link
+                href="/account"
+                aria-label="My Nexmod"
+                className="grid place-items-center w-9 h-9 rounded-lg text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors"
+              >
+                <IconUser width={18} height={18} />
+              </Link>
+
               <LanguageSwitcher />
               <ThemeToggle />
 

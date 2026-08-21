@@ -40,6 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/services", changeFrequency: "monthly", priority: 0.9 },
     { path: "/ez-lip", changeFrequency: "monthly", priority: 0.9 },
     { path: "/packages", changeFrequency: "weekly", priority: 0.9 },
+    { path: "/advisor", changeFrequency: "monthly", priority: 0.85 },
     { path: "/build", changeFrequency: "monthly", priority: 0.85 },
     { path: "/gallery", changeFrequency: "weekly", priority: 0.8 },
     { path: "/articles", changeFrequency: "daily", priority: 0.8 },

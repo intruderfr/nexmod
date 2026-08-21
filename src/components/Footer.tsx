@@ -166,6 +166,8 @@ export function Footer() {
             </h3>
             <ul className="space-y-2.5">
               {[
+                { href: "/account", label: "My Nexmod" },
+                { href: "/advisor", label: "Advisor" },
                 { href: "/packages", label: "Packages" },
                 { href: "/build", label: dict.nav.build },
                 { href: "/gallery", label: "Gallery" },

@@ -6,6 +6,7 @@ import { categories } from "@/data/categories";
 import { allFitments, products } from "@/data/products";
 import { lkr, site, waLink } from "@/data/site";
 import { useCart } from "@/lib/cart";
+import { usePrefs } from "@/lib/prefs";
 import {
   CategoryIcon,
   IconArrowRight,
@@ -73,6 +74,7 @@ interface Selection {
 
 export function BuildStudio() {
   const { add, setOpen } = useCart();
+  const { saveBuild, activeVehicle } = usePrefs();
   const searchParams = useSearchParams();
 
   const [vehicle, setVehicle] = useState("");
@@ -80,6 +82,7 @@ export function BuildStudio() {
   const [colour, setColour] = useState("");
   const [selected, setSelected] = useState<Selection[]>([]);
   const [copied, setCopied] = useState(false);
+  const [savedName, setSavedName] = useState("");
   const [openCategory, setOpenCategory] = useState<string | null>("body-kits");
   const [hasPhoto, setHasPhoto] = useState(false);
 
@@ -493,6 +496,36 @@ export function BuildStudio() {
                 <button type="button" onClick={addAllToCart} className="btn btn-outline w-full">
                   <IconCart width={16} height={16} />
                   Add all to cart
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const name =
+                      window.prompt("Name this build", vehicleLabel || "My build")?.trim();
+                    if (!name) return;
+                    saveBuild({
+                      name,
+                      vehicle: vehicleLabel || activeVehicle?.model,
+                      colour: colour || undefined,
+                      items: selected.map((s) => ({
+                        slug: s.slug,
+                        variantId: s.variantId,
+                        withInstallation: s.withInstallation,
+                      })),
+                    });
+                    setSavedName(name);
+                    window.setTimeout(() => setSavedName(""), 2500);
+                  }}
+                  className="btn btn-outline w-full"
+                >
+                  {savedName ? (
+                    <>
+                      <IconCheck width={15} height={15} />
+                      Saved to My Nexmod
+                    </>
+                  ) : (
+                    "Save this build"
+                  )}
                 </button>
                 <button
                   type="button"

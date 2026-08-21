@@ -19,6 +19,8 @@ import {
   IconArrowRight,
   IconCheck,
   IconClock,
+  IconHeart,
+  IconHeartFilled,
   IconPlus,
   IconTool,
 } from "./Icons";
@@ -40,8 +42,10 @@ export function ProductCard({ product }: { product: Product }) {
   const range = priceRange(product);
   const hasRange = range.min !== range.max;
   const photo = productImage(product.slug, product.category);
-  const { isComparing, toggleCompare, compareFull, activeVehicle } = usePrefs();
+  const { isComparing, toggleCompare, compareFull, activeVehicle, isWishlisted, toggleWishlist } =
+    usePrefs();
   const comparing = isComparing(product.slug);
+  const saved = isWishlisted(product.slug);
 
   // Does this fit the car currently selected in the garage?
   const fitsActive =
@@ -108,6 +112,23 @@ export function ProductCard({ product }: { product: Product }) {
         }`}
       >
         {comparing ? <IconCheck width={14} height={14} /> : <IconPlus width={14} height={14} />}
+      </button>
+
+      <button
+        type="button"
+        onClick={() => toggleWishlist(product.slug)}
+        aria-pressed={saved}
+        aria-label={saved ? `Remove ${product.name} from wishlist` : `Save ${product.name}`}
+        title={saved ? "Saved" : "Save for later"}
+        className={`absolute top-[3.25rem] right-2.5 z-10 grid place-items-center w-8 h-8 rounded-md backdrop-blur transition-colors ${
+          saved ? "bg-[var(--accent)] text-white" : "bg-black/50 text-white hover:bg-black/75"
+        }`}
+      >
+        {saved ? (
+          <IconHeartFilled width={14} height={14} />
+        ) : (
+          <IconHeart width={14} height={14} />
+        )}
       </button>
 
 

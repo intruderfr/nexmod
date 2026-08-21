@@ -1,5 +1,6 @@
 import { LocaleLink as Link } from "@/i18n/client";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { DeliveryEstimator } from "@/components/DeliveryEstimator";
 import { IconTruck, IconWhatsApp } from "@/components/Icons";
 import { lkr, site, waLink } from "@/data/site";
 import { pageMeta } from "@/lib/seo";
@@ -41,6 +42,10 @@ export default function DeliveryReturnsPage() {
 
       <section className="container-nex py-12 md:py-16">
         <div className="max-w-3xl">
+          <div className="mb-10">
+            <DeliveryEstimator />
+          </div>
+
           {/* Delivery table */}
           <div className="surface p-6 mb-10">
             <h2 className="flex items-center gap-2.5 text-xl mb-5">

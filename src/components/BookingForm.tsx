@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { services } from "@/data/services";
 import { site, waLink } from "@/data/site";
+import { usePrefs } from "@/lib/prefs";
 import { IconCheck, IconWhatsApp } from "./Icons";
 
 /**
@@ -38,11 +39,13 @@ const IS_STATIC = process.env.NEXT_PUBLIC_STATIC_EXPORT === "1";
 
 
 export function BookingForm({ preselect }: { preselect?: string }) {
+  const { logHistory, profile, activeVehicle } = usePrefs();
+
   const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    vehicle: "",
+    name: profile.name ?? "",
+    phone: profile.phone ?? "",
+    email: profile.email ?? "",
+    vehicle: activeVehicle?.model ?? "",
     service: preselect ?? "",
     date: "",
     time: "",
@@ -107,6 +110,12 @@ export function BookingForm({ preselect }: { preselect?: string }) {
         body: JSON.stringify(form),
       });
       if (!res.ok) throw new Error("Request failed");
+      logHistory({
+        kind: "booking",
+        summary: `Booking requested — ${selectedService?.name ?? "service"}${
+          form.date ? ` on ${form.date}` : ""
+        }`,
+      });
       setStatus("sent");
     } catch {
       setStatus("error");
