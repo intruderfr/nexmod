@@ -234,7 +234,9 @@ h5 {
   letter-spacing: -0.028em;
   line-height: 1.08;
   text-wrap: balance;
-  margin: 0;
+  /* No `margin: 0` here. This rule is unlayered, and unlayered CSS beats
+     everything in @layer components — including .prose-nex spacing. Tailwind
+     preflight already resets these margins from inside a layer. */
 }
 
 h1 {
@@ -310,7 +312,7 @@ h1 {
 
 p {
   text-wrap: pretty;
-  margin: 0;
+  /* Margin deliberately not reset here — see the note on the heading rule. */
 }
 
 /* Anything numeric lines up in columns. */
