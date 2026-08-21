@@ -4,6 +4,7 @@ import { LocaleLink as Link, useDictionary } from "@/i18n/client";
 import { categories } from "@/data/categories";
 import { services } from "@/data/services";
 import { site } from "@/data/site";
+import { LogoMark, BRAND_RED } from "./Logo";
 import {
   IconClock,
   IconFacebook,
@@ -61,14 +62,9 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2">
             <Link href="/" className="flex items-center gap-2.5 mb-5" aria-label="Nexmod home">
-              <span className="relative grid place-items-center w-9 h-9 rounded-md bg-[var(--fg)] text-[var(--bg)] overflow-hidden">
-                <span className="font-[family-name:var(--font-display)] font-extrabold text-[15px] leading-none">
-                  N
-                </span>
-                <span className="absolute inset-x-0 bottom-0 h-[3px] bg-[var(--accent)]" />
-              </span>
+              <LogoMark className="h-[21px] w-auto shrink-0 text-[var(--fg)]" />
               <span className="font-[family-name:var(--font-display)] font-extrabold tracking-tight text-[19px]">
-                NEXMOD
+                NE<span style={{ color: BRAND_RED }}>X</span>MOD
               </span>
             </Link>
 

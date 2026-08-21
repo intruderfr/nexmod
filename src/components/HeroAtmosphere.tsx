@@ -58,7 +58,7 @@ export function HeroAtmosphere({ className = "" }: { className?: string }) {
       (!document.documentElement.hasAttribute("data-theme") &&
         window.matchMedia("(prefers-color-scheme: dark)").matches);
 
-    const accent: [number, number, number] = isDark ? [255, 74, 46] : [214, 51, 24];
+    const accent: [number, number, number] = isDark ? [230, 58, 64] : [206, 35, 41];
     const cool: [number, number, number] = isDark ? [90, 130, 180] : [120, 150, 190];
     void styles;
 

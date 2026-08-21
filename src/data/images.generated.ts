@@ -152,39 +152,39 @@ export const generatedImages = {
     "source": "Pexels"
   },
   "build-01": {
-    "alt": "Modified sedan",
-    "width": 2400,
-    "height": 1600,
-    "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAQBACdASoUAA0APxFysFAsJqSisAgBgCIJZgCdL1yB0YELrDEKAPavAAD+6nx8dhCJUjil0EhJ0MZuyFsQQRcHYhuKaHavRhKd2ZgYHTbqe4WAAAA=",
-    "source": "Unsplash"
+    "alt": "BYD SUV in the Nexmod workshop at Dehiwala under the hexagon LED ceiling",
+    "width": 640,
+    "height": 640,
+    "lqip": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAACwBACdASoUABQAPxGAt1WsJ6UjKAgBgCIJZwDM0AuXVMvDY7ddHqGwMDKmHAFwAP2bAB0lwR6uzg5hV1pJ4/qrA9vHHTxfWmEglYvIu978KBilUXRkG7EYy59KlJ0LSSLNucZ6EqD2i8pSWI+tIiL+gQ27lLQkdGJWnMMiDLVs+BYVGBLIAAAA",
+    "source": "Nexmod"
   },
   "build-02": {
-    "alt": "Modified coupe",
-    "width": 2400,
-    "height": 1600,
-    "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAwCdASoUAA0APxFyslAsJqSisAgBgCIJZwDCgBQOQ8llg9q1ogAA/fad5DERVVIDpSbyEs7LI3FpAsMRrR40Hpn1jKjNZIAAAA==",
-    "source": "Unsplash"
+    "alt": "Land Rover Defender in for bodywork at the Nexmod workshop",
+    "width": 361,
+    "height": 640,
+    "lqip": "data:image/webp;base64,UklGRhABAABXRUJQVlA4IAQBAACQBgCdASoUACQAPxF8t1UsJyUjKrgIAYAiCWIAwFAAbizuYALajJj5EHPJeEiD9onLZBMxtubWe9vIILoAAP3jFQoxcTaSmKd3Sig8qbUANWu25cy5EZu4TWfv3DkXq5XGoiiI2tmsaOOvoIJgo4LFYiNpoRFpO6d6Y/kcJ/6gfYjEqvsyPfo8iZZBBvJbI/ByzCuixkO/PiLtW7/QbDAwNhQOQJvfkevby08BiuNz7i7peki761JOFHbxpyJ6G604k3FarZ1XysY+BQsBV+6wf0zbrgzB1ykXFDngDzgap4NZpmVazSpNA7jgG8ygqSIvh1RX5E97efmptR1qUhizvAAAAA==",
+    "source": "Nexmod"
   },
   "build-03": {
-    "alt": "Sports car on a road",
-    "width": 2400,
-    "height": 1600,
-    "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAwCdASoUAA0APxFysVCsJqSisAgBgCIJYgCdACP/mnTTqc88tCAA/lmI475rWvlY5gUSFJSKBE2Ff344gNhIRIgifhI/rQBuNlmAAAA=",
-    "source": "Unsplash"
+    "alt": "White SUV fitted with side steps at Nexmod Dehiwala",
+    "width": 361,
+    "height": 640,
+    "lqip": "data:image/webp;base64,UklGRuIAAABXRUJQVlA4INYAAACQBgCdASoUACQAPxF8tVUsJySjKrgIAYAiCWUAxoAKCF+i0COv5lDFuBesij8b5XNRquK+70vR1PjKNZwAAP4mZSawjzSCMkhWsVZ3lbKBjrnsaXVh8rUVDl9whrh/5QdSJuS5y5VA/3N7j1+jPhYWnHJ5Gn2ps/3R8mNJNvQdjzJmDjpwEWy1ds6d4JfBbraL+x8L/vG+5By5CmCIgEJ4+4gqTFe1YwyIHAaNFsxXE9+Xk5IURrwbgnrm/dPiKWfsbbrXAzzfEL1iuqqG5vzmMJ/AAAAA",
+    "source": "Nexmod"
   },
   "build-04": {
-    "alt": "Car in motion",
-    "width": 2400,
-    "height": 1600,
-    "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAwCdASoUAA0APxFysVCsJqSisAgBgCIJQBOmUABmWQnMSR5rIzoAAPJz8MMhWppJmPua7inlR9M82IY+/zphDoblw0C/RoK8G51AAAA=",
-    "source": "Pexels"
+    "alt": "Audi with an LED rear light bar fitted, in the Nexmod showroom",
+    "width": 361,
+    "height": 640,
+    "lqip": "data:image/webp;base64,UklGRvAAAABXRUJQVlA4IOQAAABwBgCdASoUACQAPxF4sFMsJyQiqqoBgCIJQBg0P/y7dSSBuMZnwO/6LrHpe7tsDZgy7ZAd79CSSbLOWMAAyQHzIQE4bSXYhXWaOEX/Ar9GjM2MRYJ3/cGPqWMdp2kE9elNk7bYWVDQYK+w0V3OoGWdrwIHod+NzpQ80cQqvElo9JDmOVpDfbnOaX9ust9GVvzRfAxGvoQv5bGRiyXjTJkmYqMXH8QkQWARUm+fZwCmNiIk0JGqnczttbpovgYa29xH1do3KPTNZpzK3FaQKd2GtiNB/psr40LZRDbXmCz6SBcWgAA=",
+    "source": "Nexmod"
   },
   "build-05": {
-    "alt": "Car front three-quarter",
-    "width": 2400,
-    "height": 1350,
-    "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAwCdASoUAAsAPxF4slEsJ6SisAgBgCIJYwAASonwgy13P7y8mAAAzfDdO4s/I3LCcVyCHkoFLxk5emEXr9QNHrq9X/ztL0A4AA==",
-    "source": "Pexels"
+    "alt": "Car running upgraded headlights at dusk in Colombo",
+    "width": 640,
+    "height": 360,
+    "lqip": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACwAwCdASoUAAsAPxF0sVCsJqSisAgBgCIJYwDE2BxkzdiASNtoAAD+iSPQb19nYMZrxMKLrXvECb78k5r78demfUw0Fgd1rAMwOAIwPkpvMNiuBWeUAAAA",
+    "source": "Nexmod"
   },
   "build-06": {
     "alt": "Supercar in a showroom",

@@ -24,6 +24,7 @@ import {
   IconUser,
   IconWhatsApp,
 } from "./Icons";
+import { LogoMark, BRAND_RED } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { OpenStatus } from "./OpenStatus";
 import { Photo } from "./Photo";
@@ -187,18 +188,23 @@ export function Header() {
             {/* Wordmark */}
             <Link
               href="/"
-              className="flex items-center gap-2.5 shrink-0"
+              /*
+                gap-2 rather than gap-2.5: the real monogram is wider than the
+                placeholder tile it replaced, which pushed the bar 1px over at
+                1280. Two pixels back here is cheaper than shrinking the mark.
+              */
+              className="flex items-center gap-2 shrink-0"
               aria-label={`${site.name} home`}
             >
-              <span className="relative grid place-items-center w-8 h-8 rounded-[6px] bg-[var(--fg)] text-[var(--bg)] overflow-hidden">
-                <span className="font-[family-name:var(--font-display)] font-extrabold text-[14px] leading-none">
-                  N
-                </span>
-                <span className="absolute inset-x-0 bottom-0 h-[3px] bg-[var(--accent)]" />
-              </span>
+              {/*
+                The real NM monogram, traced from the company artwork. It
+                replaces the placeholder "N" tile that stood in while nobody
+                had the actual logo.
+              */}
+              <LogoMark className="h-[19px] w-auto shrink-0 text-[var(--fg)]" />
               <span className="block leading-none">
                 <span className="block font-[family-name:var(--font-display)] font-extrabold tracking-[-0.03em] text-[17px]">
-                  NEXMOD
+                  NE<span style={{ color: BRAND_RED }}>X</span>MOD
                 </span>
                 {/*
                   The tagline is set in 8px mono with wide tracking, which makes

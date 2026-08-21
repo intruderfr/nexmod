@@ -28,7 +28,8 @@
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 
   /* Static brand values, for places that need a literal ---------------- */
-  --color-nex-red: #ff4a2e;
+  /* Sampled from the official artwork: the mean of 56,289 red pixels. */
+  --color-nex-red: #ce2329;
   --color-nex-green: #34c46a;
   --color-nex-amber: #ffb62e;
 }
@@ -60,12 +61,12 @@
   --border-hairline: rgba(11, 13, 17, 0.07);
 
   /* Accent */
-  --accent: #d63318;
-  --accent-hover: #b92a12;
+  --accent: #ce2329;
+  --accent-hover: #a81a20;
   --accent-fg: #ffffff;
-  --accent-subtle: rgba(214, 51, 24, 0.07);
-  --accent-line: rgba(214, 51, 24, 0.22);
-  --accent-glow: rgba(214, 51, 24, 0.16);
+  --accent-subtle: rgba(206, 35, 41, 0.07);
+  --accent-line: rgba(206, 35, 41, 0.22);
+  --accent-glow: rgba(206, 35, 41, 0.16);
 
   /* Titanium — secondary technical tone, for data and meta */
   --titanium: #5b6673;
@@ -106,12 +107,12 @@
     --border-strong: #2f353e;
     --border-hairline: rgba(255, 255, 255, 0.06);
 
-    --accent: #ff4a2e;
-    --accent-hover: #ff6347;
+    --accent: #e63a40;
+    --accent-hover: #ef5f63;
     --accent-fg: #ffffff;
-    --accent-subtle: rgba(255, 74, 46, 0.11);
-    --accent-line: rgba(255, 74, 46, 0.3);
-    --accent-glow: rgba(255, 74, 46, 0.28);
+    --accent-subtle: rgba(230, 58, 64, 0.11);
+    --accent-line: rgba(230, 58, 64, 0.3);
+    --accent-glow: rgba(230, 58, 64, 0.28);
 
     --titanium: #8d97a5;
     --titanium-subtle: rgba(141, 151, 165, 0.1);
@@ -148,12 +149,12 @@
   --border-strong: #2f353e;
   --border-hairline: rgba(255, 255, 255, 0.06);
 
-  --accent: #ff4a2e;
-  --accent-hover: #ff6347;
+  --accent: #e63a40;
+  --accent-hover: #ef5f63;
   --accent-fg: #ffffff;
-  --accent-subtle: rgba(255, 74, 46, 0.11);
-  --accent-line: rgba(255, 74, 46, 0.3);
-  --accent-glow: rgba(255, 74, 46, 0.28);
+  --accent-subtle: rgba(230, 58, 64, 0.11);
+  --accent-line: rgba(230, 58, 64, 0.3);
+  --accent-glow: rgba(230, 58, 64, 0.28);
 
   --titanium: #8d97a5;
   --titanium-subtle: rgba(141, 151, 165, 0.1);

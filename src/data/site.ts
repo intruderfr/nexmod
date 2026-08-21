@@ -37,7 +37,11 @@ export const site = {
     tel: "+94757740404",
     // wa.me requires no plus sign or spaces
     whatsapp: "94757740404",
-    email: "hello@nexmod.lk", // PLACEHOLDER — confirm with owner
+    // The real address, from the company brand banner and Facebook business
+    // details. The previous hello@nexmod.lk was invented and reached nobody
+    // — a contact page that silently drops enquiries is worse than one with
+    // no email on it at all.
+    email: "nexmod.lk@gmail.com",
   },
 
   address: {
