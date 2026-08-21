@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LocaleLink as Link } from "@/i18n/client";
 import { IconArrowRight } from "./Icons";
 
 /**

@@ -1,4 +1,13 @@
-import Link from "next/link";
+"use client";
+
+import { LocaleLink as Link, useDictionary, useLocale } from "@/i18n/client";
+import {
+  categoryName,
+  categoryTagline,
+  productTagline,
+  serviceName,
+  serviceTagline,
+} from "@/i18n/content";
 import { getCategory } from "@/data/categories";
 import { lkr } from "@/data/site";
 import type { Article, Product, Service } from "@/data/types";
@@ -10,6 +19,8 @@ import { Visual } from "./Visual";
 /* ------------------------------------------------------------------ Product */
 
 export function ProductCard({ product }: { product: Product }) {
+  const locale = useLocale();
+  const dict = useDictionary();
   const category = getCategory(product.category);
   const range = priceRange(product);
   const hasRange = range.min !== range.max;
@@ -20,7 +31,7 @@ export function ProductCard({ product }: { product: Product }) {
         <Visual
           variant={product.category}
           icon={category?.icon ?? "tool"}
-          label={category?.name}
+          label={category ? categoryName(category.slug, locale, category.name) : undefined}
           ratio="wide"
         />
         {product.badges && product.badges.length > 0 && (
@@ -56,13 +67,13 @@ export function ProductCard({ product }: { product: Product }) {
         </h3>
 
         <p className="text-[13px] text-[var(--fg-muted)] leading-relaxed line-clamp-2 mb-3">
-          {product.tagline}
+          {productTagline(product.slug, locale, product.tagline)}
         </p>
 
         <div className="mt-auto pt-3 border-t border-[var(--border)] flex items-end justify-between gap-3">
           <div>
             <span className="block text-[10.5px] uppercase tracking-wider text-[var(--fg-subtle)]">
-              {hasRange ? "From" : "Price"}
+              {hasRange ? dict.commerce.from : dict.commerce.price}
             </span>
             <span className="text-lg font-bold tabular-nums leading-tight">
               {lkr(range.min)}
@@ -77,7 +88,7 @@ export function ProductCard({ product }: { product: Product }) {
           {product.installation?.available && (
             <span className="badge shrink-0">
               <IconTool width={11} height={11} />
-              Fitting
+              {dict.commerce.fitting}
             </span>
           )}
         </div>
@@ -89,6 +100,9 @@ export function ProductCard({ product }: { product: Product }) {
 /* ------------------------------------------------------------------ Service */
 
 export function ServiceCard({ service }: { service: Service }) {
+  const locale = useLocale();
+  const dict = useDictionary();
+
   return (
     <article className="surface surface-hover overflow-hidden flex flex-col group">
       <Link href={`/services/${service.slug}`} className="block">
@@ -102,20 +116,20 @@ export function ServiceCard({ service }: { service: Service }) {
           </span>
           <h3 className="font-semibold text-[16px] leading-snug pt-1.5">
             <Link href={`/services/${service.slug}`} className="hover:text-[var(--accent)] transition-colors">
-              {service.name}
+              {serviceName(service.slug, locale, service.name)}
             </Link>
           </h3>
         </div>
 
         <p className="text-[13.5px] text-[var(--fg-muted)] leading-relaxed mb-4 line-clamp-2">
-          {service.tagline}
+          {serviceTagline(service.slug, locale, service.tagline)}
         </p>
 
         <div className="mt-auto pt-3.5 border-t border-[var(--border)] flex items-center justify-between gap-3">
           <div className="min-w-0">
             {service.fromPrice && (
               <span className="block text-[15px] font-bold tabular-nums leading-tight">
-                From {lkr(service.fromPrice)}
+                {dict.commerce.from} {lkr(service.fromPrice)}
               </span>
             )}
             <span className="flex items-center gap-1 text-[11.5px] text-[var(--fg-subtle)] mt-0.5">
@@ -143,6 +157,8 @@ export function ArticleCard({
   article: Article;
   featured?: boolean;
 }) {
+  const dict = useDictionary();
+
   const categoryIcon =
     article.category === "news"
       ? "essentials"
@@ -176,7 +192,9 @@ export function ArticleCard({
           <span className="badge badge-accent capitalize">{article.category}</span>
           <time dateTime={article.publishedAt}>{formatDateShort(article.publishedAt)}</time>
           <span aria-hidden="true">·</span>
-          <span>{article.readingMinutes} min read</span>
+          <span>
+            {article.readingMinutes} {dict.common.minRead}
+          </span>
         </div>
 
         <h3
@@ -199,7 +217,7 @@ export function ArticleCard({
 
         {featured && (
           <span className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-[var(--accent)]">
-            Read the guide
+            {dict.actions.readGuide}
             <IconArrowRight width={15} height={15} className="group-hover:translate-x-0.5 transition-transform" />
           </span>
         )}
@@ -223,6 +241,8 @@ export function CategoryCard({
   icon: string;
   count: number;
 }) {
+  const locale = useLocale();
+
   return (
     <Link
       href={`/categories/${slug}`}
@@ -232,11 +252,13 @@ export function CategoryCard({
       <div className="p-4">
         <div className="flex items-center justify-between gap-2 mb-1">
           <h3 className="font-semibold text-[15px] group-hover:text-[var(--accent)] transition-colors">
-            {name}
+            {categoryName(slug, locale, name)}
           </h3>
           <span className="text-[11px] text-[var(--fg-subtle)] tabular-nums shrink-0">{count}</span>
         </div>
-        <p className="text-[12.5px] text-[var(--fg-muted)] leading-snug line-clamp-2">{tagline}</p>
+        <p className="text-[12.5px] text-[var(--fg-muted)] leading-snug line-clamp-2">
+          {categoryTagline(slug, locale, tagline)}
+        </p>
       </div>
     </Link>
   );

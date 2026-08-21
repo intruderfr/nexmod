@@ -3,63 +3,87 @@ import { categories } from "@/data/categories";
 import { products } from "@/data/products";
 import { services } from "@/data/services";
 import { site } from "@/data/site";
+import { localeMeta, locales } from "@/i18n/config";
 import { publishedArticles } from "@/lib/content";
 
 /**
- * Sitemap. Scheduled articles are excluded automatically because
- * publishedArticles() filters on date — so a future-dated post never leaks
- * into the sitemap before it goes live.
+ * Sitemap.
+ *
+ * Every path is emitted once per locale, and each entry carries the full
+ * `alternates.languages` set so Google can see the translation cluster from
+ * the sitemap alone rather than having to crawl each page for hreflang.
+ *
+ * Scheduled articles are excluded automatically, because publishedArticles()
+ * filters on date — a future-dated post never leaks in before it goes live.
  *
  * Revalidated daily so newly scheduled content appears without a redeploy.
  */
 export const revalidate = 86400;
 
+interface Entry {
+  path: string;
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority: number;
+  lastModified?: Date;
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const url = (path: string) => `${site.url}${path}`;
 
-  const staticPages: MetadataRoute.Sitemap = [
-    { url: url("/"), lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: url("/products"), lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: url("/services"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: url("/ez-lip"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: url("/articles"), lastModified: now, changeFrequency: "daily", priority: 0.8 },
-    { url: url("/about"), lastModified: now, changeFrequency: "yearly", priority: 0.6 },
-    { url: url("/contact"), lastModified: now, changeFrequency: "yearly", priority: 0.7 },
-    { url: url("/book"), lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: url("/faq"), lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: url("/delivery-returns"), lastModified: now, changeFrequency: "yearly", priority: 0.4 },
-    { url: url("/privacy"), lastModified: now, changeFrequency: "yearly", priority: 0.2 },
-    { url: url("/terms"), lastModified: now, changeFrequency: "yearly", priority: 0.2 },
+  const entries: Entry[] = [
+    { path: "", changeFrequency: "weekly", priority: 1 },
+    { path: "/products", changeFrequency: "weekly", priority: 0.9 },
+    { path: "/services", changeFrequency: "monthly", priority: 0.9 },
+    { path: "/ez-lip", changeFrequency: "monthly", priority: 0.9 },
+    { path: "/articles", changeFrequency: "daily", priority: 0.8 },
+    { path: "/book", changeFrequency: "monthly", priority: 0.8 },
+    { path: "/contact", changeFrequency: "yearly", priority: 0.7 },
+    { path: "/about", changeFrequency: "yearly", priority: 0.6 },
+    { path: "/faq", changeFrequency: "monthly", priority: 0.6 },
+    { path: "/delivery-returns", changeFrequency: "yearly", priority: 0.4 },
+    { path: "/privacy", changeFrequency: "yearly", priority: 0.2 },
+    { path: "/terms", changeFrequency: "yearly", priority: 0.2 },
+
+    ...categories.map((c) => ({
+      path: `/categories/${c.slug}`,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    })),
+
+    ...services.map((s) => ({
+      path: `/services/${s.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: s.featured ? 0.85 : 0.75,
+    })),
+
+    ...products.map((p) => ({
+      path: `/products/${p.slug}`,
+      changeFrequency: "weekly" as const,
+      priority: p.featured ? 0.8 : 0.7,
+    })),
+
+    ...publishedArticles().map((a) => ({
+      path: `/articles/${a.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: a.featured ? 0.75 : 0.65,
+      lastModified: new Date(a.updatedAt ?? a.publishedAt),
+    })),
   ];
 
-  const categoryPages: MetadataRoute.Sitemap = categories.map((c) => ({
-    url: url(`/categories/${c.slug}`),
-    lastModified: now,
-    changeFrequency: "weekly",
-    priority: 0.8,
-  }));
-
-  const productPages: MetadataRoute.Sitemap = products.map((p) => ({
-    url: url(`/products/${p.slug}`),
-    lastModified: now,
-    changeFrequency: "weekly",
-    priority: p.featured ? 0.8 : 0.7,
-  }));
-
-  const servicePages: MetadataRoute.Sitemap = services.map((s) => ({
-    url: url(`/services/${s.slug}`),
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: s.featured ? 0.85 : 0.75,
-  }));
-
-  const articlePages: MetadataRoute.Sitemap = publishedArticles().map((a) => ({
-    url: url(`/articles/${a.slug}`),
-    lastModified: new Date(a.updatedAt ?? a.publishedAt),
-    changeFrequency: "monthly",
-    priority: a.featured ? 0.75 : 0.65,
-  }));
-
-  return [...staticPages, ...categoryPages, ...servicePages, ...productPages, ...articlePages];
+  return entries.flatMap((entry) =>
+    locales.map((locale) => ({
+      url: `${site.url}/${locale}${entry.path}`,
+      lastModified: entry.lastModified ?? now,
+      changeFrequency: entry.changeFrequency,
+      priority: entry.priority,
+      alternates: {
+        languages: {
+          ...Object.fromEntries(
+            locales.map((l) => [localeMeta[l].htmlLang, `${site.url}/${l}${entry.path}`]),
+          ),
+          "x-default": `${site.url}/en${entry.path}`,
+        },
+      },
+    })),
+  );
 }

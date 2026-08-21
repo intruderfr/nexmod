@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LocaleLink as Link } from "@/i18n/client";
 import { breadcrumbSchema } from "@/lib/schema";
 import { IconChevronRight } from "./Icons";
 import { JsonLd } from "./JsonLd";

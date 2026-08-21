@@ -1,4 +1,6 @@
-import Link from "next/link";
+"use client";
+
+import { LocaleLink as Link, useDictionary } from "@/i18n/client";
 import { categories } from "@/data/categories";
 import { services } from "@/data/services";
 import { site } from "@/data/site";
@@ -15,6 +17,7 @@ import {
 } from "./Icons";
 
 export function Footer() {
+  const dict = useDictionary();
   const year = new Date().getFullYear();
 
   return (
@@ -24,15 +27,14 @@ export function Footer() {
         <div className="container-nex py-12 md:py-16">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div className="max-w-xl">
-              <p className="eyebrow mb-3">Ready when you are</p>
+              <p className="eyebrow mb-3">{dict.footer.ctaEyebrow}</p>
               <h2 className="text-3xl md:text-4xl mb-3">
-                Send us a photo of your car.
+                {dict.footer.ctaTitle1}
                 <br />
-                We&rsquo;ll tell you what works.
+                {dict.footer.ctaTitle2}
               </h2>
               <p className="text-[var(--fg-muted)] leading-relaxed">
-                Most quotes take a few minutes on WhatsApp. No obligation, and we will tell you
-                honestly if something is not worth doing.
+{dict.footer.ctaLede}
               </p>
             </div>
             <div className="flex flex-wrap gap-3 shrink-0">
@@ -43,10 +45,10 @@ export function Footer() {
                 className="btn btn-lg btn-whatsapp"
               >
                 <IconWhatsApp width={18} height={18} />
-                WhatsApp us
+                {dict.actions.whatsappUs}
               </a>
               <Link href="/book" className="btn btn-lg btn-outline">
-                Book a fitting
+                {dict.actions.bookFitting}
               </Link>
             </div>
           </div>
@@ -71,7 +73,7 @@ export function Footer() {
             </Link>
 
             <p className="text-sm text-[var(--fg-muted)] leading-relaxed mb-5 max-w-xs">
-              {site.shortDescription} Official EZ Lip USA agent for Sri Lanka.
+              {dict.footer.blurb} {dict.footer.officialAgent}
             </p>
 
             <div className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--border)] bg-[var(--bg-raised)] mb-6">
@@ -84,7 +86,7 @@ export function Footer() {
                 {site.rating.value}
                 <span className="text-[var(--fg-subtle)] font-normal">
                   {" "}
-                  · {site.rating.count} Google reviews
+                  · {site.rating.count} {dict.common.googleReviews}
                 </span>
               </span>
             </div>
@@ -112,7 +114,7 @@ export function Footer() {
           {/* Products */}
           <div>
             <h3 className="text-[11px] font-bold uppercase tracking-[0.13em] text-[var(--fg-subtle)] mb-4">
-              Products
+              {dict.nav.products}
             </h3>
             <ul className="space-y-2.5">
               {categories.slice(0, 7).map((c) => (
@@ -136,7 +138,7 @@ export function Footer() {
           {/* Services */}
           <div>
             <h3 className="text-[11px] font-bold uppercase tracking-[0.13em] text-[var(--fg-subtle)] mb-4">
-              Services
+              {dict.nav.services}
             </h3>
             <ul className="space-y-2.5">
               {services.slice(0, 7).map((s) => (
@@ -160,17 +162,17 @@ export function Footer() {
           {/* Company */}
           <div>
             <h3 className="text-[11px] font-bold uppercase tracking-[0.13em] text-[var(--fg-subtle)] mb-4">
-              Company
+              {dict.common.company}
             </h3>
             <ul className="space-y-2.5">
               {[
-                { href: "/about", label: "About Nexmod" },
+                { href: "/about", label: dict.nav.about },
                 { href: "/ez-lip", label: "EZ Lip Sri Lanka" },
-                { href: "/articles", label: "Articles & News" },
-                { href: "/book", label: "Book a fitting" },
-                { href: "/contact", label: "Contact & directions" },
-                { href: "/faq", label: "FAQ" },
-                { href: "/delivery-returns", label: "Delivery & returns" },
+                { href: "/articles", label: dict.nav.articles },
+                { href: "/book", label: dict.actions.bookFitting },
+                { href: "/contact", label: dict.nav.contact },
+                { href: "/faq", label: dict.footer.faqLink },
+                { href: "/delivery-returns", label: dict.footer.deliveryLink },
               ].map((l) => (
                 <li key={l.href}>
                   <Link
@@ -187,7 +189,7 @@ export function Footer() {
           {/* Visit */}
           <div>
             <h3 className="text-[11px] font-bold uppercase tracking-[0.13em] text-[var(--fg-subtle)] mb-4">
-              Visit the workshop
+              {dict.common.visitWorkshop}
             </h3>
             <ul className="space-y-3.5 text-[13.5px] text-[var(--fg-muted)]">
               <li className="flex gap-2.5">
@@ -236,7 +238,7 @@ export function Footer() {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-[11px] uppercase tracking-wider text-[var(--fg-subtle)] mr-1">
-                We accept
+                {dict.common.weAccept}
               </span>
               {site.payments.map((p) => (
                 <span key={p.id} className="badge">
@@ -246,13 +248,13 @@ export function Footer() {
             </div>
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-[var(--fg-subtle)]">
               <Link href="/privacy" className="hover:text-[var(--fg)]">
-                Privacy
+                {dict.footer.privacy}
               </Link>
               <Link href="/terms" className="hover:text-[var(--fg)]">
-                Terms
+                {dict.footer.terms}
               </Link>
               <span>
-                © {year} {site.legalName}. All rights reserved.
+                © {year} {site.legalName}. {dict.footer.rights}
               </span>
             </div>
           </div>

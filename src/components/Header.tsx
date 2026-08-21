@@ -1,7 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import { LocaleLink as Link, useDictionary } from "@/i18n/client";
 import { usePathname } from "next/navigation";
+import { stripLocale } from "@/i18n/config";
 import { useEffect, useState } from "react";
 import { categories } from "@/data/categories";
 import { services, serviceCategories } from "@/data/services";
@@ -17,19 +18,22 @@ import {
   IconSearch,
   IconWhatsApp,
 } from "./Icons";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
-
-const nav = [
-  { label: "Products", href: "/products", mega: "products" as const },
-  { label: "Services", href: "/services", mega: "services" as const },
-  { label: "EZ Lip", href: "/ez-lip" },
-  { label: "Articles", href: "/articles" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
 
 export function Header() {
   const pathname = usePathname();
+  const dict = useDictionary();
+
+  const nav = [
+    { label: dict.nav.products, href: "/products", mega: "products" as const },
+    { label: dict.nav.services, href: "/services", mega: "services" as const },
+    { label: dict.nav.ezLip, href: "/ez-lip" },
+    { label: dict.nav.articles, href: "/articles" },
+    { label: dict.nav.about, href: "/about" },
+    { label: dict.nav.contact, href: "/contact" },
+  ];
+
   const { totals, setOpen } = useCart();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -66,8 +70,10 @@ export function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // pathname includes the locale prefix (/si/products); nav hrefs do not.
+  const path = stripLocale(pathname ?? "/").path;
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+    href === "/" ? path === "/" : path.startsWith(href);
 
   return (
     <>
@@ -75,8 +81,7 @@ export function Header() {
       <div className="hidden md:block bg-[var(--fg)] text-[var(--bg)] text-xs">
         <div className="container-nex flex items-center justify-between h-9">
           <p className="font-medium">
-            Official <strong className="font-bold">EZ Lip USA</strong> agent for Sri Lanka — genuine
-            product, fitted here only.
+{dict.nav.announcement}
           </p>
           <div className="flex items-center gap-5">
             <a href={`tel:${site.contact.tel}`} className="inline-flex items-center gap-1.5 hover:opacity-70">
@@ -148,11 +153,13 @@ export function Header() {
             <div className="flex items-center gap-1.5">
               <Link
                 href="/search"
-                aria-label="Search the site"
+                aria-label={dict.nav.search}
                 className="grid place-items-center w-10 h-10 rounded-md text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors"
               >
                 <IconSearch width={18} height={18} />
               </Link>
+
+              <LanguageSwitcher />
 
               <ThemeToggle />
 
@@ -184,7 +191,7 @@ export function Header() {
                 type="button"
                 onClick={() => setMobileOpen(true)}
                 className="lg:hidden grid place-items-center w-10 h-10 rounded-md text-[var(--fg-muted)] hover:text-[var(--fg)]"
-                aria-label="Open menu"
+                aria-label={dict.nav.openMenu}
               >
                 <IconMenu />
               </button>
@@ -199,13 +206,13 @@ export function Header() {
               {mega === "products" ? (
                 <div className="grid grid-cols-4 gap-x-8 gap-y-1">
                   <div className="col-span-1 pr-8 border-r border-[var(--border)]">
-                    <p className="eyebrow mb-3">Shop</p>
-                    <h3 className="text-xl mb-2">Every category</h3>
+                    <p className="eyebrow mb-3">{dict.home.shopEyebrow}</p>
+                    <h3 className="text-xl mb-2">{dict.nav.everyCategory}</h3>
                     <p className="text-sm text-[var(--fg-muted)] mb-5 leading-relaxed">
-                      Supplied and professionally fitted at our Dehiwala workshop.
+                      {dict.nav.megaProducts}
                     </p>
                     <Link href="/products" className="btn btn-sm btn-outline">
-                      All products
+                      {dict.nav.allProducts}
                     </Link>
                   </div>
                   <div className="col-span-3 grid grid-cols-3 gap-1">
@@ -231,13 +238,13 @@ export function Header() {
               ) : (
                 <div className="grid grid-cols-4 gap-x-8">
                   <div className="col-span-1 pr-8 border-r border-[var(--border)]">
-                    <p className="eyebrow mb-3">Workshop</p>
-                    <h3 className="text-xl mb-2">What we do</h3>
+                    <p className="eyebrow mb-3">{dict.home.servicesEyebrow}</p>
+                    <h3 className="text-xl mb-2">{dict.nav.whatWeDo}</h3>
                     <p className="text-sm text-[var(--fg-muted)] mb-5 leading-relaxed">
-                      Twelve services, all carried out in-house at Dehiwala.
+                      {dict.nav.megaServices}
                     </p>
                     <Link href="/services" className="btn btn-sm btn-outline">
-                      All services
+                      {dict.nav.allServices}
                     </Link>
                   </div>
                   <div className="col-span-3 grid grid-cols-4 gap-x-6">
@@ -286,7 +293,7 @@ export function Header() {
                 type="button"
                 onClick={() => setMobileOpen(false)}
                 className="grid place-items-center w-10 h-10 rounded-md hover:bg-[var(--bg-inset)]"
-                aria-label="Close menu"
+                aria-label={dict.nav.closeMenu}
               >
                 <IconClose />
               </button>
@@ -307,7 +314,7 @@ export function Header() {
                 ))}
               </nav>
 
-              <p className="eyebrow mb-3">Shop by category</p>
+              <p className="eyebrow mb-3">{dict.nav.shopBy}</p>
               <div className="grid grid-cols-2 gap-2 mb-8">
                 {categories.map((c) => (
                   <Link
@@ -329,7 +336,7 @@ export function Header() {
                   className="btn btn-whatsapp w-full"
                 >
                   <IconWhatsApp width={17} height={17} />
-                  WhatsApp us
+                  {dict.actions.whatsappUs}
                 </a>
                 <a href={`tel:${site.contact.tel}`} className="btn btn-outline w-full">
                   <IconPhone width={16} height={16} />

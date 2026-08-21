@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LocaleLink as Link } from "@/i18n/client";
 import { useState } from "react";
 import { lkr, site } from "@/data/site";
 import { useCart } from "@/lib/cart";

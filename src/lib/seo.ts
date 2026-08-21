@@ -1,52 +1,60 @@
 import type { Metadata } from "next";
 import { site } from "@/data/site";
+import { defaultLocale, isLocale, localeMeta, locales, type Locale } from "@/i18n/config";
 
 /**
- * Metadata helpers. Every page uses `pageMeta` so that titles, canonicals,
- * Open Graph and Twitter cards stay consistent and nothing is ever forgotten.
+ * Metadata helpers. Every page routes through `pageMeta` so titles, canonicals,
+ * hreflang, Open Graph and Twitter cards stay consistent and nothing is ever
+ * forgotten.
  */
 
 interface PageMetaInput {
   title: string;
   description: string;
-  /** Path only, e.g. "/services/window-tinting". Canonical is derived from it. */
+  /**
+   * Locale-agnostic path, e.g. "/services/window-tinting". The locale prefix
+   * and the full hreflang set are derived from it.
+   */
   path: string;
+  /** Locale of the page being rendered. Defaults to English. */
+  locale?: string;
   keywords?: string[];
-  /** Defaults to "website". Articles should pass "article". */
   type?: "website" | "article";
   publishedTime?: string;
   modifiedTime?: string;
   /** Suppress indexing — used for internal tools like /studio. */
   noindex?: boolean;
-  /** Overrides the generated OG image. */
   image?: string;
 }
 
-export function absoluteUrl(path: string): string {
-  const clean = path.startsWith("/") ? path : `/${path}`;
-  return `${site.url}${clean === "/" ? "" : clean}`;
+/** Absolute URL for a locale-agnostic path within a given locale. */
+export function absoluteUrl(path: string, locale: Locale = defaultLocale): string {
+  const clean = path === "/" ? "" : path.startsWith("/") ? path : `/${path}`;
+  return `${site.url}/${locale}${clean}`;
 }
 
 /**
  * Titles are capped so Google does not truncate them mid-word.
  * The suffix is dropped when the title is already long.
  */
-function buildTitle(title: string): string {
-  const suffix = ` | ${site.name} Sri Lanka`;
+function buildTitle(title: string, locale: Locale): string {
+  const suffix = locale === "en" ? " | Nexmod Sri Lanka" : " | Nexmod";
   if (title.length + suffix.length <= 60) return title + suffix;
-  if (title.length <= 60) return `${title} | ${site.name}`;
+  if (title.length <= 60) return `${title} | Nexmod`;
   return title;
 }
 
-/** Open Graph image is generated per-page by /opengraph-image routes. */
+/** OG images live at the English path — they are language-neutral artwork. */
 function ogImageFor(path: string): string {
-  return absoluteUrl(path === "/" ? "/opengraph-image" : `${path}/opengraph-image`);
+  const clean = path === "/" ? "" : path;
+  return `${site.url}/en${clean}/opengraph-image`;
 }
 
 export function pageMeta({
   title,
   description,
   path,
+  locale: rawLocale = defaultLocale,
   keywords = [],
   type = "website",
   publishedTime,
@@ -54,14 +62,28 @@ export function pageMeta({
   noindex = false,
   image,
 }: PageMetaInput): Metadata {
-  const url = absoluteUrl(path);
+  const locale: Locale = isLocale(rawLocale) ? rawLocale : defaultLocale;
+  const url = absoluteUrl(path, locale);
   const ogImage = image ?? ogImageFor(path);
+  const meta = localeMeta[locale];
 
   return {
-    title: buildTitle(title),
+    title: buildTitle(title, locale),
     description,
     keywords: keywords.length ? keywords : undefined,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      // The same page in every locale, plus x-default. Reciprocal sets are
+      // what make Google trust hreflang.
+      languages: noindex
+        ? undefined
+        : {
+            ...Object.fromEntries(
+              locales.map((l) => [localeMeta[l].htmlLang, absoluteUrl(path, l)]),
+            ),
+            "x-default": absoluteUrl(path, "en"),
+          },
+    },
     robots: noindex
       ? { index: false, follow: false }
       : {
@@ -81,7 +103,7 @@ export function pageMeta({
       title,
       description,
       siteName: site.name,
-      locale: site.locale,
+      locale: meta.htmlLang.replace("-", "_"),
       images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
       ...(type === "article" && publishedTime ? { publishedTime, modifiedTime } : {}),
     },

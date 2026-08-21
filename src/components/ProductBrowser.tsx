@@ -5,15 +5,10 @@ import { ProductCard } from "@/components/Cards";
 import { IconClose, IconFilter, IconSearch } from "@/components/Icons";
 import type { Category, Product } from "@/data/types";
 import { lkr } from "@/data/site";
+import { useDictionary, useLocale } from "@/i18n/client";
+import { categoryName } from "@/i18n/content";
 
 type SortKey = "featured" | "price-asc" | "price-desc" | "name";
-
-const sortOptions: { value: SortKey; label: string }[] = [
-  { value: "featured", label: "Featured" },
-  { value: "price-asc", label: "Price: low to high" },
-  { value: "price-desc", label: "Price: high to low" },
-  { value: "name", label: "Name A–Z" },
-];
 
 /**
  * Client-side catalogue browser.
@@ -35,6 +30,16 @@ export function ProductBrowser({
   /** When rendered inside a category page, hides the category filter. */
   lockedCategory?: string;
 }) {
+  const locale = useLocale();
+  const dict = useDictionary();
+
+  const sortOptions: { value: SortKey; label: string }[] = [
+    { value: "featured", label: dict.filters.sortFeatured },
+    { value: "price-asc", label: dict.filters.sortPriceAsc },
+    { value: "price-desc", label: dict.filters.sortPriceDesc },
+    { value: "name", label: dict.filters.sortName },
+  ];
+
   const [query, setQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedFitment, setSelectedFitment] = useState<string>("");
@@ -108,7 +113,7 @@ export function ProductBrowser({
       {!lockedCategory && (
         <fieldset>
           <legend className="text-[11px] font-bold uppercase tracking-[0.13em] text-[var(--fg-subtle)] mb-3">
-            Category
+            {dict.filters.category}
           </legend>
           <div className="space-y-1.5">
             {categories.map((c) => {
@@ -139,7 +144,9 @@ export function ProductBrowser({
                       onChange={() => toggleCategory(c.slug)}
                       className="sr-only"
                     />
-                    <span className="text-[13.5px] truncate">{c.name}</span>
+                    <span className="text-[13.5px] truncate">
+                {categoryName(c.slug, locale, c.name)}
+              </span>
                   </span>
                   <span className="text-[11.5px] text-[var(--fg-subtle)] tabular-nums shrink-0">
                     {count}
@@ -156,7 +163,7 @@ export function ProductBrowser({
           htmlFor="fitment"
           className="block text-[11px] font-bold uppercase tracking-[0.13em] text-[var(--fg-subtle)] mb-3"
         >
-          Fits my car
+          {dict.filters.fitsMyCar}
         </label>
         <select
           id="fitment"
@@ -164,7 +171,7 @@ export function ProductBrowser({
           onChange={(e) => setSelectedFitment(e.target.value)}
           className="field"
         >
-          <option value="">Any vehicle</option>
+          <option value="">{dict.filters.anyVehicle}</option>
           {fitments.map((f) => (
             <option key={f} value={f}>
               {f}
@@ -172,18 +179,18 @@ export function ProductBrowser({
           ))}
         </select>
         <p className="text-[11.5px] text-[var(--fg-subtle)] mt-2 leading-snug">
-          Includes universal-fit products. Not listed? WhatsApp us — we will confirm.
+          {dict.filters.fitmentHelp}
         </p>
       </div>
 
       <fieldset>
         <legend className="text-[11px] font-bold uppercase tracking-[0.13em] text-[var(--fg-subtle)] mb-3">
-          Options
+          {dict.filters.options}
         </legend>
         <div className="space-y-2">
           {[
-            { checked: installOnly, set: setInstallOnly, label: "Installation available" },
-            { checked: inStockOnly, set: setInStockOnly, label: "In stock only" },
+            { checked: installOnly, set: setInstallOnly, label: dict.filters.installAvailable },
+            { checked: inStockOnly, set: setInStockOnly, label: dict.filters.inStockOnly },
           ].map(({ checked, set, label }) => (
             <label key={label} className="flex items-center gap-2.5 py-1 cursor-pointer group">
               <span
@@ -213,7 +220,7 @@ export function ProductBrowser({
 
       {activeCount > 0 && (
         <button type="button" onClick={clearAll} className="btn btn-sm btn-outline w-full">
-          Clear {activeCount} filter{activeCount === 1 ? "" : "s"}
+          {dict.actions.clearFilters} ({activeCount})
         </button>
       )}
     </div>
@@ -239,8 +246,8 @@ export function ProductBrowser({
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search products…"
-              aria-label="Search products"
+              placeholder={dict.filters.searchProducts}
+              aria-label={dict.filters.searchProducts}
               className="field pl-9"
             />
           </div>
@@ -251,7 +258,7 @@ export function ProductBrowser({
             className="lg:hidden btn btn-outline relative"
           >
             <IconFilter width={16} height={16} />
-            Filters
+            {dict.filters.filters}
             {activeCount > 0 && (
               <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 grid place-items-center rounded-full bg-[var(--accent)] text-white text-[10px] font-bold">
                 {activeCount}
@@ -262,7 +269,7 @@ export function ProductBrowser({
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as SortKey)}
-            aria-label="Sort products"
+            aria-label={dict.filters.sort}
             className="field w-auto shrink-0"
           >
             {sortOptions.map((o) => (
@@ -274,7 +281,8 @@ export function ProductBrowser({
         </div>
 
         <p className="text-[13px] text-[var(--fg-subtle)] mb-5" aria-live="polite">
-          {filtered.length} {filtered.length === 1 ? "product" : "products"}
+          {filtered.length}{" "}
+          {filtered.length === 1 ? dict.filters.product : dict.filters.products}
           {filtered.length > 0 && (
             <>
               {" "}
@@ -288,12 +296,12 @@ export function ProductBrowser({
 
         {filtered.length === 0 ? (
           <div className="surface p-10 text-center">
-            <p className="font-semibold mb-1.5">Nothing matched those filters</p>
+            <p className="font-semibold mb-1.5">{dict.filters.noMatch}</p>
             <p className="text-sm text-[var(--fg-muted)] mb-5">
-              Try clearing a filter, or message us — we source parts to order.
+              {dict.filters.noMatchBody}
             </p>
             <button type="button" onClick={clearAll} className="btn btn-outline">
-              Clear filters
+              {dict.actions.clearFilters}
             </button>
           </div>
         ) : (
@@ -314,12 +322,12 @@ export function ProductBrowser({
           />
           <div className="absolute inset-x-0 bottom-0 max-h-[85vh] bg-[var(--bg)] border-t border-[var(--border)] rounded-t-2xl flex flex-col animate-fade-up">
             <div className="flex items-center justify-between px-5 h-14 border-b border-[var(--border)] shrink-0">
-              <span className="font-bold">Filters</span>
+              <span className="font-bold">{dict.filters.filters}</span>
               <button
                 type="button"
                 onClick={() => setFiltersOpen(false)}
                 className="grid place-items-center w-9 h-9 rounded-md hover:bg-[var(--bg-inset)]"
-                aria-label="Close filters"
+                aria-label={dict.nav.closeMenu}
               >
                 <IconClose />
               </button>
@@ -331,7 +339,8 @@ export function ProductBrowser({
                 onClick={() => setFiltersOpen(false)}
                 className="btn btn-primary w-full"
               >
-                Show {filtered.length} {filtered.length === 1 ? "product" : "products"}
+                {dict.filters.show} {filtered.length}{" "}
+                {filtered.length === 1 ? dict.filters.product : dict.filters.products}
               </button>
             </div>
           </div>
