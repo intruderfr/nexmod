@@ -205,7 +205,12 @@ export function Advisor() {
               step={1}
               value={budgetIndex}
               onChange={(e) => setBudgetIndex(Number(e.target.value))}
-              className="w-full accent-[var(--accent)]"
+              className="range"
+              style={
+                {
+                  "--fill": `${(budgetIndex / (BUDGET_STEPS.length - 1)) * 100}%`,
+                } as React.CSSProperties
+              }
             />
 
             <div className="flex justify-between mt-2 font-[family-name:var(--font-mono)] text-[10.5px] text-[var(--fg-subtle)]">

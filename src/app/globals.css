@@ -822,6 +822,163 @@ p {
 
   /* --------------------------------------------------- section headings */
 
+  /* ------------------------------------------------------------- controls */
+
+  /*
+   * Range inputs.
+   *
+   * The browser default — even with accent-color set — is the single loudest
+   * "unfinished" signal in a configurator. A thick grey track and a plain
+   * circle read as a form control; a thin track with a filled portion and a
+   * ringed thumb reads as an instrument.
+   *
+   * The filled portion is driven by --fill (a percentage) set inline by the
+   * component, because CSS cannot read an input's value.
+   */
+  .range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 20px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .range::-webkit-slider-runnable-track {
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(
+      to right,
+      var(--accent) 0%,
+      var(--accent) var(--fill, 50%),
+      var(--border-strong) var(--fill, 50%),
+      var(--border-strong) 100%
+    );
+  }
+
+  .range::-moz-range-track {
+    height: 3px;
+    border-radius: 999px;
+    background: var(--border-strong);
+  }
+  .range::-moz-range-progress {
+    height: 3px;
+    border-radius: 999px;
+    background: var(--accent);
+  }
+
+  .range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    margin-top: -6px;
+    border-radius: 50%;
+    background: var(--bg-raised);
+    border: 2px solid var(--accent);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    transition:
+      transform 0.15s var(--ease-out-expo),
+      box-shadow 0.15s var(--ease-out-expo);
+  }
+  .range::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--bg-raised);
+    border: 2px solid var(--accent);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  }
+
+  .range:hover::-webkit-slider-thumb,
+  .range:focus-visible::-webkit-slider-thumb {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 5px var(--accent-subtle);
+  }
+  .range:hover::-moz-range-thumb {
+    box-shadow: 0 0 0 5px var(--accent-subtle);
+  }
+
+  .range:focus-visible {
+    outline: none;
+  }
+
+  /* Colour input — strip the native chrome so it reads as a swatch. */
+  .swatch-input {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    border: 2px solid var(--border-strong);
+    border-radius: 0.5rem;
+    background: transparent;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s var(--ease-out-expo);
+  }
+  .swatch-input:hover {
+    border-color: var(--accent);
+  }
+  .swatch-input::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  .swatch-input::-webkit-color-swatch {
+    border: none;
+    border-radius: 0.3125rem;
+  }
+  .swatch-input::-moz-color-swatch {
+    border: none;
+    border-radius: 0.3125rem;
+  }
+
+  /* Colour chip in a preset row. */
+  .swatch {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 0.5rem;
+    border: 2px solid transparent;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition:
+      transform 0.18s var(--ease-spring),
+      border-color 0.18s var(--ease-out-expo);
+  }
+  .swatch:hover {
+    transform: scale(1.1);
+  }
+  .swatch[aria-pressed="true"] {
+    border-color: var(--accent);
+    transform: scale(1.1);
+  }
+
+  /* Tool button — square icon control used in the studio toolbar. */
+  .tool {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.625rem;
+    border: 1px solid transparent;
+    color: var(--fg-muted);
+    background: transparent;
+    cursor: pointer;
+    transition:
+      background-color 0.2s var(--ease-out-expo),
+      color 0.2s var(--ease-out-expo),
+      border-color 0.2s var(--ease-out-expo);
+  }
+  .tool:hover {
+    background: var(--bg-inset);
+    color: var(--fg);
+  }
+  .tool[aria-pressed="true"],
+  .tool.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
   /* Numbered section marker — used only where content is genuinely a sequence. */
   .step-marker {
     font-family: var(--font-mono);

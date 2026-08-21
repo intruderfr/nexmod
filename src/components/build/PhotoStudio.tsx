@@ -8,6 +8,7 @@ import {
   IconPlus,
   IconTrash,
 } from "@/components/Icons";
+import { Photo } from "@/components/Photo";
 import {
   createLayer,
   hexToRgba,
@@ -23,18 +24,18 @@ import {
 /**
  * Photo studio.
  *
- * Upload a photo of your car and stack treatments on it: window tint, carbon
- * panels, gloss-black trim, a colour wrap, lighting glow, tyre lettering and
- * vinyl stripes. Each is a layer with its own region and settings, so you can
- * build up a whole look rather than toggling one effect.
+ * Presented as a tool rather than a form: a dark stage that holds the car, a
+ * toolbar of treatments across the top, and a docked inspector on the right
+ * that only ever shows the settings for the selected layer. That framing is
+ * the point — a configurator built out of default browser controls reads as a
+ * questionnaire no matter how good the surrounding page is.
  *
  * Everything happens in the browser. The file is read with FileReader, drawn
  * to a canvas and never uploaded — re-encoding through the canvas also strips
  * EXIF, so GPS data in the original does not survive even locally.
  *
- * HONESTY: this is an illustration, not a render. It does not know where your
- * windows or panels are — you place the regions. Every export is watermarked
- * as such, and each treatment carries its own caveat where one is warranted.
+ * HONESTY: an illustration, not a render. It does not know where your windows
+ * or panels are — you place the regions. Exports are watermarked as such.
  */
 
 const LOOKS = [
@@ -47,7 +48,6 @@ const LOOKS = [
 
 type LookId = (typeof LOOKS)[number]["id"];
 
-/** Longest edge the working canvas is downscaled to. */
 const MAX_EDGE = 1600;
 
 export function PhotoStudio({
@@ -64,7 +64,6 @@ export function PhotoStudio({
   const [activeId, setActiveId] = useState<string | null>(null);
   const [look, setLook] = useState<LookId>("none");
   const [wipe, setWipe] = useState(100);
-  const [adding, setAdding] = useState(false);
 
   const frameRef = useRef<HTMLDivElement>(null);
   const dragState = useRef<{
@@ -147,7 +146,6 @@ export function PhotoStudio({
     const layer = createLayer(kind);
     setLayers((prev) => [...prev, layer]);
     setActiveId(layer.id);
-    setAdding(false);
   }
 
   function updateLayer(id: string, patch: Partial<Layer>) {
@@ -222,7 +220,6 @@ export function PhotoStudio({
       drawLayer(ctx, layer, canvas.width, canvas.height);
     }
 
-    // Watermark, so a shared preview is never mistaken for a finished job.
     const pad = Math.round(canvas.width * 0.025);
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
@@ -239,11 +236,29 @@ export function PhotoStudio({
 
   const activeFilter = LOOKS.find((l) => l.id === look)?.filter ?? "none";
 
-  /* -------------------------------------------------------------- empty */
+  /* ========================================================= EMPTY STATE */
 
   if (!image) {
     return (
-      <div>
+      <div className="relative overflow-hidden rounded-2xl border border-[var(--border)]">
+        {/* A real photograph behind the drop target, not a dashed box */}
+        <Photo
+          image="hero-alt"
+          ratio="free"
+          alt=""
+          sizes="100vw"
+          className="absolute inset-0 h-full w-full"
+        />
+        <div
+          className="absolute inset-0"
+          aria-hidden="true"
+          style={{
+            background:
+              "linear-gradient(180deg, color-mix(in srgb, var(--bg-sunken) 72%, transparent) 0%, color-mix(in srgb, var(--bg-sunken) 92%, transparent) 100%)",
+          }}
+        />
+        <div className="absolute inset-0 carbon-texture opacity-40" aria-hidden="true" />
+
         <label
           onDragOver={(e) => {
             e.preventDefault();
@@ -256,11 +271,7 @@ export function PhotoStudio({
             const file = e.dataTransfer.files?.[0];
             if (file) loadFile(file);
           }}
-          className={`relative flex flex-col items-center justify-center text-center gap-4 rounded-xl border-2 border-dashed cursor-pointer transition-colors px-6 py-16 md:py-24 ${
-            dragging
-              ? "border-[var(--accent)] bg-[var(--accent-subtle)]"
-              : "border-[var(--border-strong)] hover:border-[var(--accent)] bg-[var(--bg-subtle)]"
-          }`}
+          className="relative block cursor-pointer px-6 py-16 md:py-24 text-center"
         >
           <input
             type="file"
@@ -272,397 +283,455 @@ export function PhotoStudio({
             }}
           />
 
-          <span className="grid place-items-center w-14 h-14 rounded-full bg-[var(--accent-subtle)] text-[var(--accent)]">
-            <IconPlus width={26} height={26} />
+          {/* Corner registration marks — the frame, without a dashed border */}
+          <span
+            aria-hidden="true"
+            className={`pointer-events-none absolute inset-5 rounded-xl transition-colors duration-300 ${
+              dragging ? "ring-2 ring-[var(--accent)]" : "ring-1 ring-white/10"
+            }`}
+          />
+
+          <span
+            className={`relative grid place-items-center w-16 h-16 mx-auto rounded-2xl mb-6 transition-transform duration-300 ${
+              dragging ? "scale-110 bg-[var(--accent)] text-white" : "bg-white/10 text-white backdrop-blur"
+            }`}
+          >
+            <IconPlus width={28} height={28} />
           </span>
 
-          <span>
-            <span className="block font-[family-name:var(--font-display)] font-bold text-xl mb-1.5">
-              Drop a photo of your car
-            </span>
-            <span className="block text-[var(--fg-muted)] text-[15px] leading-relaxed max-w-sm">
-              Or tap to choose one. A straight-on front or side shot in daylight works best.
-            </span>
+          <span className="relative block font-[family-name:var(--font-display)] font-extrabold text-white text-2xl md:text-3xl tracking-[-0.03em] mb-2.5">
+            {dragging ? "Drop it here" : "Drop a photo of your car"}
+          </span>
+          <span className="relative block text-white/60 text-[15px] leading-relaxed max-w-sm mx-auto mb-7">
+            Or tap to choose one. A straight-on front or side shot in daylight works best.
           </span>
 
-          <span className="flex flex-wrap justify-center gap-2 mt-1">
-            <span className="badge">JPG, PNG, WebP</span>
-            <span className="badge">Up to 15MB</span>
-            <span className="badge badge-stock">
-              <IconCheck width={11} height={11} />
-              Never leaves your device
-            </span>
+          <span className="relative flex flex-wrap justify-center gap-1.5 max-w-lg mx-auto">
+            {LAYER_KINDS.map((k) => (
+              <span
+                key={k.kind}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/10 backdrop-blur text-white/80 font-[family-name:var(--font-mono)] text-[10.5px] uppercase tracking-wider"
+              >
+                <CategoryIcon name={k.icon} width={11} height={11} />
+                {k.label}
+              </span>
+            ))}
+          </span>
+
+          <span className="relative block mt-6 font-[family-name:var(--font-mono)] text-[10.5px] uppercase tracking-[0.16em] text-white/40">
+            JPG · PNG · WebP · never leaves your device
           </span>
         </label>
 
         {error && (
-          <p role="alert" className="mt-3 text-[13.5px] font-medium text-[var(--accent)]">
+          <p
+            role="alert"
+            className="relative px-6 pb-6 text-[13.5px] font-medium text-center text-[var(--accent)]"
+          >
             {error}
           </p>
         )}
-
-        <div className="mt-5 flex flex-wrap gap-2">
-          {LAYER_KINDS.map((k) => (
-            <span key={k.kind} className="badge">
-              <CategoryIcon name={k.icon} width={11} height={11} />
-              {k.label}
-            </span>
-          ))}
-        </div>
-        <p className="mt-2.5 text-[12.5px] text-[var(--fg-subtle)] leading-relaxed">
-          Seven treatments you can stack on your own photo. Processed entirely in your browser —
-          location data in the original file is stripped when the image loads.
-        </p>
       </div>
     );
   }
 
-  /* ------------------------------------------------------------- loaded */
+  /* ============================================================== STUDIO */
 
   return (
-    <div className="space-y-5">
-      {/* Canvas */}
-      <div
-        ref={frameRef}
-        onPointerMove={pointerMove}
-        onPointerUp={pointerUp}
-        onPointerCancel={pointerUp}
-        onPointerDown={() => setActiveId(null)}
-        className="relative overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-sunken)] select-none touch-none"
-      >
-        <div className="relative" style={{ clipPath: `inset(0 ${100 - wipe}% 0 0)` }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={image.src}
-            alt="Your car"
-            className="block w-full h-auto"
-            style={{ filter: activeFilter }}
-          />
+    <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-raised)]">
+      {/* Toolbar */}
+      <div className="flex items-center gap-1 px-3 h-14 border-b border-[var(--border)] bg-[var(--bg-subtle)]">
+        <span className="hidden sm:block font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.18em] text-[var(--fg-subtle)] pr-3 mr-1 border-r border-[var(--border)]">
+          Add
+        </span>
 
-          {layers.map((layer) =>
-            layer.hidden ? null : (
-              <div key={layer.id} className="absolute pointer-events-none" style={layerStyle(layer)}>
-                {layer.kind === "text" && (
-                  <span
-                    className="absolute inset-0 grid place-items-center font-bold uppercase tracking-[0.08em] whitespace-nowrap"
-                    style={{
-                      color: layer.colour,
-                      fontSize: "min(100%, 1.4vw)",
-                      textShadow: "0 1px 2px rgba(0,0,0,0.4)",
-                    }}
-                  >
-                    {layer.text}
-                  </span>
-                )}
-              </div>
-            ),
-          )}
+        <div className="flex items-center gap-1 overflow-x-auto scroll-x">
+          {LAYER_KINDS.map((k) => (
+            <button
+              key={k.kind}
+              type="button"
+              onClick={() => addLayer(k.kind)}
+              title={`${k.label} — ${k.represents}`}
+              aria-label={`Add ${k.label}`}
+              className="tool shrink-0"
+            >
+              <CategoryIcon name={k.icon} width={17} height={17} />
+            </button>
+          ))}
         </div>
 
-        {/* Untreated original, revealed to the right of the wipe */}
-        {wipe < 100 && (
-          <div className="absolute inset-0 -z-10">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={image.src} alt="" className="block w-full h-auto" />
-          </div>
-        )}
-
-        {/* Region handles for the selected layer */}
-        {active && !active.hidden && (
-          <div
-            onPointerDown={(e) => pointerDown(e, active.id, "move")}
-            className="absolute cursor-move border-2 border-[var(--accent)] rounded-sm"
-            style={{
-              left: `${active.region.x * 100}%`,
-              top: `${active.region.y * 100}%`,
-              width: `${active.region.w * 100}%`,
-              height: `${active.region.h * 100}%`,
-            }}
-          >
-            <span className="absolute -top-6 left-0 px-1.5 py-0.5 rounded bg-[var(--accent)] text-white font-[family-name:var(--font-mono)] text-[9.5px] whitespace-nowrap">
-              {activeMeta?.label} — drag to place
-            </span>
-            <span
-              onPointerDown={(e) => pointerDown(e, active.id, "resize")}
-              className="absolute -right-2 -bottom-2 w-4 h-4 rounded-sm bg-[var(--accent)] cursor-se-resize"
-            />
-          </div>
-        )}
-
-        {wipe < 100 && (
-          <div
-            className="absolute inset-y-0 w-0.5 bg-white/80 pointer-events-none"
-            style={{ left: `${wipe}%` }}
-          >
-            <span className="absolute top-3 left-2 px-1.5 py-0.5 rounded bg-black/70 text-white font-[family-name:var(--font-mono)] text-[10px]">
-              AFTER
-            </span>
-          </div>
-        )}
-
-        <button
-          type="button"
-          onClick={reset}
-          aria-label="Remove photo"
-          className="absolute top-3 right-3 grid place-items-center w-9 h-9 rounded-lg bg-black/60 text-white backdrop-blur hover:bg-black/80 transition-colors"
-        >
-          <IconClose width={16} height={16} />
-        </button>
+        <div className="ml-auto flex items-center gap-2 shrink-0 pl-3">
+          <span className="hidden md:inline font-[family-name:var(--font-mono)] text-[10.5px] text-[var(--fg-subtle)] tabular-nums">
+            {layers.length} {layers.length === 1 ? "layer" : "layers"}
+          </span>
+          <button type="button" onClick={download} className="btn btn-sm btn-primary">
+            Export
+          </button>
+        </div>
       </div>
 
-      <p className="flex items-center gap-2 text-[12px] text-[var(--fg-subtle)]">
-        <span className="truncate">{fileName}</span>
-        <span className="ml-auto shrink-0">Illustration only — not a render of the finished job</span>
-      </p>
+      <div className="grid lg:grid-cols-[1fr_300px]">
+        {/* -------------------------------------------------------- stage */}
+        <div className="relative bg-[var(--bg-sunken)] p-4 md:p-6">
+          <div
+            ref={frameRef}
+            onPointerMove={pointerMove}
+            onPointerUp={pointerUp}
+            onPointerCancel={pointerUp}
+            onPointerDown={() => setActiveId(null)}
+            className="relative overflow-hidden rounded-xl shadow-2xl select-none touch-none"
+          >
+            <div className="relative" style={{ clipPath: `inset(0 ${100 - wipe}% 0 0)` }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={image.src}
+                alt="Your car"
+                className="block w-full h-auto"
+                style={{ filter: activeFilter }}
+              />
 
-      {/* Layer controls */}
-      <div className="grid lg:grid-cols-[1fr_280px] gap-5">
-        <div className="surface p-5">
-          <div className="flex items-center justify-between gap-3 mb-4">
-            <h3 className="font-[family-name:var(--font-display)] font-bold text-[15px]">
-              Treatments
-              {layers.length > 0 && (
-                <span className="ml-2 font-[family-name:var(--font-mono)] text-[11px] font-normal text-[var(--fg-subtle)]">
-                  {layers.length}
-                </span>
+              {layers.map((layer) =>
+                layer.hidden ? null : (
+                  <div
+                    key={layer.id}
+                    className="absolute pointer-events-none"
+                    style={layerStyle(layer)}
+                  >
+                    {layer.kind === "text" && (
+                      <span
+                        className="absolute inset-0 grid place-items-center font-bold uppercase tracking-[0.08em] whitespace-nowrap"
+                        style={{
+                          color: layer.colour,
+                          fontSize: "min(100%, 1.4vw)",
+                          textShadow: "0 1px 2px rgba(0,0,0,0.4)",
+                        }}
+                      >
+                        {layer.text}
+                      </span>
+                    )}
+                  </div>
+                ),
               )}
-            </h3>
-            <button
-              type="button"
-              onClick={() => setAdding((a) => !a)}
-              className="btn btn-sm btn-outline"
-            >
-              <IconPlus width={13} height={13} />
-              Add
-            </button>
+            </div>
+
+            {wipe < 100 && (
+              <div className="absolute inset-0 -z-10">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={image.src} alt="" className="block w-full h-auto" />
+              </div>
+            )}
+
+            {active && !active.hidden && (
+              <div
+                onPointerDown={(e) => pointerDown(e, active.id, "move")}
+                className="absolute cursor-move"
+                style={{
+                  left: `${active.region.x * 100}%`,
+                  top: `${active.region.y * 100}%`,
+                  width: `${active.region.w * 100}%`,
+                  height: `${active.region.h * 100}%`,
+                }}
+              >
+                <span className="absolute inset-0 ring-1 ring-[var(--accent)] rounded-[3px]" />
+                {/* Corner ticks rather than a heavy border */}
+                {(
+                  [
+                    "top-0 left-0 border-t-2 border-l-2 rounded-tl-[3px]",
+                    "top-0 right-0 border-t-2 border-r-2 rounded-tr-[3px]",
+                    "bottom-0 left-0 border-b-2 border-l-2 rounded-bl-[3px]",
+                    "bottom-0 right-0 border-b-2 border-r-2 rounded-br-[3px]",
+                  ] as const
+                ).map((cls) => (
+                  <span
+                    key={cls}
+                    className={`absolute w-3 h-3 border-[var(--accent)] ${cls}`}
+                  />
+                ))}
+
+                <span className="absolute -top-6 left-0 px-1.5 py-0.5 rounded bg-[var(--accent)] text-white font-[family-name:var(--font-mono)] text-[9.5px] whitespace-nowrap">
+                  {activeMeta?.label}
+                </span>
+
+                <span
+                  onPointerDown={(e) => pointerDown(e, active.id, "resize")}
+                  className="absolute -right-1.5 -bottom-1.5 w-3.5 h-3.5 rounded-full bg-[var(--accent)] ring-2 ring-white/80 cursor-se-resize"
+                />
+              </div>
+            )}
+
+            {wipe < 100 && (
+              <div
+                className="absolute inset-y-0 w-0.5 bg-white pointer-events-none shadow-[0_0_10px_rgba(0,0,0,0.6)]"
+                style={{ left: `${wipe}%` }}
+              />
+            )}
           </div>
 
-          {adding && (
-            <div className="grid sm:grid-cols-2 gap-2 mb-4 pb-4 border-b border-[var(--border)]">
-              {LAYER_KINDS.map((k) => (
-                <button
-                  key={k.kind}
-                  type="button"
-                  onClick={() => addLayer(k.kind)}
-                  className="flex items-start gap-2.5 p-2.5 rounded-lg border border-[var(--border)] hover:border-[var(--accent)] text-left transition-colors"
-                >
-                  <span className="shrink-0 grid place-items-center w-7 h-7 rounded-md bg-[var(--accent-subtle)] text-[var(--accent)]">
-                    <CategoryIcon name={k.icon} width={14} height={14} />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-[13px] font-semibold leading-tight">{k.label}</span>
-                    <span className="block text-[11px] text-[var(--fg-subtle)] leading-snug mt-0.5">
-                      {k.represents}
-                    </span>
-                  </span>
-                </button>
-              ))}
+          {/* Stage footer */}
+          <div className="flex items-center gap-4 mt-4">
+            <span className="font-[family-name:var(--font-mono)] text-[10.5px] text-[var(--fg-subtle)] truncate max-w-[12rem]">
+              {fileName}
+            </span>
+
+            <div className="flex-1 flex items-center gap-2 min-w-0">
+              <span className="font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-wider text-[var(--fg-subtle)] shrink-0">
+                A/B
+              </span>
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={wipe}
+                onChange={(e) => setWipe(Number(e.target.value))}
+                aria-label="Reveal treatments over the original"
+                className="range flex-1"
+                style={{ "--fill": `${wipe}%` } as React.CSSProperties}
+              />
             </div>
-          )}
 
-          {layers.length === 0 ? (
-            <p className="text-[13.5px] text-[var(--fg-muted)] leading-relaxed py-2">
-              Nothing added yet. Press <strong className="text-[var(--fg)]">Add</strong> and pick a
-              treatment — tint, carbon, gloss black, a colour wrap, lighting, lettering or a stripe.
-            </p>
-          ) : (
-            <ul className="space-y-1.5">
-              {layers.map((layer) => {
-                const meta = LAYER_META.get(layer.kind);
-                const isActive = layer.id === activeId;
-                return (
-                  <li key={layer.id}>
-                    <div
-                      className={`flex items-center gap-2 rounded-lg border transition-colors ${
-                        isActive
-                          ? "border-[var(--accent)] bg-[var(--accent-subtle)]"
-                          : "border-[var(--border)]"
-                      }`}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => setActiveId(isActive ? null : layer.id)}
-                        className="flex-1 flex items-center gap-2.5 px-3 py-2.5 text-left min-w-0"
-                      >
-                        <span
-                          className="shrink-0 w-4 h-4 rounded border border-[var(--border-strong)]"
-                          style={{
-                            background:
-                              layer.kind === "carbon"
-                                ? "repeating-linear-gradient(45deg,#2a2d33 0 2px,#141619 2px 4px)"
-                                : layer.colour,
-                          }}
-                        />
-                        <span className="min-w-0">
-                          <span className="block text-[13px] font-medium truncate">
-                            {meta?.label}
-                            {layer.kind === "text" && layer.text ? ` — ${layer.text}` : ""}
-                          </span>
-                        </span>
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => updateLayer(layer.id, { hidden: !layer.hidden })}
-                        aria-label={layer.hidden ? "Show layer" : "Hide layer"}
-                        className="shrink-0 px-2 py-1 font-[family-name:var(--font-mono)] text-[10px] text-[var(--fg-subtle)] hover:text-[var(--fg)]"
-                      >
-                        {layer.hidden ? "OFF" : "ON"}
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => removeLayer(layer.id)}
-                        aria-label="Remove treatment"
-                        className="shrink-0 grid place-items-center w-8 h-8 mr-1 rounded text-[var(--fg-subtle)] hover:text-[var(--accent)]"
-                      >
-                        <IconTrash width={13} height={13} />
-                      </button>
-                    </div>
-
-                    {/* Settings for the selected layer */}
-                    {isActive && meta && (
-                      <div className="mt-2 mb-1 mx-1 p-3 rounded-lg bg-[var(--bg-inset)] space-y-3">
-                        {meta.controls.text && (
-                          <div>
-                            <label className="label mb-1.5 text-[12px]">Text</label>
-                            <input
-                              value={layer.text ?? ""}
-                              onChange={(e) =>
-                                updateLayer(layer.id, { text: e.target.value.slice(0, 18) })
-                              }
-                              className="field py-1.5 text-[13px]"
-                              placeholder="NEXMOD"
-                            />
-                          </div>
-                        )}
-
-                        {meta.controls.colour && (
-                          <div>
-                            <span className="label mb-1.5 text-[12px]">Colour</span>
-                            <div className="flex flex-wrap gap-1.5">
-                              {SWATCHES.map((c) => (
-                                <button
-                                  key={c}
-                                  type="button"
-                                  onClick={() => updateLayer(layer.id, { colour: c })}
-                                  aria-label={`Colour ${c}`}
-                                  className={`w-6 h-6 rounded-md border-2 transition-transform ${
-                                    layer.colour === c
-                                      ? "border-[var(--accent)] scale-110"
-                                      : "border-[var(--border-strong)]"
-                                  }`}
-                                  style={{ background: c }}
-                                />
-                              ))}
-                              <input
-                                type="color"
-                                value={layer.colour}
-                                onChange={(e) => updateLayer(layer.id, { colour: e.target.value })}
-                                aria-label="Custom colour"
-                                className="w-6 h-6 rounded-md border border-[var(--border-strong)] bg-transparent cursor-pointer"
-                              />
-                            </div>
-                          </div>
-                        )}
-
-                        {meta.controls.opacity && (
-                          <div>
-                            <label className="label mb-1 text-[12px]">
-                              {layer.kind === "tint" ? "Darkness" : "Strength"}{" "}
-                              <span className="font-[family-name:var(--font-mono)] font-normal text-[var(--fg-subtle)]">
-                                {Math.round(layer.opacity * 100)}%
-                              </span>
-                            </label>
-                            <input
-                              type="range"
-                              min={5}
-                              max={100}
-                              value={Math.round(layer.opacity * 100)}
-                              onChange={(e) =>
-                                updateLayer(layer.id, { opacity: Number(e.target.value) / 100 })
-                              }
-                              className="w-full accent-[var(--accent)]"
-                            />
-                          </div>
-                        )}
-
-                        {meta.controls.angle && (
-                          <div>
-                            <label className="label mb-1 text-[12px]">
-                              Angle{" "}
-                              <span className="font-[family-name:var(--font-mono)] font-normal text-[var(--fg-subtle)]">
-                                {layer.angle ?? 0}°
-                              </span>
-                            </label>
-                            <input
-                              type="range"
-                              min={-45}
-                              max={45}
-                              value={layer.angle ?? 0}
-                              onChange={(e) =>
-                                updateLayer(layer.id, { angle: Number(e.target.value) })
-                              }
-                              className="w-full accent-[var(--accent)]"
-                            />
-                          </div>
-                        )}
-
-                        {meta.caveat && (
-                          <p className="text-[11px] text-[var(--fg-subtle)] leading-relaxed pt-1 border-t border-[var(--border)]">
-                            {meta.caveat}
-                          </p>
-                        )}
-                      </div>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          )}
+            <button
+              type="button"
+              onClick={reset}
+              className="shrink-0 font-[family-name:var(--font-mono)] text-[10.5px] uppercase tracking-wider text-[var(--fg-subtle)] hover:text-[var(--accent)] transition-colors"
+            >
+              New photo
+            </button>
+          </div>
         </div>
 
-        {/* Look + wipe + export */}
-        <div className="space-y-5">
-          <fieldset className="surface p-5">
-            <legend className="label mb-3">Look</legend>
-            <div className="flex flex-wrap gap-1.5 mb-4">
+        {/* ---------------------------------------------------- inspector */}
+        <aside className="border-t lg:border-t-0 lg:border-l border-[var(--border)] flex flex-col max-h-[38rem]">
+          {/* Look */}
+          <div className="p-4 border-b border-[var(--border)]">
+            <p className="font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.18em] text-[var(--fg-subtle)] mb-2.5">
+              Look
+            </p>
+            <div className="flex flex-wrap gap-1">
               {LOOKS.map((l) => (
                 <button
                   key={l.id}
                   type="button"
                   onClick={() => setLook(l.id)}
-                  className={`btn btn-sm ${look === l.id ? "btn-primary" : "btn-outline"}`}
+                  aria-pressed={look === l.id}
+                  className={`px-2.5 py-1.5 rounded-lg font-[family-name:var(--font-mono)] text-[10.5px] uppercase tracking-wider transition-colors ${
+                    look === l.id
+                      ? "bg-[var(--accent)] text-white"
+                      : "bg-[var(--bg-inset)] text-[var(--fg-muted)] hover:text-[var(--fg)]"
+                  }`}
                 >
                   {l.label}
                 </button>
               ))}
             </div>
-
-            <label htmlFor="wipe" className="label mb-1.5">
-              Before / after
-            </label>
-            <input
-              id="wipe"
-              type="range"
-              min={0}
-              max={100}
-              value={wipe}
-              onChange={(e) => setWipe(Number(e.target.value))}
-              className="w-full accent-[var(--accent)]"
-            />
-          </fieldset>
-
-          <div className="space-y-2">
-            <button type="button" onClick={download} className="btn btn-outline w-full">
-              Download preview
-            </button>
-            <button type="button" onClick={reset} className="btn btn-ghost btn-sm w-full">
-              Use a different photo
-            </button>
           </div>
-        </div>
+
+          {/* Layer list */}
+          <div className="flex-1 overflow-y-auto">
+            {layers.length === 0 ? (
+              <div className="p-6 text-center">
+                <p className="text-[13.5px] text-[var(--fg-muted)] leading-relaxed">
+                  Pick a treatment from the toolbar above, then drag its box onto the right part of
+                  the car.
+                </p>
+              </div>
+            ) : (
+              <ul className="p-2 space-y-1">
+                {layers.map((layer) => {
+                  const meta = LAYER_META.get(layer.kind);
+                  const isActive = layer.id === activeId;
+                  return (
+                    <li key={layer.id}>
+                      <div
+                        className={`flex items-center gap-2 rounded-lg transition-colors ${
+                          isActive ? "bg-[var(--accent-subtle)]" : "hover:bg-[var(--bg-inset)]"
+                        }`}
+                      >
+                        <button
+                          type="button"
+                          onClick={() => setActiveId(isActive ? null : layer.id)}
+                          className="flex-1 flex items-center gap-2.5 px-2.5 py-2 text-left min-w-0"
+                        >
+                          <span
+                            className="shrink-0 w-4 h-4 rounded-[5px] ring-1 ring-black/20"
+                            style={{
+                              background:
+                                layer.kind === "carbon"
+                                  ? "repeating-linear-gradient(45deg,#2a2d33 0 2px,#141619 2px 4px)"
+                                  : layer.colour,
+                            }}
+                          />
+                          <span
+                            className={`block text-[12.5px] font-medium truncate ${
+                              isActive ? "text-[var(--accent)]" : ""
+                            }`}
+                          >
+                            {meta?.label}
+                            {layer.kind === "text" && layer.text ? ` · ${layer.text}` : ""}
+                          </span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => updateLayer(layer.id, { hidden: !layer.hidden })}
+                          aria-label={layer.hidden ? "Show layer" : "Hide layer"}
+                          className={`shrink-0 w-7 h-7 grid place-items-center rounded font-[family-name:var(--font-mono)] text-[9px] transition-colors ${
+                            layer.hidden
+                              ? "text-[var(--fg-faint)]"
+                              : "text-[var(--fg-subtle)] hover:text-[var(--fg)]"
+                          }`}
+                        >
+                          {layer.hidden ? "OFF" : "ON"}
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => removeLayer(layer.id)}
+                          aria-label="Remove treatment"
+                          className="shrink-0 grid place-items-center w-7 h-7 mr-1 rounded text-[var(--fg-subtle)] hover:text-[var(--accent)] transition-colors"
+                        >
+                          <IconTrash width={12} height={12} />
+                        </button>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
+
+          {/* Settings for the selected layer */}
+          {active && activeMeta && (
+            <div className="border-t border-[var(--border)] p-4 space-y-4 bg-[var(--bg-subtle)]">
+              <div className="flex items-center justify-between gap-2">
+                <p className="font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.18em] text-[var(--accent)]">
+                  {activeMeta.label}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setActiveId(null)}
+                  aria-label="Close settings"
+                  className="grid place-items-center w-6 h-6 rounded text-[var(--fg-subtle)] hover:text-[var(--fg)]"
+                >
+                  <IconClose width={12} height={12} />
+                </button>
+              </div>
+
+              {activeMeta.controls.text && (
+                <div>
+                  <label htmlFor="layer-text" className="label mb-1.5 text-[11.5px]">
+                    Text
+                  </label>
+                  <input
+                    id="layer-text"
+                    value={active.text ?? ""}
+                    onChange={(e) => updateLayer(active.id, { text: e.target.value.slice(0, 18) })}
+                    className="field py-1.5 text-[13px]"
+                    placeholder="NEXMOD"
+                  />
+                </div>
+              )}
+
+              {activeMeta.controls.colour && (
+                <div>
+                  <span className="label mb-2 text-[11.5px]">Colour</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {SWATCHES.map((c) => (
+                      <button
+                        key={c}
+                        type="button"
+                        onClick={() => updateLayer(active.id, { colour: c })}
+                        aria-pressed={active.colour === c}
+                        aria-label={`Colour ${c}`}
+                        className="swatch"
+                        style={{ background: c }}
+                      />
+                    ))}
+                    <input
+                      type="color"
+                      value={active.colour}
+                      onChange={(e) => updateLayer(active.id, { colour: e.target.value })}
+                      aria-label="Custom colour"
+                      className="swatch-input"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {activeMeta.controls.opacity && (
+                <Slider
+                  label={active.kind === "tint" ? "Darkness" : "Strength"}
+                  value={Math.round(active.opacity * 100)}
+                  min={5}
+                  max={100}
+                  suffix="%"
+                  onChange={(v) => updateLayer(active.id, { opacity: v / 100 })}
+                />
+              )}
+
+              {activeMeta.controls.angle && (
+                <Slider
+                  label="Angle"
+                  value={active.angle ?? 0}
+                  min={-45}
+                  max={45}
+                  suffix="°"
+                  onChange={(v) => updateLayer(active.id, { angle: v })}
+                />
+              )}
+
+              {activeMeta.caveat && (
+                <p className="text-[11px] text-[var(--fg-subtle)] leading-relaxed pt-3 border-t border-[var(--border)]">
+                  {activeMeta.caveat}
+                </p>
+              )}
+            </div>
+          )}
+        </aside>
       </div>
+
+      <p className="px-4 py-2.5 border-t border-[var(--border)] bg-[var(--bg-subtle)] font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.14em] text-[var(--fg-subtle)] text-center">
+        Illustration — not a render of the finished job
+      </p>
+    </div>
+  );
+}
+
+/** Labelled slider with a live monospace readout. */
+function Slider({
+  label,
+  value,
+  min,
+  max,
+  suffix,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  suffix: string;
+  onChange: (value: number) => void;
+}) {
+  const fill = ((value - min) / (max - min)) * 100;
+  return (
+    <div>
+      <div className="flex items-baseline justify-between mb-1">
+        <label className="label mb-0 text-[11.5px]">{label}</label>
+        <span className="font-[family-name:var(--font-mono)] text-[11px] text-[var(--fg-muted)] tabular-nums">
+          {value}
+          {suffix}
+        </span>
+      </div>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        aria-label={label}
+        className="range"
+        style={{ "--fill": `${fill}%` } as React.CSSProperties}
+      />
     </div>
   );
 }
@@ -741,14 +810,14 @@ function drawLayer(
 
     case "stripe":
       ctx.translate(x + w / 2, y + h / 2);
-      ctx.rotate((((layer.angle ?? 0) * Math.PI) / 180));
+      ctx.rotate(((layer.angle ?? 0) * Math.PI) / 180);
       ctx.fillStyle = layer.colour;
       ctx.fillRect(-w / 2, -h / 2, w, h);
       break;
 
     case "text": {
       ctx.translate(x + w / 2, y + h / 2);
-      ctx.rotate((((layer.angle ?? 0) * Math.PI) / 180));
+      ctx.rotate(((layer.angle ?? 0) * Math.PI) / 180);
       const size = Math.min(h * 0.8, (w / Math.max(1, (layer.text ?? "").length)) * 1.5);
       ctx.font = `700 ${size}px sans-serif`;
       ctx.fillStyle = layer.colour;
@@ -763,3 +832,5 @@ function drawLayer(
 
   ctx.restore();
 }
+
+void IconCheck;

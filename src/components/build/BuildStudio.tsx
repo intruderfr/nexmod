@@ -15,6 +15,8 @@ import {
   IconTool,
   IconWhatsApp,
 } from "@/components/Icons";
+import { Photo } from "@/components/Photo";
+import { productImage } from "@/data/imagery";
 import { PhotoStudio } from "./PhotoStudio";
 
 /**
@@ -334,16 +336,22 @@ export function BuildStudio() {
                             <button
                               type="button"
                               onClick={() => toggle(product.slug)}
-                              className="w-full flex items-start gap-3 p-3.5 text-left"
+                              className="w-full flex items-center gap-3 p-2.5 text-left"
                             >
-                              <span
-                                className={`shrink-0 grid place-items-center w-5 h-5 mt-0.5 rounded border transition-colors ${
-                                  active
-                                    ? "bg-[var(--accent)] border-[var(--accent)] text-white"
-                                    : "border-[var(--border-strong)]"
-                                }`}
-                              >
-                                {active && <IconCheck width={12} height={12} strokeWidth={3} />}
+                              <span className="relative shrink-0 w-16 rounded-lg overflow-hidden">
+                                {(() => {
+                                  const thumb = productImage(product.slug, product.category);
+                                  return thumb ? (
+                                    <Photo image={thumb} ratio="square" sizes="4rem" />
+                                  ) : (
+                                    <span className="block aspect-square bg-[var(--bg-inset)]" />
+                                  );
+                                })()}
+                                {active && (
+                                  <span className="absolute inset-0 grid place-items-center bg-[var(--accent)]/85 text-white">
+                                    <IconCheck width={18} height={18} strokeWidth={3} />
+                                  </span>
+                                )}
                               </span>
 
                               <span className="flex-1 min-w-0">
@@ -355,7 +363,7 @@ export function BuildStudio() {
                                 </span>
                               </span>
 
-                              <span className="shrink-0 figure text-[14px] font-semibold">
+                              <span className="shrink-0 figure text-[14px] font-semibold pr-1">
                                 {lkr(unit)}
                               </span>
                             </button>
