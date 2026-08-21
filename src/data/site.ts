@@ -10,8 +10,14 @@ export const site = {
   name: "NEXMOD",
   legalName: "Nexmod",
   tagline: "Premium Car Accessories",
-  // The domain is registered but was not serving a site at time of build.
-  url: "https://nexmod.lk",
+  /**
+   * Canonical origin, including any base path.
+   *
+   * The real domain is registered but was not serving a site at time of build.
+   * NEXT_PUBLIC_SITE_URL overrides it so the GitHub Pages preview emits its own
+   * canonicals and sitemap rather than pointing at a domain that is not live.
+   */
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://nexmod.lk",
   locale: "en_LK",
   country: "LK",
   currency: "LKR",

@@ -1,5 +1,8 @@
 import { ogContentType, ogImage, ogSize } from "@/components/og";
 
+/** Required so this route can be emitted by `output: export`. */
+export const dynamic = "force-static";
+
 export const size = ogSize;
 export const contentType = ogContentType;
 export const alt = "Nexmod — Premium Car Accessories, Dehiwala, Sri Lanka";

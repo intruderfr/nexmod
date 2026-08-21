@@ -1,10 +1,14 @@
 import type { MetadataRoute } from "next";
+
 import { categories } from "@/data/categories";
 import { products } from "@/data/products";
 import { services } from "@/data/services";
 import { site } from "@/data/site";
 import { localeMeta, locales } from "@/i18n/config";
 import { publishedArticles } from "@/lib/content";
+
+/** Required so this route can be emitted by `output: export`. */
+export const dynamic = "force-static";
 
 /**
  * Sitemap.

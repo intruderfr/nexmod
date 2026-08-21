@@ -1,6 +1,9 @@
 import { site } from "@/data/site";
 import { publishedArticles } from "@/lib/content";
 
+/** Required so this route can be emitted by `output: export`. */
+export const dynamic = "force-static";
+
 /**
  * RSS 2.0 feed.
  *

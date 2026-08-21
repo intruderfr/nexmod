@@ -29,6 +29,14 @@ const timeSlots = [
 
 type Status = "idle" | "sending" | "sent" | "error";
 
+/**
+ * On the GitHub Pages static export there is no server to POST to, so the
+ * form skips the request entirely and hands off to WhatsApp — which is how
+ * Nexmod takes most bookings anyway.
+ */
+const IS_STATIC = process.env.NEXT_PUBLIC_STATIC_EXPORT === "1";
+
+
 export function BookingForm({ preselect }: { preselect?: string }) {
   const [form, setForm] = useState({
     name: "",
@@ -80,6 +88,12 @@ export function BookingForm({ preselect }: { preselect?: string }) {
     e.preventDefault();
     if (isFriday) {
       setError("We are closed on Fridays — please pick another day.");
+      return;
+    }
+
+    // No backend on the static build — send them to WhatsApp instead.
+    if (IS_STATIC) {
+      window.open(whatsappMessage, "_blank", "noopener,noreferrer");
       return;
     }
 
@@ -288,7 +302,11 @@ export function BookingForm({ preselect }: { preselect?: string }) {
           disabled={status === "sending" || isFriday}
           className="btn btn-primary btn-lg w-full"
         >
-          {status === "sending" ? "Sending…" : "Request this slot"}
+          {status === "sending"
+            ? "Sending…"
+            : IS_STATIC
+              ? "Send booking on WhatsApp"
+              : "Request this slot"}
         </button>
         <a
           href={whatsappMessage}

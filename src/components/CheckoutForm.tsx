@@ -9,6 +9,14 @@ import { IconCart, IconCheck, IconTruck, IconWhatsApp } from "./Icons";
 type Status = "idle" | "sending" | "sent" | "error";
 
 /**
+ * On the GitHub Pages static export there is no server to POST to, so the
+ * form skips the request entirely and hands off to WhatsApp — which is how
+ * Nexmod takes most bookings anyway.
+ */
+const IS_STATIC = process.env.NEXT_PUBLIC_STATIC_EXPORT === "1";
+
+
+/**
  * Checkout.
  *
  * Collects the order and posts it to /api/orders, which is a stub — see that
@@ -38,6 +46,12 @@ export function CheckoutForm() {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    // No backend on the static build — hand the formatted order to WhatsApp.
+    if (IS_STATIC) {
+      window.open(whatsappOrderLink(), "_blank", "noopener,noreferrer");
+      return;
+    }
+
     setStatus("sending");
     setError("");
 
@@ -340,7 +354,11 @@ export function CheckoutForm() {
               disabled={status === "sending"}
               className="btn btn-primary btn-lg w-full"
             >
-              {status === "sending" ? "Placing order…" : "Place order"}
+              {status === "sending"
+                ? "Placing order…"
+                : IS_STATIC
+                  ? "Send order on WhatsApp"
+                  : "Place order"}
             </button>
             <a
               href={whatsappOrderLink()}
