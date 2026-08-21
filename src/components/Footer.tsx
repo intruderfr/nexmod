@@ -169,6 +169,8 @@ export function Footer() {
                 { href: "/account", label: "My Nexmod" },
                 { href: "/advisor", label: "Advisor" },
                 { href: "/packages", label: "Packages" },
+                { href: "/care", label: "Nexmod Care" },
+                { href: "/warranty", label: "Warranty" },
                 { href: "/build", label: dict.nav.build },
                 { href: "/gallery", label: "Gallery" },
                 { href: "/about", label: dict.nav.about },

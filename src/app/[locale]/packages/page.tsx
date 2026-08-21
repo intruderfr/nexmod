@@ -1,5 +1,6 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { IconArrowRight, IconWhatsApp } from "@/components/Icons";
+import { PackageBuilder } from "@/components/PackageBuilder";
 import { PackageCard } from "@/components/PackageCard";
 import { Photo } from "@/components/Photo";
 import { SectionHead } from "@/components/SectionHead";
@@ -104,6 +105,28 @@ export default function PackagesPage() {
           </section>
         );
       })}
+
+      {/*
+        The curated packages above answer "what should I do first". This
+        answers the other half — someone who already knows what they want in a
+        combination we did not think to bundle, and who should not lose the
+        bundle discount for it.
+      */}
+      <section id="build-your-own" className="border-t border-[var(--border)] scroll-mt-24">
+        <div className="container-nex py-16 md:py-24">
+          <div className="max-w-2xl mb-10">
+            <p className="eyebrow mb-4">Build your own</p>
+            <h2 className="text-display-3 mb-5">Or make up your own package</h2>
+            <p className="text-[14.5px] text-[var(--fg-muted)] leading-relaxed">
+              Pick anything from the catalogue. Two items or more and the bundle discount applies
+              the same way it does to the sets above — it comes from fitting everything in one
+              visit rather than from how much you spend.
+            </p>
+          </div>
+
+          <PackageBuilder />
+        </div>
+      </section>
 
       <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
         <div className="container-nex py-16 md:py-20 text-center">

@@ -202,6 +202,18 @@ export function CartDrawer() {
                     )}
                   </dd>
                 </div>
+                {totals.bundleSaving > 0 && (
+                  <div className="flex justify-between text-[var(--accent)]">
+                    <dt className="font-medium">Bundle ({totals.bundlePct}%)</dt>
+                    <dd className="tabular-nums font-medium">−{lkr(totals.bundleSaving)}</dd>
+                  </div>
+                )}
+                {totals.memberSaving > 0 && (
+                  <div className="flex justify-between text-[var(--accent)]">
+                    <dt className="font-medium">Care member ({totals.memberDiscountPct}%)</dt>
+                    <dd className="tabular-nums font-medium">−{lkr(totals.memberSaving)}</dd>
+                  </div>
+                )}
                 <div className="flex justify-between pt-2.5 mt-2.5 border-t border-[var(--border)] text-base font-bold">
                   <dt>Total</dt>
                   <dd className="tabular-nums">{lkr(totals.total)}</dd>

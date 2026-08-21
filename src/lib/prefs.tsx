@@ -10,6 +10,8 @@ import {
   type ReactNode,
 } from "react";
 
+import { tierById } from "@/data/care";
+
 /**
  * The customer's local profile.
  *
@@ -59,7 +61,37 @@ export interface SavedBuild {
   items: SavedBuildItem[];
 }
 
-export type HistoryKind = "enquiry" | "order" | "booking" | "build";
+/**
+ * A registered warranty.
+ *
+ * Kept on the device on purpose. There is no account behind this — the record
+ * exists so the owner can see what is still covered and hand the details to
+ * Nexmod over WhatsApp when something fails, without hunting for an invoice.
+ */
+export interface WarrantyRecord {
+  id: string;
+  /** Product slug. Free-text `label` covers anything not in the catalogue. */
+  slug?: string;
+  label: string;
+  /** ISO date the work was done. */
+  fittedOn: string;
+  /** Base term plus any extension and any plan bonus, already summed. */
+  months: number;
+  vehicleId?: string;
+  reference?: string;
+  note?: string;
+}
+
+/** An active Nexmod Care subscription, as the device understands it. */
+export interface Membership {
+  tier: string;
+  /** "monthly" or "annual" — changes what the renewal date means. */
+  billing: "monthly" | "annual";
+  startedAt: string;
+  reference?: string;
+}
+
+export type HistoryKind = "enquiry" | "order" | "booking" | "build" | "warranty" | "care";
 
 export interface HistoryEntry {
   id: string;
@@ -80,6 +112,8 @@ interface PrefsState {
   recent: string[];
   builds: SavedBuild[];
   history: HistoryEntry[];
+  warranties: WarrantyRecord[];
+  membership: Membership | null;
   ready: boolean;
 }
 
@@ -98,18 +132,28 @@ type Action =
   | { type: "saveBuild"; build: Omit<SavedBuild, "id" | "createdAt"> }
   | { type: "removeBuild"; id: string }
   | { type: "logHistory"; entry: Omit<HistoryEntry, "id" | "at"> }
+  | { type: "addWarranty"; record: Omit<WarrantyRecord, "id"> }
+  | { type: "updateWarranty"; id: string; patch: Partial<WarrantyRecord> }
+  | { type: "removeWarranty"; id: string }
+  | { type: "setMembership"; membership: Membership | null }
   | { type: "clearHistory" }
   | { type: "replaceAll"; state: Partial<PrefsState> }
   | { type: "reset" };
 
-const STORAGE_KEY = "nexmod.prefs.v2";
-const LEGACY_KEY = "nexmod.prefs.v1";
+/*
+ * v3 adds warranties and membership. Both older keys are still read on first
+ * load, so an existing visitor keeps their garage and saved builds; the new
+ * fields simply start empty. sanitise() supplies the defaults.
+ */
+const STORAGE_KEY = "nexmod.prefs.v3";
+const LEGACY_KEYS = ["nexmod.prefs.v2", "nexmod.prefs.v1"];
 
 export const COMPARE_LIMIT = 4;
 const RECENT_LIMIT = 12;
 const VEHICLE_LIMIT = 6;
 const BUILD_LIMIT = 12;
 const HISTORY_LIMIT = 40;
+const WARRANTY_LIMIT = 40;
 
 const initial: PrefsState = {
   profile: {},
@@ -120,6 +164,8 @@ const initial: PrefsState = {
   recent: [],
   builds: [],
   history: [],
+  warranties: [],
+  membership: null,
   ready: false,
 };
 
@@ -226,6 +272,25 @@ function reducer(state: PrefsState, action: Action): PrefsState {
     case "clearHistory":
       return { ...state, history: [] };
 
+    case "addWarranty": {
+      const record: WarrantyRecord = { ...action.record, id: newId("w") };
+      return { ...state, warranties: [record, ...state.warranties].slice(0, WARRANTY_LIMIT) };
+    }
+
+    case "updateWarranty":
+      return {
+        ...state,
+        warranties: state.warranties.map((w) =>
+          w.id === action.id ? { ...w, ...action.patch } : w,
+        ),
+      };
+
+    case "removeWarranty":
+      return { ...state, warranties: state.warranties.filter((w) => w.id !== action.id) };
+
+    case "setMembership":
+      return { ...state, membership: action.membership };
+
     default:
       return state;
   }
@@ -253,6 +318,16 @@ interface PrefsValue extends PrefsState {
   removeBuild: (id: string) => void;
   logHistory: (entry: Omit<HistoryEntry, "id" | "at">) => void;
   clearHistory: () => void;
+  addWarranty: (record: Omit<WarrantyRecord, "id">) => void;
+  updateWarranty: (id: string, patch: Partial<WarrantyRecord>) => void;
+  removeWarranty: (id: string) => void;
+  setMembership: (membership: Membership | null) => void;
+  /** True while a Care plan is active. Gates member pricing across the site. */
+  isMember: boolean;
+  /** Member discount as a fraction, e.g. 0.1. Zero when there is no plan. */
+  memberDiscount: number;
+  /** Applies the member discount to a price. Returns it untouched for guests. */
+  memberPrice: (price: number) => number;
   exportProfile: () => void;
   importProfile: (file: File) => Promise<boolean>;
   resetAll: () => void;
@@ -266,7 +341,9 @@ export function PrefsProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const raw =
-        window.localStorage.getItem(STORAGE_KEY) ?? window.localStorage.getItem(LEGACY_KEY);
+        window.localStorage.getItem(STORAGE_KEY) ??
+        LEGACY_KEYS.map((key) => window.localStorage.getItem(key)).find(Boolean) ??
+        null;
       const parsed = raw ? JSON.parse(raw) : {};
       dispatch({ type: "hydrate", state: sanitise(parsed) });
     } catch {
@@ -287,6 +364,22 @@ export function PrefsProvider({ children }: { children: ReactNode }) {
   const activeVehicle = useMemo(
     () => state.vehicles.find((v) => v.id === state.activeVehicleId) ?? null,
     [state.vehicles, state.activeVehicleId],
+  );
+
+  /*
+   * Member pricing is derived here rather than stored, so a plan that is
+   * cancelled or a tier that is renamed can never leave a stale discount
+   * baked into the saved state.
+   */
+  const memberDiscount = useMemo(() => {
+    if (!state.membership) return 0;
+    const tier = tierById(state.membership.tier);
+    return tier ? tier.discountPct / 100 : 0;
+  }, [state.membership]);
+
+  const memberPrice = useCallback(
+    (price: number) => (memberDiscount ? Math.round(price * (1 - memberDiscount)) : price),
+    [memberDiscount],
   );
 
   const isComparing = useCallback((slug: string) => state.compare.includes(slug), [state.compare]);
@@ -348,11 +441,28 @@ export function PrefsProvider({ children }: { children: ReactNode }) {
       removeBuild: (id) => dispatch({ type: "removeBuild", id }),
       logHistory: (entry) => dispatch({ type: "logHistory", entry }),
       clearHistory: () => dispatch({ type: "clearHistory" }),
+      addWarranty: (record) => dispatch({ type: "addWarranty", record }),
+      updateWarranty: (id, patch) => dispatch({ type: "updateWarranty", id, patch }),
+      removeWarranty: (id) => dispatch({ type: "removeWarranty", id }),
+      setMembership: (membership) => dispatch({ type: "setMembership", membership }),
+      isMember: memberDiscount > 0,
+      memberDiscount,
+      memberPrice,
       exportProfile,
       importProfile,
       resetAll: () => dispatch({ type: "reset" }),
     }),
-    [state, activeVehicle, isComparing, isWishlisted, hasProfile, exportProfile, importProfile],
+    [
+      state,
+      activeVehicle,
+      isComparing,
+      isWishlisted,
+      hasProfile,
+      exportProfile,
+      importProfile,
+      memberDiscount,
+      memberPrice,
+    ],
   );
 
   return <PrefsContext.Provider value={value}>{children}</PrefsContext.Provider>;
@@ -375,6 +485,15 @@ function sanitise(raw: unknown): Partial<PrefsState> {
     recent: arr<string>(data.recent).filter((s) => typeof s === "string").slice(0, RECENT_LIMIT),
     builds: arr<SavedBuild>(data.builds).filter((b) => b && Array.isArray(b.items)),
     history: arr<HistoryEntry>(data.history).filter((h) => h && typeof h.summary === "string"),
+    warranties: arr<WarrantyRecord>(data.warranties).filter(
+      (w) => w && typeof w.label === "string" && typeof w.fittedOn === "string",
+    ),
+    membership:
+      typeof data.membership === "object" &&
+      data.membership !== null &&
+      typeof (data.membership as Membership).tier === "string"
+        ? (data.membership as Membership)
+        : null,
   };
 }
 

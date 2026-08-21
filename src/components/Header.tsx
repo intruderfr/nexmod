@@ -57,12 +57,23 @@ export function Header() {
   const [mega, setMega] = useState<"products" | "services" | null>(null);
   const closeTimer = useRef<number | null>(null);
 
+  /*
+   * `core` items stay in the bar from lg up; the rest appear only from xl.
+   *
+   * Measured at 1024px the bar has about 451px between the wordmark and the
+   * action cluster, and all eight items want 597px. Before this split the
+   * overflow was silent — "Build Studio" simply wrapped onto a second line
+   * inside a 32px-tall bar, which reads as a rendering fault rather than a
+   * design. Below xl the menu button stays put, so nothing becomes
+   * unreachable; it just moves into the sheet.
+   */
   const nav = [
-    { label: dict.nav.products, href: "/products", mega: "products" as const },
-    { label: dict.nav.services, href: "/services", mega: "services" as const },
+    { label: dict.nav.products, href: "/products", mega: "products" as const, core: true },
+    { label: dict.nav.services, href: "/services", mega: "services" as const, core: true },
+    { label: "Packages", href: "/packages", core: true },
+    { label: dict.nav.build, href: "/build", core: true },
+    { label: "Care", href: "/care", core: true },
     { label: "Advisor", href: "/advisor" },
-    { label: "Packages", href: "/packages" },
-    { label: dict.nav.build, href: "/build" },
     { label: "Gallery", href: "/gallery" },
     { label: dict.nav.articles, href: "/articles" },
   ];
@@ -116,6 +127,7 @@ export function Header() {
   const mobileNav = [
     ...nav,
     { label: dict.nav.ezLip, href: "/ez-lip" },
+    { label: "Warranty", href: "/warranty" },
     { label: "My Nexmod", href: "/account" },
     { label: dict.nav.about, href: "/about" },
     { label: dict.nav.contact, href: "/contact" },
@@ -188,7 +200,14 @@ export function Header() {
                 <span className="block font-[family-name:var(--font-display)] font-extrabold tracking-[-0.03em] text-[17px]">
                   NEXMOD
                 </span>
-                <span className="hidden sm:block font-[family-name:var(--font-mono)] text-[8px] tracking-[0.18em] uppercase text-[var(--fg-subtle)] mt-[2px]">
+                {/*
+                  The tagline is set in 8px mono with wide tracking, which makes
+                  it about 45px wider than NEXMOD itself — so it, not the brand
+                  name, sets the wordmark's width. Between lg and xl that width
+                  is the difference between the nav fitting and not, and a
+                  strapline is the cheapest thing in the bar to give up.
+                */}
+                <span className="hidden xl:block font-[family-name:var(--font-mono)] text-[8px] tracking-[0.18em] uppercase text-[var(--fg-subtle)] mt-[2px]">
                   Premium Car Accessories
                 </span>
               </span>
@@ -197,11 +216,15 @@ export function Header() {
             {/* Primary nav */}
             <nav className="hidden lg:flex items-center gap-0.5 ml-2" aria-label="Main">
               {nav.map((item) => (
-                <div key={item.href} onMouseEnter={() => openMega(item.mega ?? null)}>
+                <div
+                  key={item.href}
+                  onMouseEnter={() => openMega(item.mega ?? null)}
+                  className={item.core ? undefined : "hidden xl:block"}
+                >
                   <Link
                     href={item.href}
                     aria-expanded={item.mega ? mega === item.mega : undefined}
-                    className={`inline-flex items-center gap-1 h-8 px-2.5 rounded-lg text-[13.5px] font-medium transition-colors ${
+                    className={`inline-flex items-center gap-1 h-8 px-2.5 rounded-lg text-[13.5px] font-medium whitespace-nowrap transition-colors ${
                       isActive(item.href)
                         ? "text-[var(--fg)] bg-[var(--bg-inset)]"
                         : "text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)]"
@@ -276,7 +299,7 @@ export function Header() {
                 type="button"
                 onClick={() => setMobileOpen(true)}
                 aria-label={dict.nav.openMenu}
-                className="lg:hidden hdr-btn ml-1"
+                className="xl:hidden hdr-btn ml-1"
               >
                 <IconMenu width={19} height={19} />
               </button>
@@ -407,7 +430,7 @@ export function Header() {
 
       {/* ========================================================== MOBILE */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 z-[70]">
+        <div className="xl:hidden fixed inset-0 z-[70]">
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in"
             onClick={() => setMobileOpen(false)}

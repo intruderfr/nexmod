@@ -9,7 +9,9 @@ import {
   useReducer,
   type ReactNode,
 } from "react";
+import { bundleRate, bundleSaving } from "@/data/bundle";
 import { lkr, site, waLink } from "@/data/site";
+import { usePrefs } from "@/lib/prefs";
 
 /**
  * Cart state.
@@ -119,6 +121,16 @@ export interface CartTotals {
   deliveryFee: number;
   /** True when everything in the cart is being fitted at the workshop. */
   allInstalled: boolean;
+  /** Multi-item fitting discount in rupees. */
+  bundleSaving: number;
+  /** The ladder rate reached, as a percentage, for labelling the line. */
+  bundlePct: number;
+  /** Distinct items being fitted — what the ladder is counted on. */
+  fittedItemCount: number;
+  /** Member discount in rupees. Zero without an active Care plan. */
+  memberSaving: number;
+  /** The tier's percentage, for labelling the line. */
+  memberDiscountPct: number;
   total: number;
   qualifiesForFreeDelivery: boolean;
   amountToFreeDelivery: number;
@@ -177,6 +189,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
     };
   }, [state.open]);
 
+  /*
+   * PrefsProvider wraps CartProvider in the layout, so member pricing is read
+   * here rather than duplicated. Without this the plan would be decorative:
+   * a discount that appears on the Care page and nowhere a customer pays.
+   */
+  const { memberDiscount } = usePrefs();
+
   const totals = useMemo<CartTotals>(() => {
     const itemCount = state.lines.reduce((n, l) => n + l.qty, 0);
     const subtotal = state.lines.reduce((n, l) => n + l.unitPrice * l.qty, 0);
@@ -191,17 +210,39 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const deliveryFee =
       state.lines.length === 0 || allInstalled || qualifiesForFreeDelivery ? 0 : DELIVERY_FEE;
 
+    /*
+     * The bundle ladder counts distinct items being fitted in one visit, which
+     * is where the saving to the workshop actually comes from. Items going out
+     * for delivery do not save a bay changeover, so they do not count.
+     */
+    const fittedItemCount = state.lines.filter((l) => l.withInstallation).length;
+    const bundle = bundleSaving(
+      state.lines.reduce((n, l) => (l.withInstallation ? n + l.unitPrice * l.qty : n), 0),
+      fittedItemCount,
+    );
+
+    // Member discount comes off after the bundle, not alongside it — the Care
+    // page and the package builder both state it that way.
+    const memberSaving = Math.round(
+      (subtotal + installationTotal - bundle) * memberDiscount,
+    );
+
     return {
       itemCount,
       subtotal,
       installationTotal,
       deliveryFee,
       allInstalled,
-      total: subtotal + installationTotal + deliveryFee,
+      bundleSaving: bundle,
+      bundlePct: Math.round(bundleRate(fittedItemCount) * 100),
+      fittedItemCount,
+      memberSaving,
+      memberDiscountPct: Math.round(memberDiscount * 100),
+      total: subtotal + installationTotal + deliveryFee - bundle - memberSaving,
       qualifiesForFreeDelivery,
       amountToFreeDelivery: Math.max(0, site.delivery.freeThreshold - subtotal),
     };
-  }, [state.lines]);
+  }, [state.lines, memberDiscount]);
 
   const whatsappOrderLink = useCallback(() => {
     if (state.lines.length === 0) {
@@ -223,6 +264,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       `Subtotal: ${lkr(totals.subtotal)}`,
       totals.installationTotal > 0 ? `Fitting: ${lkr(totals.installationTotal)}` : null,
       totals.deliveryFee > 0 ? `Delivery: ${lkr(totals.deliveryFee)}` : null,
+      totals.bundleSaving > 0
+        ? `Bundle discount (${totals.bundlePct}% on ${totals.fittedItemCount} fitted items): −${lkr(totals.bundleSaving)}`
+        : null,
+      totals.memberSaving > 0
+        ? `Care member discount (${totals.memberDiscountPct}%): −${lkr(totals.memberSaving)}`
+        : null,
       `Total: ${lkr(totals.total)}`,
       "",
       totals.allInstalled
