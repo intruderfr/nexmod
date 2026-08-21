@@ -1,3 +1,4 @@
+import { applyArticleOverrides } from "./overrides";
 import type { Article } from "./types";
 
 /**
@@ -11,7 +12,7 @@ import type { Article } from "./types";
  * editorial calendar that drives the daily posting plan.
  */
 
-export const articles: Article[] = [
+const catalogue: Article[] = [
   {
     slug: "carbon-fibre-wrap-guide-sri-lanka",
     title: "Carbon Fibre Wrap in Sri Lanka: What It Costs, How Long It Lasts, and What Nobody Tells You",
@@ -1523,6 +1524,13 @@ export const articles: Article[] = [
 ];
 
 /* ------------------------------------------------------------------ helpers */
+
+/**
+ * Publish dates are overridable, which is how scheduling is actually
+ * controlled: set a future date from the admin panel and the daily rebuild
+ * publishes the piece on that morning without anyone touching the repo again.
+ */
+export const articles: Article[] = applyArticleOverrides(catalogue);
 
 export const articleBySlug = new Map(articles.map((a) => [a.slug, a]));
 

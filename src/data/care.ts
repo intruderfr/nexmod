@@ -1,3 +1,4 @@
+import { applyCareOverrides } from "./overrides";
 import type { Money } from "./types";
 
 /**
@@ -60,7 +61,7 @@ export interface CareTier {
   notIncluded: string;
 }
 
-export const careTiers: CareTier[] = [
+const tiers: CareTier[] = [
   {
     id: "essential",
     name: "Care Essential",
@@ -102,6 +103,9 @@ export const careTiers: CareTier[] = [
       "Not a body shop. Accident damage, respray and panel work sit outside every tier, Signature included.",
   },
 ];
+
+/** Fees and percentages are overridable from the local admin panel. */
+export const careTiers: CareTier[] = applyCareOverrides(tiers);
 
 export const careBenefits: CareBenefit[] = [
   {

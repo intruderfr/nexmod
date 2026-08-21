@@ -1,3 +1,4 @@
+import { applyProductOverrides } from "./overrides";
 import type { Product } from "./types";
 
 /**
@@ -11,7 +12,7 @@ import type { Product } from "./types";
  * publicly advertised range.
  */
 
-export const products: Product[] = [
+const catalogue: Product[] = [
   /* ---------------------------------------------------------------- EZ LIP */
   {
     slug: "ez-lip-pro-universal-front-lip",
@@ -1626,6 +1627,13 @@ export const products: Product[] = [
 ];
 
 /* ------------------------------------------------------------------ helpers */
+
+/**
+ * Prices, stock and featured flags come from overrides.json where set, so the
+ * owner can change them from the local admin panel without touching code.
+ * Everything else is exactly as written above.
+ */
+export const products: Product[] = applyProductOverrides(catalogue);
 
 export const productBySlug = new Map(products.map((p) => [p.slug, p]));
 

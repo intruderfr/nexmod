@@ -21,13 +21,15 @@ import {
   IconTrash,
   IconWhatsApp,
 } from "./Icons";
+import { CoverPanel } from "./account/CoverPanel";
 import { Photo } from "./Photo";
 
-type Tab = "garage" | "builds" | "wishlist" | "history" | "details";
+type Tab = "garage" | "builds" | "cover" | "wishlist" | "history" | "details";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "garage", label: "My garage" },
   { id: "builds", label: "Saved builds" },
+  { id: "cover", label: "Cover" },
   { id: "wishlist", label: "Wishlist" },
   { id: "history", label: "Activity" },
   { id: "details", label: "Details" },
@@ -60,6 +62,7 @@ export function Account() {
     removeBuild,
     history,
     clearHistory,
+    warranties,
     exportProfile,
     importProfile,
     resetAll,
@@ -100,11 +103,13 @@ export function Account() {
                 ? vehicles.length
                 : t.id === "builds"
                   ? builds.length
-                  : t.id === "wishlist"
-                    ? wishlist.length
-                    : t.id === "history"
-                      ? history.length
-                      : 0;
+                  : t.id === "cover"
+                    ? warranties.length
+                    : t.id === "wishlist"
+                      ? wishlist.length
+                      : t.id === "history"
+                        ? history.length
+                        : 0;
             return (
               <button
                 key={t.id}
@@ -323,6 +328,8 @@ export function Account() {
       )}
 
       {/* ---------------------------------------------------------- WISHLIST */}
+      {tab === "cover" && <CoverPanel />}
+
       {tab === "wishlist" && (
         <section>
           {wishlistProducts.length === 0 ? (

@@ -1,3 +1,4 @@
+import { applyServiceOverrides } from "./overrides";
 import type { Service } from "./types";
 
 /**
@@ -9,7 +10,7 @@ import type { Service } from "./types";
  * practice for each discipline.
  */
 
-export const services: Service[] = [
+const catalogue: Service[] = [
   {
     slug: "carbon-fibre-wrapping",
     name: "Carbon Fibre Wrapping",
@@ -1280,6 +1281,9 @@ export const services: Service[] = [
 ];
 
 /* ------------------------------------------------------------------ helpers */
+
+/** From-prices and price notes are overridable from the local admin panel. */
+export const services: Service[] = applyServiceOverrides(catalogue);
 
 export const serviceBySlug = new Map(services.map((s) => [s.slug, s]));
 
