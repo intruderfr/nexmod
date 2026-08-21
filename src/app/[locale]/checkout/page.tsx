@@ -19,7 +19,7 @@ export async function generateMetadata({
 export default function CheckoutPage() {
   return (
     <section className="container-nex py-12 md:py-16">
-      <h1 className="text-3xl md:text-4xl mb-8">Checkout</h1>
+      <h1 className="text-display-3 mb-8">Checkout</h1>
       <CheckoutForm />
     </section>
   );

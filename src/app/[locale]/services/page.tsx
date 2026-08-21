@@ -56,7 +56,7 @@ export default function ServicesPage() {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           <div>
             <p className="eyebrow mb-2.5">Workshop</p>
-            <h1 className="text-4xl md:text-5xl mb-5">
+            <h1 className="text-display-2 mb-5">
               Twelve services.
               <br />
               All done in-house.
@@ -114,7 +114,7 @@ export default function ServicesPage() {
         return (
           <section key={group.id} className="container-nex py-12 md:py-16 border-b border-[var(--border)] last:border-0">
             <div className="mb-7">
-              <h2 className="text-2xl md:text-3xl mb-2">{group.label}</h2>
+              <h2 className="text-heading mb-2">{group.label}</h2>
               <p className="text-[var(--fg-muted)]">{group.blurb}</p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger">
@@ -129,7 +129,7 @@ export default function ServicesPage() {
       {/* CTA */}
       <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
         <div className="container-nex py-16 md:py-20 text-center">
-          <h2 className="text-3xl md:text-4xl mb-3">Not sure what your car needs?</h2>
+          <h2 className="text-display-3 mb-3">Not sure what your car needs?</h2>
           <p className="text-[var(--fg-muted)] leading-relaxed max-w-xl mx-auto mb-7">
             Send us a photo and tell us what bothers you about the car. We will tell you what we
             would do first, and what we would leave alone.

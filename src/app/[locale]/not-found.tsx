@@ -10,7 +10,7 @@ export default function NotFound() {
         <p className="font-[family-name:var(--font-display)] text-7xl md:text-8xl font-extrabold text-[var(--accent)] leading-none mb-6">
           404
         </p>
-        <h1 className="text-3xl md:text-4xl mb-4">This page took a wrong turn.</h1>
+        <h1 className="text-display-3 mb-4">This page took a wrong turn.</h1>
         <p className="text-lg text-[var(--fg-muted)] leading-relaxed mb-8">
           The page you were after does not exist, or it has moved. Try the catalogue, or just ask us
           directly — it is usually faster.

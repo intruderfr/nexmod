@@ -68,7 +68,7 @@ export default function ContactPage() {
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
             <p className="eyebrow mb-2.5">Contact</p>
-            <h1 className="text-4xl md:text-5xl mb-5">Come and see us.</h1>
+            <h1 className="text-display-2 mb-5">Come and see us.</h1>
             <p className="text-lg text-[var(--fg-muted)] leading-relaxed mb-9 max-w-lg">
               We are on Sri Saranankara Road in Dehiwala, open six days a week. Walk in for quick
               jobs, or send a photo on WhatsApp first and we will tell you what your car needs.

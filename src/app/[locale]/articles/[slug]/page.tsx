@@ -97,7 +97,7 @@ export default async function ArticlePage({
             <span>{article.author}</span>
           </div>
 
-          <h1 className="text-3xl md:text-5xl mb-5 leading-[1.1]">{article.title}</h1>
+          <h1 className="text-display-2 mb-5 leading-[1.1]">{article.title}</h1>
           <p className="text-lg md:text-xl text-[var(--fg-muted)] leading-relaxed">
             {article.excerpt}
           </p>
@@ -235,7 +235,7 @@ export default async function ArticlePage({
       {products.length > 0 && (
         <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
           <div className="container-nex py-16 md:py-20">
-            <h2 className="text-2xl md:text-3xl mb-7">Products mentioned</h2>
+            <h2 className="text-heading mb-7">Products mentioned</h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
               {products.slice(0, 4).map((p) => (
                 <ProductCard key={p.slug} product={p} />
@@ -250,7 +250,7 @@ export default async function ArticlePage({
         <section className="border-t border-[var(--border)]">
           <div className="container-nex py-16 md:py-20">
             <div className="flex items-end justify-between gap-4 mb-7">
-              <h2 className="text-2xl md:text-3xl">Read next</h2>
+              <h2 className="text-heading">Read next</h2>
               <Link
                 href="/articles"
                 className="inline-flex items-center gap-1.5 text-sm font-semibold hover:text-[var(--accent)] transition-colors"

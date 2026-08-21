@@ -65,8 +65,8 @@ export default function ArticlesPage() {
 
       <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <p className="eyebrow mb-2.5">Articles &amp; news</p>
-        <h1 className="text-4xl md:text-5xl mb-4 max-w-2xl">Know before you spend.</h1>
-        <p className="text-lg text-[var(--fg-muted)] leading-relaxed max-w-2xl mb-6">
+        <h1 className="text-display-2 mb-4 max-w-2xl">Know before you spend.</h1>
+        <p className="text-lede mb-6">
           Guides written from the workshop floor. Real Sri Lankan prices, realistic lifespans in
           tropical sun, and the details that decide whether work lasts — including the parts that
           cost us sales to say out loud.

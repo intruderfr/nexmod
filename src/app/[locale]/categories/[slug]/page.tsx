@@ -91,7 +91,7 @@ export default async function CategoryPage({
           </span>
           <div>
             <p className="eyebrow mb-1.5">{items.length} products</p>
-            <h1 className="text-3xl md:text-4xl">{category.heading}</h1>
+            <h1 className="text-display-3">{category.heading}</h1>
           </div>
         </div>
 
@@ -115,7 +115,7 @@ export default async function CategoryPage({
       {relatedServices.length > 0 && (
         <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
           <div className="container-nex py-16 md:py-20">
-            <h2 className="text-2xl md:text-3xl mb-2">We fit all of this</h2>
+            <h2 className="text-heading mb-2">We fit all of this</h2>
             <p className="text-[var(--fg-muted)] mb-7 max-w-2xl leading-relaxed">
               Buying the part is half of it. Here is exactly how we install it, and the steps that
               decide whether the work lasts.

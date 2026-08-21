@@ -48,7 +48,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
 
       <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <p className="eyebrow mb-2.5">Topic</p>
-        <h1 className="text-4xl md:text-5xl mb-3 capitalize">{tag}</h1>
+        <h1 className="text-display-2 mb-3 capitalize">{tag}</h1>
         <p className="text-lg text-[var(--fg-muted)]">
           {items.length} {items.length === 1 ? "article" : "articles"}
         </p>

@@ -550,7 +550,7 @@ function StepHead({ n, title, note }: { n: string; title: string; note: string }
   return (
     <header className="mb-6">
       <span className="step-marker block mb-3">{n}</span>
-      <h2 className="text-2xl md:text-3xl mb-2">{title}</h2>
+      <h2 className="text-heading mb-2">{title}</h2>
       <p className="text-[var(--fg-muted)] leading-relaxed">{note}</p>
     </header>
   );

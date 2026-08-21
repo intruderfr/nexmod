@@ -162,8 +162,8 @@ export default function FaqPage() {
 
       <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <p className="eyebrow mb-2.5">FAQ</p>
-        <h1 className="text-4xl md:text-5xl mb-4 max-w-2xl">Questions, answered properly.</h1>
-        <p className="text-lg text-[var(--fg-muted)] leading-relaxed max-w-2xl">
+        <h1 className="text-display-2 mb-4 max-w-2xl">Questions, answered properly.</h1>
+        <p className="text-lede">
           Delivery, payment, warranty, fitting times and returns. If your question is not here,
           WhatsApp us — we answer quickly and we do not do sales pressure.
         </p>

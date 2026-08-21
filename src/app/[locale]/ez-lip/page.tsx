@@ -158,7 +158,7 @@ export default function EzLipPage() {
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
             <p className="eyebrow mb-3">Why flexible wins here</p>
-            <h2 className="text-3xl md:text-4xl mb-5">
+            <h2 className="text-display-3 mb-5">
               Sri Lankan roads destroy rigid lips.
             </h2>
             <div className="prose-nex max-w-none">
@@ -231,7 +231,7 @@ export default function EzLipPage() {
         <div className="container-nex py-16 md:py-20">
           <div className="max-w-2xl mb-9">
             <p className="eyebrow mb-3">What the agency means</p>
-            <h2 className="text-3xl md:text-4xl mb-3">Why buying genuine matters</h2>
+            <h2 className="text-display-3 mb-3">Why buying genuine matters</h2>
             <p className="text-[var(--fg-muted)] leading-relaxed">
               Counterfeit EZ Lip has circulated in the region for years. It looks correct on day one.
               It stops looking correct within a season.
@@ -277,7 +277,7 @@ export default function EzLipPage() {
       <section className="container-nex py-16 md:py-20">
         <div className="max-w-2xl mb-8">
           <p className="eyebrow mb-3">In stock</p>
-          <h2 className="text-3xl md:text-4xl mb-3">Choose your profile</h2>
+          <h2 className="text-display-3 mb-3">Choose your profile</h2>
           <p className="text-[var(--fg-muted)] leading-relaxed">
             Both are genuine EZ Lip USA product. The only real question is how much drop suits how
             you actually use the car.
@@ -297,7 +297,7 @@ export default function EzLipPage() {
           <div className="container-nex py-16 md:py-20">
             <div className="max-w-2xl mb-9">
               <p className="eyebrow mb-3">Fitting</p>
-              <h2 className="text-3xl md:text-4xl mb-3">How we fit it</h2>
+              <h2 className="text-display-3 mb-3">How we fit it</h2>
               <p className="text-[var(--fg-muted)] leading-relaxed">
                 Ninety minutes, start to finish, and you can wait for it.
               </p>
@@ -330,7 +330,7 @@ export default function EzLipPage() {
       <section className="container-nex py-16 md:py-20">
         <div className="max-w-3xl">
           <p className="eyebrow mb-3">Questions</p>
-          <h2 className="text-3xl md:text-4xl mb-8">EZ Lip, answered</h2>
+          <h2 className="text-display-3 mb-8">EZ Lip, answered</h2>
           <Faq items={faqs} />
         </div>
       </section>
@@ -338,7 +338,7 @@ export default function EzLipPage() {
       {/* CTA */}
       <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
         <div className="container-nex py-16 md:py-20 text-center">
-          <h2 className="text-3xl md:text-4xl mb-3">Send us your bumper.</h2>
+          <h2 className="text-display-3 mb-3">Send us your bumper.</h2>
           <p className="text-[var(--fg-muted)] leading-relaxed max-w-xl mx-auto mb-7">
             One straight-on photo is all we need to confirm fitment and tell you which profile
             suits your car.

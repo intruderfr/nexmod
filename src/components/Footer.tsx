@@ -28,7 +28,7 @@ export function Footer() {
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div className="max-w-xl">
               <p className="eyebrow mb-3">{dict.footer.ctaEyebrow}</p>
-              <h2 className="text-3xl md:text-4xl mb-3">
+              <h2 className="text-display-3 mb-3">
                 {dict.footer.ctaTitle1}
                 <br />
                 {dict.footer.ctaTitle2}
@@ -166,6 +166,7 @@ export function Footer() {
             </h3>
             <ul className="space-y-2.5">
               {[
+                { href: "/packages", label: "Packages" },
                 { href: "/build", label: dict.nav.build },
                 { href: "/gallery", label: "Gallery" },
                 { href: "/about", label: dict.nav.about },

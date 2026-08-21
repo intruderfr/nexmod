@@ -39,8 +39,8 @@ export default function StudioPage() {
     <>
       <section className="container-nex pt-10 pb-8 border-b border-[var(--border)]">
         <span className="badge badge-accent mb-4">Internal — not indexed</span>
-        <h1 className="text-4xl md:text-5xl mb-4">SEO Studio</h1>
-        <p className="text-lg text-[var(--fg-muted)] leading-relaxed max-w-2xl">
+        <h1 className="text-display-2 mb-4">SEO Studio</h1>
+        <p className="text-lede">
           The posting plan, the article pipeline and the local SEO checklist. Everything here is
           driven by <code className="text-[var(--accent)]">src/data/calendar.ts</code> — edit that
           file and this page updates.
@@ -96,7 +96,7 @@ export default function StudioPage() {
       {/* Scheduled queue */}
       {queued.length > 0 && (
         <section className="container-nex py-12 md:py-16 border-b border-[var(--border)]">
-          <h2 className="text-2xl md:text-3xl mb-6">Publishing queue</h2>
+          <h2 className="text-heading mb-6">Publishing queue</h2>
           <div className="surface overflow-hidden">
             <div className="scroll-x">
               <table className="w-full text-left border-collapse min-w-[40rem]">
@@ -138,7 +138,7 @@ export default function StudioPage() {
       {/* Weekly rhythm */}
       <section className="container-nex py-12 md:py-16 border-b border-[var(--border)]">
         <div className="max-w-2xl mb-7">
-          <h2 className="text-2xl md:text-3xl mb-3">Weekly posting rhythm</h2>
+          <h2 className="text-heading mb-3">Weekly posting rhythm</h2>
           <p className="text-[var(--fg-muted)] leading-relaxed">
             Google Business Profile posts expire after seven days, so consistency matters more than
             volume. This is a repeatable cycle — the copy templates are ready to fill in and paste.
@@ -201,7 +201,7 @@ export default function StudioPage() {
       {/* Checklist */}
       <section className="container-nex py-12 md:py-16 border-b border-[var(--border)]">
         <div className="max-w-2xl mb-7">
-          <h2 className="text-2xl md:text-3xl mb-3">Local SEO checklist</h2>
+          <h2 className="text-heading mb-3">Local SEO checklist</h2>
           <p className="text-[var(--fg-muted)] leading-relaxed">
             Ranked by impact. The critical items are where nearly all the local-pack visibility
             comes from — and most competitors have not done them.
@@ -246,7 +246,7 @@ export default function StudioPage() {
       {/* Keyword map */}
       <section className="container-nex py-12 md:py-16 border-b border-[var(--border)]">
         <div className="max-w-2xl mb-7">
-          <h2 className="flex items-center gap-2.5 text-2xl md:text-3xl mb-3">
+          <h2 className="flex items-center gap-2.5 text-heading mb-3">
             <IconSearch width={22} height={22} className="text-[var(--accent)]" />
             Keyword map
           </h2>
@@ -312,7 +312,7 @@ export default function StudioPage() {
       {/* Pipeline */}
       <section className="container-nex py-12 md:py-16">
         <div className="max-w-2xl mb-7">
-          <h2 className="text-2xl md:text-3xl mb-3">Article pipeline</h2>
+          <h2 className="text-heading mb-3">Article pipeline</h2>
           <p className="text-[var(--fg-muted)] leading-relaxed">
             Write these in order. Model-specific guides are the biggest untapped opportunity — one
             per popular Sri Lankan model, and almost nobody is targeting them.

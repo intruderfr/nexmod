@@ -52,10 +52,10 @@ export default function ProductsPage() {
 
       <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <p className="eyebrow mb-2.5">Shop</p>
-        <h1 className="text-4xl md:text-5xl mb-4 max-w-2xl">
+        <h1 className="text-display-2 mb-4 max-w-2xl">
           Every accessory, supplied and fitted.
         </h1>
-        <p className="text-lg text-[var(--fg-muted)] leading-relaxed max-w-2xl">
+        <p className="text-lede">
           {products.length} products across {categories.length} categories. Everything here can be
           delivered islandwide, or fitted properly at our Dehiwala workshop — most of it the same
           day.

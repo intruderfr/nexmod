@@ -32,7 +32,7 @@ export function SectionHead({
       >
         <div className={centered ? "" : "max-w-2xl"}>
           <p className={`eyebrow mb-5 ${centered ? "justify-center" : ""}`}>{eyebrow}</p>
-          <h2 className="text-[clamp(1.875rem,3.8vw,3rem)]">{title}</h2>
+          <h2 className="text-display-3">{title}</h2>
           {lede && (
             <p className="text-[var(--fg-muted)] text-lg leading-relaxed mt-4 max-w-[62ch]">{lede}</p>
           )}

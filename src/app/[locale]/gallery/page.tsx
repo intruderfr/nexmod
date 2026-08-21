@@ -52,7 +52,7 @@ export default function GalleryPage() {
 
           <div className="max-w-2xl mt-10">
             <p className="eyebrow mb-5">Gallery</p>
-            <h1 className="text-[clamp(2.25rem,6vw,4.25rem)] leading-[0.98] mb-6">
+            <h1 className="text-display-2 mb-6">
               What comes out
               <br />
               <span className="text-[var(--accent)]">of the bay.</span>

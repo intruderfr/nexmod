@@ -58,7 +58,7 @@ export default async function ArticleCategoryPage({
         <p className="eyebrow mb-2.5">
           {items.length} {items.length === 1 ? "article" : "articles"}
         </p>
-        <h1 className="text-4xl md:text-5xl mb-4">{meta.label}</h1>
+        <h1 className="text-display-2 mb-4">{meta.label}</h1>
         <p className="text-lg text-[var(--fg-muted)] max-w-2xl leading-relaxed mb-6">{meta.blurb}</p>
 
         <div className="flex flex-wrap gap-2">

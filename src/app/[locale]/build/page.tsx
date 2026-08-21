@@ -54,7 +54,7 @@ export default function BuildPage() {
 
           <div className="max-w-2xl mt-10">
             <p className="eyebrow mb-5">Build Studio</p>
-            <h1 className="text-[clamp(2.25rem,6vw,4.25rem)] leading-[0.98] mb-6">
+            <h1 className="text-display-2 mb-6">
               Show us your car.
               <br />
               <span className="text-[var(--accent)]">Build it here.</span>

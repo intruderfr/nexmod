@@ -41,7 +41,7 @@ export default function BookPage() {
         <div className="grid lg:grid-cols-[1fr_380px] gap-12">
           <div>
             <p className="eyebrow mb-2.5">Booking</p>
-            <h1 className="text-4xl md:text-5xl mb-4">Book a slot at the workshop.</h1>
+            <h1 className="text-display-2 mb-4">Book a slot at the workshop.</h1>
             <p className="text-lg text-[var(--fg-muted)] leading-relaxed mb-8 max-w-2xl">
               Tell us the car, what you want done, and when suits. We will come back to confirm —
               usually within a few hours during opening times.

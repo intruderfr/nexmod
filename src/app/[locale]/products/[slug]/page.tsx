@@ -8,6 +8,7 @@ import { IconArrowRight, IconCheck, IconClock, IconShield, IconTool } from "@/co
 import { JsonLd } from "@/components/JsonLd";
 import { Photo } from "@/components/Photo";
 import { RecentlyViewed, TrackProductView } from "@/components/RecentlyViewed";
+import { StickyBuyBar } from "@/components/StickyBuyBar";
 import { Visual } from "@/components/Visual";
 import { productImage } from "@/data/imagery";
 import { getCategory } from "@/data/categories";
@@ -58,6 +59,7 @@ export default async function ProductPage({
     <>
       <JsonLd data={productSchema(product)} />
       <TrackProductView slug={product.slug} />
+      <StickyBuyBar product={product} />
       {product.faqs && product.faqs.length > 0 && <JsonLd data={faqSchema(product.faqs)} />}
 
       <div className="container-nex pt-6 pb-4">
@@ -113,7 +115,7 @@ export default async function ProductPage({
               </span>
             )}
 
-            <h1 className="text-3xl md:text-4xl mb-3">{product.name}</h1>
+            <h1 className="text-display-3 mb-3">{product.name}</h1>
             <p className="text-lg text-[var(--fg-muted)] leading-relaxed mb-7">{product.tagline}</p>
 
             <AddToCart product={product} />
@@ -146,7 +148,7 @@ export default async function ProductPage({
           <div className="grid lg:grid-cols-[1fr_360px] gap-12">
             <div className="max-w-2xl">
               <p className="eyebrow mb-3">About this product</p>
-              <h2 className="text-2xl md:text-3xl mb-6">The detail that matters</h2>
+              <h2 className="text-heading mb-6">The detail that matters</h2>
               <div className="prose-nex">
                 {product.body.map((para, i) => (
                   <p key={i}>{para}</p>
@@ -251,7 +253,7 @@ export default async function ProductPage({
           <div className="container-nex py-16 md:py-20">
             <div className="max-w-3xl">
               <p className="eyebrow mb-3">Questions</p>
-              <h2 className="text-2xl md:text-3xl mb-7">
+              <h2 className="text-heading mb-7">
                 What people ask about the {product.name.toLowerCase()}
               </h2>
               <Faq items={product.faqs} />
@@ -264,7 +266,7 @@ export default async function ProductPage({
       {related.length > 0 && (
         <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
           <div className="container-nex py-16 md:py-20">
-            <h2 className="text-2xl md:text-3xl mb-7">Goes well with this</h2>
+            <h2 className="text-heading mb-7">Goes well with this</h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
               {related.map((p) => (
                 <ProductCard key={p.slug} product={p} />

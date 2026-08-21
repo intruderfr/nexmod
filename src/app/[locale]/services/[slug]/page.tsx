@@ -121,7 +121,7 @@ export default async function ServicePage({
               <span className="badge capitalize">{service.category}</span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl mb-4">{service.name}</h1>
+            <h1 className="text-display-2 mb-4">{service.name}</h1>
             <p className="text-xl text-[var(--fg-muted)] leading-relaxed mb-8 max-w-2xl">
               {service.tagline}
             </p>
@@ -204,7 +204,7 @@ export default async function ServicePage({
           <div className="grid lg:grid-cols-[1fr_1fr] gap-12">
             <div>
               <p className="eyebrow mb-3">Included as standard</p>
-              <h2 className="text-2xl md:text-3xl mb-6">What you actually get</h2>
+              <h2 className="text-heading mb-6">What you actually get</h2>
               <ul className="space-y-3">
                 {service.includes.map((item) => (
                   <li key={item} className="flex items-start gap-3">
@@ -224,7 +224,7 @@ export default async function ServicePage({
             {service.suitableFor && service.suitableFor.length > 0 && (
               <div>
                 <p className="eyebrow mb-3">Suitable for</p>
-                <h2 className="text-2xl md:text-3xl mb-6">When this is the right job</h2>
+                <h2 className="text-heading mb-6">When this is the right job</h2>
                 <ul className="space-y-2.5">
                   {service.suitableFor.map((item) => (
                     <li
@@ -247,7 +247,7 @@ export default async function ServicePage({
         <section className="container-nex py-16 md:py-20">
           <div className="max-w-3xl">
             <p className="eyebrow mb-5">See the difference</p>
-            <h2 className="text-3xl md:text-4xl mb-4">Untinted, and at 35% VLT</h2>
+            <h2 className="text-display-3 mb-4">Untinted, and at 35% VLT</h2>
             <p className="text-[var(--fg-muted)] leading-relaxed mb-8">
               The same photograph either side of the handle — drag it to compare. This shows the
               tonal change a mid-level film makes; it is an illustration of darkness, not a
@@ -268,7 +268,7 @@ export default async function ServicePage({
       <section className="container-nex py-16 md:py-20">
         <div className="max-w-2xl mb-10">
           <p className="eyebrow mb-3">The process</p>
-          <h2 className="text-3xl md:text-4xl mb-3">Step by step, start to finish</h2>
+          <h2 className="text-display-3 mb-3">Step by step, start to finish</h2>
           <p className="text-[var(--fg-muted)] leading-relaxed">
             We publish this because the steps most shops skip are invisible at handover — and they
             are exactly the steps that decide whether the work lasts.
@@ -294,7 +294,7 @@ export default async function ServicePage({
       {service.specs && service.specs.length > 0 && (
         <section className="border-y border-[var(--border)] bg-[var(--bg-subtle)]">
           <div className="container-nex py-16 md:py-20">
-            <h2 className="text-2xl md:text-3xl mb-7">Technical detail</h2>
+            <h2 className="text-heading mb-7">Technical detail</h2>
             <dl className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-5 max-w-5xl">
               {service.specs.map((spec) => (
                 <div key={spec.label} className="pb-4 border-b border-[var(--border)]">
@@ -315,7 +315,7 @@ export default async function ServicePage({
           <div className="grid lg:grid-cols-[1fr_1.4fr] gap-12">
             <div>
               <p className="eyebrow mb-3">Looking after it</p>
-              <h2 className="text-2xl md:text-3xl mb-3">Aftercare</h2>
+              <h2 className="text-heading mb-3">Aftercare</h2>
               <p className="text-[var(--fg-muted)] leading-relaxed">
                 We go through this with you at handover too. Following it is most of what decides
                 how long the work lasts.
@@ -340,7 +340,7 @@ export default async function ServicePage({
         <div className="container-nex py-16 md:py-20">
           <div className="max-w-3xl">
             <p className="eyebrow mb-3">Questions</p>
-            <h2 className="text-2xl md:text-3xl mb-7">
+            <h2 className="text-heading mb-7">
               What people ask about {service.name.toLowerCase()}
             </h2>
             <Faq items={service.faqs} />
@@ -352,7 +352,7 @@ export default async function ServicePage({
       {related.length > 0 && (
         <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
           <div className="container-nex py-16 md:py-20">
-            <h2 className="text-2xl md:text-3xl mb-2">Products we use for this</h2>
+            <h2 className="text-heading mb-2">Products we use for this</h2>
             <p className="text-[var(--fg-muted)] mb-7">
               Buy the part with fitting included, or just the part for islandwide delivery.
             </p>
@@ -369,7 +369,7 @@ export default async function ServicePage({
       {alsoServices.length > 0 && (
         <section className="border-t border-[var(--border)]">
           <div className="container-nex py-16 md:py-20">
-            <h2 className="text-2xl md:text-3xl mb-7">Often done at the same time</h2>
+            <h2 className="text-heading mb-7">Often done at the same time</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {alsoServices.map((s) => (
                 <Link

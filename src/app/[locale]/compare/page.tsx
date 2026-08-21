@@ -28,8 +28,8 @@ export default function ComparePage() {
 
       <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <p className="eyebrow mb-5">Compare</p>
-        <h1 className="text-4xl md:text-5xl mb-4">Side by side.</h1>
-        <p className="text-lg text-[var(--fg-muted)] leading-relaxed max-w-2xl">
+        <h1 className="text-display-2 mb-4">Side by side.</h1>
+        <p className="text-lede">
           Everything that actually differs between the products you picked — price, fitting time,
           warranty and full specifications.
         </p>

@@ -83,7 +83,7 @@ export function CheckoutForm() {
         <span className="grid place-items-center w-14 h-14 mx-auto rounded-full bg-[var(--accent-subtle)] text-[var(--accent)] mb-5">
           <IconCheck width={26} height={26} />
         </span>
-        <h1 className="text-2xl md:text-3xl mb-2.5">Order received</h1>
+        <h1 className="text-heading mb-2.5">Order received</h1>
         <p className="text-[var(--fg-muted)] leading-relaxed mb-5">
           Thanks {form.name.split(" ")[0]}. Your reference is{" "}
           <strong className="text-[var(--fg)] font-mono">{reference}</strong>. We will confirm

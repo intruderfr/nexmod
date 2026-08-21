@@ -39,7 +39,7 @@ export default function AboutPage() {
       <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <div className="max-w-3xl">
           <p className="eyebrow mb-2.5">About</p>
-          <h1 className="text-4xl md:text-5xl mb-6 leading-[1.08]">
+          <h1 className="text-display-2 mb-6 leading-[1.08]">
             We would rather lose a job than sell you the wrong thing.
           </h1>
           <p className="text-lg text-[var(--fg-muted)] leading-relaxed">
@@ -63,7 +63,7 @@ export default function AboutPage() {
               <div key={stat.label}>
                 <dt className="sr-only">{stat.label}</dt>
                 <dd>
-                  <span className="flex items-center gap-1.5 font-[family-name:var(--font-display)] text-4xl md:text-5xl font-extrabold text-[var(--accent)] tabular-nums leading-none mb-2">
+                  <span className="flex items-center gap-1.5 font-[family-name:var(--font-display)] text-display-2 font-extrabold text-[var(--accent)] tabular-nums leading-none mb-2">
                     {stat.value}
                     {stat.star && <IconStar width={22} height={22} />}
                   </span>

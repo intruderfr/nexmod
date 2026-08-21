@@ -27,7 +27,7 @@ export function RecentlyViewed({ exclude }: { exclude?: string }) {
   return (
     <section className="border-t border-[var(--border)]">
       <div className="container-nex py-12 md:py-16">
-        <h2 className="text-2xl md:text-3xl mb-7">Recently viewed</h2>
+        <h2 className="text-heading mb-7">Recently viewed</h2>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {items.map((product) => (
             <ProductCard key={product.slug} product={product} />

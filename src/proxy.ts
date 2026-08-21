@@ -15,7 +15,8 @@ import { defaultLocale, isLocale, locales } from "@/i18n/config";
  * the cookie or headers say, which is what makes shared links behave.
  */
 
-const PUBLIC_FILE = /\.(?:ico|png|jpe?g|svg|webp|avif|gif|txt|xml|json|webmanifest|woff2?)$/i;
+const PUBLIC_FILE =
+  /\.(?:ico|png|jpe?g|svg|webp|avif|gif|txt|xml|json|webmanifest|woff2?|js|mjs|css|map|html)$/i;
 
 function preferredLocale(request: NextRequest): string {
   const cookie = request.cookies.get("nexmod.locale")?.value;

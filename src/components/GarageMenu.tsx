@@ -57,7 +57,7 @@ export function GarageMenu() {
   }
 
   // Fixed-size placeholder until hydrated, so the header never shifts.
-  if (!ready) return <span className="w-10 h-10 shrink-0" aria-hidden="true" />;
+  if (!ready) return <span className="w-9 h-9 shrink-0" aria-hidden="true" />;
 
   return (
     <div ref={ref} className="relative">
@@ -66,7 +66,7 @@ export function GarageMenu() {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-label={activeVehicle ? `Garage: ${activeVehicle.model}` : "My Garage"}
-        className="relative grid place-items-center w-10 h-10 rounded-md text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors"
+        className="relative grid place-items-center w-9 h-9 rounded-lg text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors"
       >
         <IconTool width={18} height={18} />
         {vehicles.length > 0 && (

@@ -283,11 +283,11 @@ export function CommandPalette() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label={dict.nav.search}
-        className="group hidden md:flex items-center gap-2.5 h-9 pl-3 pr-2 rounded-lg border border-[var(--border)] bg-[var(--bg-inset)] text-[var(--fg-subtle)] hover:border-[var(--border-strong)] hover:text-[var(--fg-muted)] transition-colors"
+        className="group hidden lg:flex items-center gap-2 h-9 pl-2.5 pr-1.5 rounded-lg border border-[var(--border)] bg-[var(--bg-inset)] text-[var(--fg-subtle)] hover:border-[var(--border-strong)] hover:text-[var(--fg-muted)] transition-colors"
       >
         <IconSearch width={15} height={15} />
-        <span className="text-[13px]">{dict.nav.search}</span>
-        <kbd className="ml-3 px-1.5 py-0.5 rounded border border-[var(--border)] bg-[var(--bg)] font-[family-name:var(--font-mono)] text-[10px] leading-none">
+        <span className="text-[13px] hidden xl:inline">{dict.nav.search}</span>
+        <kbd className="ml-1.5 px-1.5 py-0.5 rounded border border-[var(--border)] bg-[var(--bg)] font-[family-name:var(--font-mono)] text-[10px] leading-none">
           ⌘K
         </kbd>
       </button>
@@ -296,7 +296,7 @@ export function CommandPalette() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label={dict.nav.search}
-        className="md:hidden grid place-items-center w-10 h-10 rounded-md text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors"
+        className="lg:hidden grid place-items-center w-9 h-9 rounded-lg text-[var(--fg-muted)] hover:text-[var(--fg)] hover:bg-[var(--bg-inset)] transition-colors"
       >
         <IconSearch width={18} height={18} />
       </button>

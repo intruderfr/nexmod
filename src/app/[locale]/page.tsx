@@ -95,7 +95,7 @@ export default async function HomePage({
               </p>
 
               <h1
-                className="text-[clamp(2.75rem,8vw,6.25rem)] leading-[0.94] mb-6 animate-fade-up"
+                className="text-display-1 mb-6 animate-fade-up"
                 style={{ animationDelay: "60ms" }}
               >
                 {dict.home.heroTitle1}
@@ -214,7 +214,7 @@ export default async function HomePage({
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div data-reveal>
               <p className="eyebrow mb-5">{dict.home.ezLipEyebrow}</p>
-              <h2 className="text-[clamp(2rem,4.4vw,3.25rem)] mb-4 max-w-lg">
+              <h2 className="text-display-3 mb-4 max-w-lg">
                 {dict.home.ezLipTitle}
               </h2>
               <p className="text-[var(--fg-muted)] text-lg leading-relaxed mb-8 max-w-lg">
@@ -407,7 +407,7 @@ export default async function HomePage({
           <div className="grid lg:grid-cols-2 gap-12">
             <div data-reveal>
               <p className="eyebrow mb-5">{dict.common.findUs}</p>
-              <h2 className="text-[clamp(2rem,4.4vw,3.25rem)] mb-4">
+              <h2 className="text-display-3 mb-4">
                 {dict.home.visitTitle}
               </h2>
               <p className="text-[var(--fg-muted)] text-lg leading-relaxed mb-8 max-w-md">

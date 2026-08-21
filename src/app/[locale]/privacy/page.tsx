@@ -28,7 +28,7 @@ export default function PrivacyPage() {
 
       <section className="container-nex py-12 md:py-16">
         <div className="max-w-3xl">
-          <h1 className="text-4xl md:text-5xl mb-3">Privacy policy</h1>
+          <h1 className="text-display-2 mb-3">Privacy policy</h1>
           <p className="text-[var(--fg-subtle)] mb-10">Last updated: {updated}</p>
 
           <div className="prose-nex">

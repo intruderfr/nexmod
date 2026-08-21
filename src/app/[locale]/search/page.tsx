@@ -30,7 +30,7 @@ export default function SearchPage() {
 
       <section className="container-nex pb-16 md:pb-20">
         <p className="eyebrow mb-2.5">Search</p>
-        <h1 className="text-4xl md:text-5xl mb-6">Find it fast.</h1>
+        <h1 className="text-display-2 mb-6">Find it fast.</h1>
 
         <Suspense fallback={<div className="h-14 rounded-lg bg-[var(--bg-inset)] max-w-xl" />}>
           <SiteSearch />

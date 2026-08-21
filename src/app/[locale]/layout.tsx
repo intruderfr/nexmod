@@ -15,6 +15,7 @@ import { Header } from "@/components/Header";
 import { JsonLd } from "@/components/JsonLd";
 import { Reveal } from "@/components/Reveal";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { ServiceWorker } from "@/components/ServiceWorker";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { site } from "@/data/site";
 import { getDictionary } from "@/i18n";
@@ -192,6 +193,7 @@ export default async function LocaleLayout({
         <JsonLd data={siteGraph()} />
         <Reveal />
         <ScrollProgress />
+        <ServiceWorker />
 
         <a
           href="#main"
