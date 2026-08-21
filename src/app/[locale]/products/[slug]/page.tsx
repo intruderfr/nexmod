@@ -6,7 +6,9 @@ import { ProductCard } from "@/components/Cards";
 import { Faq } from "@/components/Faq";
 import { IconArrowRight, IconCheck, IconClock, IconShield, IconTool } from "@/components/Icons";
 import { JsonLd } from "@/components/JsonLd";
+import { Photo } from "@/components/Photo";
 import { Visual } from "@/components/Visual";
+import { productImage } from "@/data/imagery";
 import { getCategory } from "@/data/categories";
 import { getProduct, products, relatedProducts } from "@/data/products";
 import { getService } from "@/data/services";
@@ -46,6 +48,7 @@ export default async function ProductPage({
 
   const category = getCategory(product.category);
   const related = relatedProducts(product, 4);
+  const photo = productImage(product.slug, product.category);
   const service = product.installation?.serviceSlug
     ? getService(product.installation.serviceSlug)
     : undefined;
@@ -73,12 +76,21 @@ export default async function ProductPage({
           {/* Visual column */}
           <div>
             <div className="surface overflow-hidden sticky top-24">
-              <Visual
-                variant={product.category}
-                icon={category?.icon ?? "tool"}
-                label={category?.name}
-                ratio="square"
-              />
+              {photo ? (
+                <Photo
+                  image={photo}
+                  ratio="square"
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 46vw"
+                />
+              ) : (
+                <Visual
+                  variant={product.category}
+                  icon={category?.icon ?? "tool"}
+                  label={category?.name}
+                  ratio="square"
+                />
+              )}
               {product.badges && product.badges.length > 0 && (
                 <div className="flex flex-wrap gap-2 p-4 border-t border-[var(--border)]">
                   {product.badges.map((b) => (

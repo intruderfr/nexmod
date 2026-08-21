@@ -12,7 +12,9 @@ import {
   IconWhatsApp,
 } from "@/components/Icons";
 import { JsonLd } from "@/components/JsonLd";
+import { Photo } from "@/components/Photo";
 import { Visual } from "@/components/Visual";
+import { serviceImage } from "@/data/imagery";
 import { getProduct } from "@/data/products";
 import { getService, services } from "@/data/services";
 import { lkr, waLink } from "@/data/site";
@@ -48,6 +50,8 @@ export default async function ServicePage({
   const service = getService(slug);
   if (!service) notFound();
 
+  const photo = serviceImage(service.slug);
+
   const related = (service.relatedProducts ?? [])
     .map(getProduct)
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
@@ -65,18 +69,49 @@ export default async function ServicePage({
       <JsonLd data={serviceSchema(service)} />
       <JsonLd data={faqSchema(service.faqs)} />
 
-      <div className="container-nex pt-6 pb-4">
-        <Breadcrumbs
-          trail={[
-            { name: "Services", path: "/services" },
-            { name: service.name, path: `/services/${service.slug}` },
-          ]}
-        />
-      </div>
+      {photo && (
+        <div className="relative isolate border-b border-[var(--border)]">
+          <Photo
+            image={photo}
+            ratio="free"
+            priority
+            alt=""
+            sizes="100vw"
+            className="absolute inset-0 h-full w-full"
+          />
+          <div
+            className="absolute inset-0"
+            aria-hidden="true"
+            style={{
+              background:
+                "linear-gradient(105deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 88%, transparent) 42%, color-mix(in srgb, var(--bg) 35%, transparent) 100%)",
+            }}
+          />
+          <div className="container-nex relative pt-6 pb-16 md:pb-20">
+            <Breadcrumbs
+              trail={[
+                { name: "Services", path: "/services" },
+                { name: service.name, path: `/services/${service.slug}` },
+              ]}
+            />
+          </div>
+        </div>
+      )}
+
+      {!photo && (
+        <div className="container-nex pt-6 pb-4">
+          <Breadcrumbs
+            trail={[
+              { name: "Services", path: "/services" },
+              { name: service.name, path: `/services/${service.slug}` },
+            ]}
+          />
+        </div>
+      )}
 
       {/* ======================================================== HERO */}
-      <section className="container-nex pb-12 md:pb-16">
-        <div className="grid lg:grid-cols-[1fr_400px] gap-10">
+      <section className="container-nex pt-10 md:pt-14 pb-12 md:pb-16">
+        <div className="grid lg:grid-cols-[1fr_400px] gap-12">
           <div>
             <div className="flex items-center gap-3 mb-5">
               <span className="grid place-items-center w-11 h-11 rounded-lg bg-[var(--accent-subtle)] text-[var(--accent)]">
@@ -254,7 +289,7 @@ export default async function ServicePage({
       {/* =================================================== AFTERCARE */}
       {service.aftercare && service.aftercare.length > 0 && (
         <section className="container-nex py-16 md:py-20">
-          <div className="grid lg:grid-cols-[1fr_1.4fr] gap-10">
+          <div className="grid lg:grid-cols-[1fr_1.4fr] gap-12">
             <div>
               <p className="eyebrow mb-3">Looking after it</p>
               <h2 className="text-2xl md:text-3xl mb-3">Aftercare</h2>

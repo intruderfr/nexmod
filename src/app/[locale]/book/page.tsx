@@ -38,7 +38,7 @@ export default function BookPage() {
       </div>
 
       <section className="container-nex pb-12 md:pb-16">
-        <div className="grid lg:grid-cols-[1fr_380px] gap-10">
+        <div className="grid lg:grid-cols-[1fr_380px] gap-12">
           <div>
             <p className="eyebrow mb-2.5">Booking</p>
             <h1 className="text-4xl md:text-5xl mb-4">Book a slot at the workshop.</h1>

@@ -53,7 +53,7 @@ export default function AboutPage() {
       {/* Numbers */}
       <section className="border-b border-[var(--border)]">
         <div className="container-nex py-12 md:py-16">
-          <dl className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <dl className="grid grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               { value: site.rating.value.toString(), label: `From ${site.rating.count} Google reviews`, star: true },
               { value: `${services.length}`, label: "Services, all in-house" },

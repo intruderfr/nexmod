@@ -53,7 +53,7 @@ export default function ServicesPage() {
 
       {/* Hero */}
       <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
-        <div className="grid lg:grid-cols-2 gap-10 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           <div>
             <p className="eyebrow mb-2.5">Workshop</p>
             <h1 className="text-4xl md:text-5xl mb-5">

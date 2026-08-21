@@ -4,7 +4,9 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { IconArrowRight } from "@/components/Icons";
 import { CategoryIcon } from "@/components/Icons";
 import { JsonLd } from "@/components/JsonLd";
+import { Photo } from "@/components/Photo";
 import { ProductBrowser } from "@/components/ProductBrowser";
+import { categoryImage } from "@/data/imagery";
 import { categories, getCategory } from "@/data/categories";
 import { allFitments, productsInCategory } from "@/data/products";
 import { services } from "@/data/services";
@@ -41,6 +43,7 @@ export default async function CategoryPage({
   if (!category) notFound();
 
   const items = productsInCategory(category.slug);
+  const photo = categoryImage(category.slug);
 
   // Services whose related products live in this category.
   const relatedServices = services.filter((s) =>
@@ -59,6 +62,27 @@ export default async function CategoryPage({
           ]}
         />
       </div>
+
+      {photo && (
+        <div className="relative isolate -mt-4 mb-10 border-y border-[var(--border)]">
+          <Photo
+            image={photo}
+            ratio="hero"
+            priority
+            alt=""
+            sizes="100vw"
+            className="h-full w-full"
+          />
+          <div
+            className="absolute inset-0"
+            aria-hidden="true"
+            style={{
+              background:
+                "linear-gradient(to top, var(--bg) 2%, color-mix(in srgb, var(--bg) 40%, transparent) 60%, transparent 100%)",
+            }}
+          />
+        </div>
+      )}
 
       <section className="container-nex pb-12 md:pb-16 border-b border-[var(--border)]">
         <div className="flex items-start gap-4 mb-5">

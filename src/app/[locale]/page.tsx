@@ -90,12 +90,12 @@ export default async function HomePage({
         <div className="container-nex relative">
           <div className="min-h-[80vh] lg:min-h-[86vh] flex flex-col justify-center py-20 lg:py-24">
             <div className="max-w-[54rem]">
-              <p className="eyebrow mb-8 animate-fade-in">
+              <p className="eyebrow mb-5 animate-fade-in">
                 {dict.home.since} {site.founded}
               </p>
 
               <h1
-                className="text-[clamp(2.75rem,8vw,6.25rem)] leading-[0.94] mb-8 animate-fade-up"
+                className="text-[clamp(2.75rem,8vw,6.25rem)] leading-[0.94] mb-6 animate-fade-up"
                 style={{ animationDelay: "60ms" }}
               >
                 {dict.home.heroTitle1}
@@ -104,7 +104,7 @@ export default async function HomePage({
               </h1>
 
               <p
-                className="text-lg md:text-xl text-[var(--fg-muted)] leading-relaxed max-w-2xl mb-10 animate-fade-up"
+                className="text-lg md:text-xl text-[var(--fg-muted)] leading-relaxed max-w-2xl mb-8 animate-fade-up"
                 style={{ animationDelay: "140ms" }}
               >
                 {dict.home.heroLede}
@@ -211,17 +211,17 @@ export default async function HomePage({
         />
 
         <div className="container-nex relative py-16 md:py-20">
-          <div className="grid lg:grid-cols-2 gap-14 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div data-reveal>
               <p className="eyebrow mb-5">{dict.home.ezLipEyebrow}</p>
-              <h2 className="text-[clamp(2rem,4.4vw,3.25rem)] mb-6 max-w-lg">
+              <h2 className="text-[clamp(2rem,4.4vw,3.25rem)] mb-4 max-w-lg">
                 {dict.home.ezLipTitle}
               </h2>
               <p className="text-[var(--fg-muted)] text-lg leading-relaxed mb-8 max-w-lg">
                 {dict.home.ezLipLede}
               </p>
 
-              <ul className="space-y-3 mb-9">
+              <ul className="space-y-3 mb-8">
                 {[
                   dict.home.ezLipPoint1,
                   dict.home.ezLipPoint2,
@@ -404,17 +404,17 @@ export default async function HomePage({
       {/* ============================================================ VISIT */}
       <section className="border-t border-[var(--border)] bg-[var(--bg-subtle)]">
         <div className="container-nex py-16 md:py-20">
-          <div className="grid lg:grid-cols-2 gap-14">
+          <div className="grid lg:grid-cols-2 gap-12">
             <div data-reveal>
               <p className="eyebrow mb-5">{dict.common.findUs}</p>
-              <h2 className="text-[clamp(2rem,4.4vw,3.25rem)] mb-5">
+              <h2 className="text-[clamp(2rem,4.4vw,3.25rem)] mb-4">
                 {dict.home.visitTitle}
               </h2>
-              <p className="text-[var(--fg-muted)] text-lg leading-relaxed mb-10 max-w-md">
+              <p className="text-[var(--fg-muted)] text-lg leading-relaxed mb-8 max-w-md">
                 {dict.home.visitLede}
               </p>
 
-              <dl className="grid sm:grid-cols-2 gap-x-10 gap-y-7 mb-10">
+              <dl className="grid sm:grid-cols-2 gap-x-12 gap-y-8 mb-8">
                 <div>
                   <dt className="font-[family-name:var(--font-mono)] text-[10.5px] uppercase tracking-[0.18em] text-[var(--fg-subtle)] mb-2.5">
                     {dict.common.openingHours}

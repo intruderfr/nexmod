@@ -170,7 +170,7 @@ export default function FaqPage() {
       </section>
 
       <section className="container-nex py-12 md:py-16">
-        <div className="grid lg:grid-cols-[220px_1fr] gap-10">
+        <div className="grid lg:grid-cols-[220px_1fr] gap-12">
           {/* Jump nav */}
           <nav aria-label="FAQ sections" className="hidden lg:block">
             <div className="sticky top-24">
