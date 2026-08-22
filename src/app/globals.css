@@ -512,10 +512,30 @@ html[lang|="ta"] {
 }
 
 /* Glass panel, for the header and any floating chrome. */
-@utility glass {
-  background-color: color-mix(in srgb, var(--bg) 78%, transparent);
-  backdrop-filter: saturate(180%) blur(20px);
+/*
+ * Frosted bar backing for the sticky header and the buy bar.
+ *
+ * A plain class rather than @utility on purpose. Tailwind owns
+ * `backdrop-filter` for its own backdrop-* utilities, and inside @utility it
+ * dropped the unprefixed declaration entirely — the compiled sheet carried
+ * only `-webkit-backdrop-filter`, and the computed style came back `none`. So
+ * the translucent background applied and the blur silently did not, which
+ * meant every surface using this was simply see-through.
+ */
+.glass {
+  background-color: color-mix(in srgb, var(--bg) 82%, transparent);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+/*
+ * No blur available means the translucency has nothing to hide behind, so the
+ * background goes opaque instead of leaving text stacked over text.
+ */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background-color: var(--bg);
+  }
 }
 
 /* Hairline with a short accent tick at the start. */

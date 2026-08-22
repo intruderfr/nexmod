@@ -317,7 +317,13 @@ export function Header() {
         {mega && (
           <div
             onMouseEnter={() => openMega(mega)}
-            className="hidden lg:block absolute inset-x-0 top-full glass border-b border-[var(--border)] shadow-2xl animate-fade-in"
+            /*
+              Opaque, not glass. This panel covers the top third of the page
+              over product cards and headings, and a translucent one leaves
+              two sets of text stacked on each other — which is exactly what
+              it was doing, because the blur never applied.
+            */
+            className="hidden lg:block absolute inset-x-0 top-full bg-[var(--bg)] border-b border-[var(--border)] shadow-2xl animate-fade-in"
           >
             <div className="container-nex py-7">
               <div className="grid grid-cols-12 gap-8">
