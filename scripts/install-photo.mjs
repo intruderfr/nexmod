@@ -51,7 +51,10 @@ const lqip = await sharp(raw).resize({ width: 20 }).webp({ quality: 30 }).toBuff
  * silently leaving the old metadata pointing at a new photograph.
  */
 let manifest = readFileSync(MANIFEST, "utf-8");
-const block = new RegExp(`(  "${key}": \\{)[\\s\\S]*?(\\n  \\},)`);
+// The final entry in the manifest carries no trailing comma, so the closing
+// brace is matched with the comma optional. Requiring it silently skipped
+// whichever key happened to be last.
+const block = new RegExp(`(  "${key}": \\{)[\\s\\S]*?(\\n  \\},?)`);
 if (!block.test(manifest)) {
   console.error(`Key "${key}" not found in images.generated.ts`);
   process.exit(1);

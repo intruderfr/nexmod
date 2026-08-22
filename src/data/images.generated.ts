@@ -19,11 +19,11 @@ export interface GeneratedImage {
 
 export const generatedImages = {
   "hero-main": {
-    "alt": "Dark sports car at dusk",
-    "width": 2400,
-    "height": 1600,
-    "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAwCdASoUAA0APxF2sVCsJySisAgBgCIJYgCdACIgsWBsYjZLSXAA+pAN7bvYKkRRq3eEOvgjXF8kf0ncwy+ri6mYuWrQ8uqUBYAA",
-    "source": "Unsplash"
+    "alt": "A car under the hexagon lighting rig at the Nexmod workshop in Dehiwala",
+    "width": 1440,
+    "height": 770,
+    "lqip": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAACwAwCdASoUAAsAPxFwsFAsJiSisAgBgCIJaQAAPcrFX+kodkptwAD9mwAdJ+WGzZ2VX4JGdk9vJRJxIcrEdx08B89mNzqqTyWizYzUpkF/xVN/xUQTzxkvWsQoZ7VWN/QAAA==",
+    "source": "Nexmod"
   },
   "hero-alt": {
     "alt": "Low sports car in profile",
@@ -82,18 +82,18 @@ export const generatedImages = {
     "source": "Pexels"
   },
   "cat-interior": {
-    "alt": "Car interior at night",
-    "width": 2400,
-    "height": 1600,
-    "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAABwAwCdASoUAA0APxF0tFEsJqUisAgBgCIJQAALfEjm7CZUlAAA/CvKVDjb/0saA3mih5MOC7V3l54W598mSfRP68wAA6//JGNYZLzYIkAAAA==",
-    "source": "Unsplash"
+    "alt": "Coil floor mats fitted to a BYD driver footwell by Nexmod",
+    "width": 1440,
+    "height": 1440,
+    "lqip": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAABQBACdASoUABQAPxF+t1WsJ6UjKAgBgCIJZwAAH3//IrWTK1OMIDJBsbQAAOJ+X4VizvDDTiMYE2AHORmK+sEd/1Ibm8GFaTRMNcyuGK49Vnhb5I0KQnpteFqz4850NPL3BlR2Gnat+jd16DC8Srd+9HBU01e4NI5OKDcPkGmsGQWS06hHKIAA",
+    "source": "Nexmod"
   },
   "cat-essentials": {
-    "alt": "Car being washed",
-    "width": 2400,
-    "height": 1600,
-    "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAwCdASoUAA0APxF0slCsJqSisAgBgCIJQBOgAqhr1IXURFh0IIAA/R4NDNwG7GN9psVu2eTSdv/txWkKWhY4rC+O/19M3HAAAA==",
-    "source": "Unsplash"
+    "alt": "Moulded boot tray fitted in a BYD load bay by Nexmod",
+    "width": 1440,
+    "height": 1440,
+    "lqip": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAADQBACdASoUABQAPxF+tlWsJ6SjKAgBgCIJZwDM0AtTqluU1edsG7gCnXD1qy1tQAD+iPV2K0SFlIWCU4ThFkclrbJ4pQYuFYq07suBMmh2FrmguqQ3KtfLrhE3poZPSI8+cosBN0OyDLOl8etUKJWPT3TF14EEIglhXWd9AHpgAA==",
+    "source": "Nexmod"
   },
   "cat-body-kits": {
     "alt": "Car in profile showing body lines",
@@ -152,17 +152,17 @@ export const generatedImages = {
     "source": "Pexels"
   },
   "build-01": {
-    "alt": "BYD SUV in the Nexmod workshop at Dehiwala under the hexagon LED ceiling",
-    "width": 640,
-    "height": 640,
-    "lqip": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAACwBACdASoUABQAPxGAt1WsJ6UjKAgBgCIJZwDM0AuXVMvDY7ddHqGwMDKmHAFwAP2bAB0lwR6uzg5hV1pJ4/qrA9vHHTxfWmEglYvIu978KBilUXRkG7EYy59KlJ0LSSLNucZ6EqD2i8pSWI+tIiL+gQ27lLQkdGJWnMMiDLVs+BYVGBLIAAAA",
+    "alt": "BYD SUV at the Nexmod workshop after a mat and accessory fit",
+    "width": 1130,
+    "height": 1130,
+    "lqip": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAADQBACdASoUABQAPxGAt1WsJ6UjKAgBgCIJZwAALEtv82HG3dlLMKge4iLPlHIiAADJMWqRoAv1iK5JB9Z/ULi8BOocRERIWAu8mNQVGpPIMle6H761dX8zv28pwwgM21fT6SkTdAykfPO24HqTfT7Wx+VKBLtMNfEvTRDZutYbpmIf5bAAAA==",
     "source": "Nexmod"
   },
   "build-02": {
-    "alt": "Land Rover Defender in for bodywork at the Nexmod workshop",
-    "width": 361,
-    "height": 640,
-    "lqip": "data:image/webp;base64,UklGRhABAABXRUJQVlA4IAQBAACQBgCdASoUACQAPxF8t1UsJyUjKrgIAYAiCWIAwFAAbizuYALajJj5EHPJeEiD9onLZBMxtubWe9vIILoAAP3jFQoxcTaSmKd3Sig8qbUANWu25cy5EZu4TWfv3DkXq5XGoiiI2tmsaOOvoIJgo4LFYiNpoRFpO6d6Y/kcJ/6gfYjEqvsyPfo8iZZBBvJbI/ByzCuixkO/PiLtW7/QbDAwNhQOQJvfkevby08BiuNz7i7peki761JOFHbxpyJ6G604k3FarZ1XysY+BQsBV+6wf0zbrgzB1ykXFDngDzgap4NZpmVazSpNA7jgG8ygqSIvh1RX5E97efmptR1qUhizvAAAAA==",
+    "alt": "Coil floor mats fitted to a BYD passenger footwell at Nexmod",
+    "width": 1440,
+    "height": 1440,
+    "lqip": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAABwBACdASoUABQAPxF2sVIsJySiqA1RgCIJZwAADSReUH6DBdp8H0fCflQBAAD9/MuXz/VgGxIMXNpYAGan0u4/fmM8Ud/RR9Noi26oEptZS1pcgka86gEintfGtXBVgwUnUWBsY708SEUn53jePGJypQrVUp6SW0vP2OtcsxrwaAAA",
     "source": "Nexmod"
   },
   "build-03": {
@@ -173,25 +173,25 @@ export const generatedImages = {
     "source": "Nexmod"
   },
   "build-04": {
-    "alt": "Audi with an LED rear light bar fitted, in the Nexmod showroom",
+    "alt": "Audi fitted with an LED rear light bar, in the Nexmod showroom",
     "width": 361,
     "height": 640,
-    "lqip": "data:image/webp;base64,UklGRvAAAABXRUJQVlA4IOQAAABwBgCdASoUACQAPxF4sFMsJyQiqqoBgCIJQBg0P/y7dSSBuMZnwO/6LrHpe7tsDZgy7ZAd79CSSbLOWMAAyQHzIQE4bSXYhXWaOEX/Ar9GjM2MRYJ3/cGPqWMdp2kE9elNk7bYWVDQYK+w0V3OoGWdrwIHod+NzpQ80cQqvElo9JDmOVpDfbnOaX9ust9GVvzRfAxGvoQv5bGRiyXjTJkmYqMXH8QkQWARUm+fZwCmNiIk0JGqnczttbpovgYa29xH1do3KPTNZpzK3FaQKd2GtiNB/psr40LZRDbXmCz6SBcWgAA=",
+    "lqip": "data:image/webp;base64,UklGRu4AAABXRUJQVlA4IOIAAAAwBgCdASoUACQAPxF2sFMsJyQiqqoBgCIJQBg0P/wCudDs2vqB/3rMppYJGaCkbCA/RnBHpnsLspwAAMkB8yEFA6l7RV0XibLSVRiua7kO4Anuer/uDyKjLltTi1zSKR+0NTHYe+pXO6IswTBzkv+AHhKqJKVicepEIpiABwAitL5PUfVcgMIrji0SYwBHDvmySBTn8zly2DJ23Ib0CK/cECeLP1i3rDmWIuwsyCYa+qd6b5YSUdJ5dQzJG9bekj+bZUS1UdHw9TKXNX+XStL/YAnSI7VDmvKHCCTpTTDlfEAA",
     "source": "Nexmod"
   },
   "build-05": {
     "alt": "Car running upgraded headlights at dusk in Colombo",
     "width": 640,
     "height": 360,
-    "lqip": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACwAwCdASoUAAsAPxF0sVCsJqSisAgBgCIJYwDE2BxkzdiASNtoAAD+iSPQb19nYMZrxMKLrXvECb78k5r78demfUw0Fgd1rAMwOAIwPkpvMNiuBWeUAAAA",
+    "lqip": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACQAwCdASoUAAsAPxFwsFAsJiSisAgBgCIJZQDE2Bxkzdh/TdEAAP6JI9BvX2dgxmvEwoute8QJy22l38OBi/dJkKK6R/PjixPj+oJRdB6Eyg2K4FZ5QAAA",
     "source": "Nexmod"
   },
   "build-06": {
-    "alt": "Supercar in a showroom",
-    "width": 2400,
-    "height": 1600,
-    "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACwAwCdASoUAA0APxF0tFEsJqUisAgBgCIJZgCdAB8lB7tCo87tAADNkz4VleCRFxhcB0u+RieuqrCt/OLCN9JRZ4Ca1jL42iYG7s0JUAAAAA==",
-    "source": "Unsplash"
+    "alt": "Coil mats and sill trim fitted through a BYD cabin at Nexmod Dehiwala",
+    "width": 1440,
+    "height": 1440,
+    "lqip": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAACwBACdASoUABQAPw1qr1AsJaQit/VYAYAhiWcAxvQR9aSHFQ3a7t3Rq4sP+CiQAP7sDgOVCLD9kVAY5KXW02UCAsCvvXySfHeqcCKH6pWwlNnQXjeszE53+EQXuqnM1rBW92L4lD65MehmNqg6WzwxJiNN8yrg6RQy8AAA",
+    "source": "Nexmod"
   }
 } as const satisfies Record<string, GeneratedImage>;
 
