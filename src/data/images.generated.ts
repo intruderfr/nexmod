@@ -26,11 +26,11 @@ export const generatedImages = {
     "source": "Nexmod"
   },
   "hero-alt": {
-    "alt": "Low sports car in profile",
-    "width": 2400,
-    "height": 1600,
-    "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoUAA0APxF0slCsJqSisAgBgCIJZwDDNCHccLh45iW07gAA/rIxEqnFZdCK0GE0mw9xIiMF4xRgjK/98IsAAA==",
-    "source": "Unsplash"
+    "alt": "The Nexmod showroom in Dehiwala under its hexagon lighting rig",
+    "width": 1080,
+    "height": 600,
+    "lqip": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADQAwCdASoUAAsAPxFwsFAsJiSisAgBgCIJZwAAXGOEw9Gl0Ub6aAAA99GNkt2aHRrwtbtiw+LeGgMoZ/a8POgyoVY3xW5Q7QtawHyA7a5ZDtvl7cct4nPsB2p5/x3NEBhDp5gkRy9EgAAA",
+    "source": "Nexmod"
   },
   "cat-carbon-fibre": {
     "alt": "Carbon-detailed sports car in profile",
@@ -54,11 +54,11 @@ export const generatedImages = {
     "source": "Pexels"
   },
   "cat-tyre-stickers": {
-    "alt": "Alloy wheel and tyre sidewall",
-    "width": 2400,
-    "height": 1350,
-    "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoUAAsAPxF0slCsJqSisAgBgCIJaQAAUrNIkBYpprJpjigA9l5juVOfM5UEBCN8OkNp4u0mFQblX3eSqJDAAA==",
-    "source": "Pexels"
+    "alt": "Alloy wheel and tyre on a car at the Nexmod workshop",
+    "width": 1080,
+    "height": 1080,
+    "lqip": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAACQBACdASoUABQAPxF4sVKsJyQiqA1RgCIJZwAAJXB6DHB1J0z87jwgSypf2AAA/svVzCJ77NrTYKVB2dbLUdBbz17nhLGyn14PJWqZKBoLKbyVkJChdbrj6sc9vryv4AQL9SHX78fevT0VXNH6/gSdQCbIG+eb+74pmmZcAAA=",
+    "source": "Nexmod"
   },
   "cat-lighting": {
     "alt": "Headlights at night",
@@ -117,11 +117,11 @@ export const generatedImages = {
     "source": "Unsplash"
   },
   "svc-detailing": {
-    "alt": "Detailing with foam",
-    "width": 2400,
-    "height": 1600,
-    "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAwCdASoUAA0APxF0slCsJqSisAgBgCIJQBOgAqhr1IXURFh0IIAA/R4NDNwG7GN9psVu2eTSdv/txWkKWhY4rC+O/19M3HAAAA==",
-    "source": "Unsplash"
+    "alt": "Coil mats and sill trim through a car cabin at Nexmod Dehiwala",
+    "width": 1440,
+    "height": 1440,
+    "lqip": "data:image/webp;base64,UklGRqAAAABXRUJQVlA4IJQAAAAQBQCdASoUABQAPxF+tlWsJ6SjKAgBgCIJZwAD5gETZKj6E6L+apOyOoeXS2g6qAFQAP6IdwlOdsPOjtg43WELpgs1/br0jOYDmSbSZfJkJ47yGdo/W9Gt7/gSyHEUUpTFBO7JuhT8/ZCe+vR5QaiWzDtcAnYGWSNIsFFXiSfBe3kqILL5XMQ0aDt2OUKkq5qAAAAA",
+    "source": "Nexmod"
   },
   "svc-workshop": {
     "alt": "Technician working on a car",
@@ -145,11 +145,11 @@ export const generatedImages = {
     "source": "Pexels"
   },
   "workshop-bay": {
-    "alt": "Car in a workshop bay",
-    "width": 2400,
-    "height": 1600,
-    "lqip": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAwCdASoUAA0APxF4slEsJ6SisAgBgCIJZwAAXlvWCz5Te7+NKMQA/uzZGZt/INwd6CzIjpSdGNYWCfoz9nfQgAA=",
-    "source": "Pexels"
+    "alt": "Cars in the Nexmod showroom beneath the branded wall and hexagon lighting",
+    "width": 1080,
+    "height": 1080,
+    "lqip": "data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAABwBQCdASoUABQAPxF+tlWsJ6SjKAgBgCIJZwDO7BEz0Hr8OUTU7NsZMl0icfXjeQrnnZfMAPeLLdP3CIm8Lr5vlOTi7MKPwPa5iPK1JkaavORXyjGWlCY5nVW8HXdlcBKvoDQN4NlQYjXTLcFMvLL09YGPMc1nKXauOHCOmqD8U7o9g0OfCgcYAAA=",
+    "source": "Nexmod"
   },
   "build-01": {
     "alt": "BYD SUV at the Nexmod workshop after a mat and accessory fit",
